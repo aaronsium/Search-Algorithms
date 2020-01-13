@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 class ClientHandler {
 
  public:
-  virtual int handleClient(ifstream input, ofstream output) = 0;
+  virtual void handleClient(ifstream input, ofstream output) = 0;
   virtual ~ClientHandler() {}
 };
 
@@ -57,6 +58,9 @@ class CacheManager {
 
  public:
   virtual int handleClient(ifstream input, ofstream output) = 0;
+  virtual int inCache() = 0; //if problem is in the cache return 1
+  virtual S solution(P) = 0; //returning solution to problem that is in the cache
+  virtual void intoCache(P,S) = 0; //inserting new solution
   virtual ~CacheManager() {}
 };
 
@@ -64,13 +68,13 @@ template <class P, class S>
 class MyClientHandler: public ClientHandler{
 
  private:
-  Solver solver;
+  Solver<P,S> solver;
+  CacheManager<P,S> cache;
 
  public:
-  MyClientHandler(Solver &solver);
-
-  virtual int handleClient(ifstream input, ofstream output) = 0;
-  virtual ~MyClientHandler() {}
+  MyClientHandler(const Solver<P,S> &sol, CacheManager<P,S> cacheManager);
+  void handleClient(ifstream input, ofstream output);
+  ~MyClientHandler() {}
 };
 
 class SerialServer : public server_side::Server{
@@ -78,8 +82,7 @@ class SerialServer : public server_side::Server{
  public:
   void open(int port,ClientHandler myHandler) override ;
   virtual ~SerialServer() {}
-
-
+  //once server has been opened handel client by calling myHandler.handleClient
 
 };
 
