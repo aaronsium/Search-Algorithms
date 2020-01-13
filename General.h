@@ -1,53 +1,86 @@
 //
-// Created by aharon on 13/01/2020.
+// Created by yaffa on 13/01/2020.
 //
 
-#include <iostream>
+#ifndef EX4_GENERAL_H
+#define EX4_GENERAL_H
+
 #include <string>
 #include <vector>
-#include <map>
-#include <unordered_map>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <bits/stdc++.h>
-#include <arpa/inet.h>
+#include <iostream>
 #include <fstream>
-#include <algorithm>
-#include <cstring>
-#include <chrono>
-#include <thread>
-#include <mutex>
-#include <cstddef>
 
 using namespace std;
-using namespace std::literals::chrono_literals;
+
+/**
+ * ClientHandler Interface
+ */
+
+class ClientHandler {
+
+ public:
+  virtual int handleClient(ifstream input, ofstream output) = 0;
+  virtual ~ClientHandler() {}
+};
+
 
 namespace server_side {
-// namespace Q::V { // C++17 alternative to the above two lines
+/**
+ * ClientHandler Interface
+ */
 class Server {
+ public:
   virtual void open(int port, ClientHandler myHandler) = 0;
   virtual void stop() = 0;
-
+  virtual ~Server() {}
 };
 }
 
+/**
+ * Solver Interface
+ */
+
+template <class P, class S>
+class Solver {
+
+ public:
+  S solve (P) = 0;
+  virtual ~Solver() {}
+};
+
+/**
+ * CacheManager Interface
+ */
+
+template <class P, class S>
+class CacheManager {
+
+ public:
+  virtual int handleClient(ifstream input, ofstream output) = 0;
+  virtual ~CacheManager() {}
+};
+
+template <class P, class S>
+class MyClientHandler: public ClientHandler{
+
+ private:
+  Solver solver;
+
+ public:
+  MyClientHandler(Solver &solver);
+
+  virtual int handleClient(ifstream input, ofstream output) = 0;
+  virtual ~MyClientHandler() {}
+};
 
 class SerialServer : public server_side::Server{
 
  public:
   void open(int port,ClientHandler myHandler) override ;
+  virtual ~SerialServer() {}
 
 
 
 };
 
-CacheManager
-class CacheManager {
-
- public:
-  bool isExist(int port,ClientHandler myHandler) override ;
-
-
-
-};
+#endif //EX4_GENERAL_H
