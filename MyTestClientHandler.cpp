@@ -15,7 +15,7 @@ void MyTestClientHandler<strring, string>::handleClient(int socket) {
     string solution;
 
     while (read(client_socket, buffer, 1024)) {
-        if (strcmp(buffer, "end")) {
+        if (!strcmp(buffer, "end")) {
             break;
         }
 
@@ -31,12 +31,3 @@ void MyTestClientHandler<strring, string>::handleClient(int socket) {
         write(socket, message.c_str(), message.length());
     }
 }
-//    vector<char> v;
-//    for(int i = 0; buffer[i] != '\n'; i++){
-//        v.push_back(buffer[i]);
-//    }
-//
-//    problem.push_back(v);
-
-
-
