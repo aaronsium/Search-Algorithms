@@ -67,6 +67,8 @@ class Solver {
  * CacheManager Interface
  */
 
+typedef vector<vector<int>> matrix;
+
 template <class P, class S>
 class CacheManager {
 
