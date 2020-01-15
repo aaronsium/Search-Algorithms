@@ -4,29 +4,39 @@
 
 #include "General.h"
 
-template<class P, class S>
-MyClientHandler<P, S>::MyClientHandler(const Solver<P,S> &sol, const CacheManager<P,S> cacheManager):solver(sol),
+
+MyTestClientHandler<strring, string>::MyClientHandler(const Solver<strring, string> &sol, const CacheManager<strring, string> cacheManager):solver(sol),
 cache(cacheManager) {}
 
-template<class P, class S>
-void MyClientHandler<P,S>::handleClient(ifstream input, ofstream output){
-    P problem[1024];
+void MyTestClientHandler<strring, string>::handleClient(int socket) {
 
-    while(input >> problem) {
-        if (strcmp(problem, "end")){
-            return;
+    char buffer[1024] = {0};
+    vector <vector<char>> problem;
+    string solution;
+
+    while (read(client_socket, buffer, 1024)) {
+        if (strcmp(buffer, "end")) {
+            break;
         }
-        output << "problem received" << endl;
+
         //searching for solution in the cache
-        if (problem.inCache) {
-            output << problem << endl;
-        //if solution wasn't found create one
+        if (buffer.inCache) {
+            solution = cacheManager.solution(buffer);
+            //if solution wasn't found create one
         } else {
-            S solution = solver.solve(problem);
-            output << solution << endl;
-            cache.intoCache(problem, solution);
+            solution = solver.solve(problem);
+            cache.intoCache(buffer, solution);
         }
+
+        write(socket, message.c_str(), message.length());
     }
 }
+//    vector<char> v;
+//    for(int i = 0; buffer[i] != '\n'; i++){
+//        v.push_back(buffer[i]);
+//    }
+//
+//    problem.push_back(v);
+
 
 

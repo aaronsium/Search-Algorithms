@@ -34,7 +34,7 @@ using namespace std::literals::chrono_literals;
 class ClientHandler {
 
  public:
-  virtual void handleClient(ifstream input, ofstream output) = 0;
+  virtual void handleClient(int socket) = 0;
   virtual ~ClientHandler() {}
 };
 
@@ -59,7 +59,7 @@ template <class P, class S>
 class Solver {
 
  public:
-  S solve (P) = 0;
+  S solve (P problem) = 0;
   virtual ~Solver() {}
 };
 
@@ -71,23 +71,21 @@ template <class P, class S>
 class CacheManager {
 
  public:
-  virtual int handleClient(ifstream input, ofstream output) = 0;
   virtual bool inCache(P problem) = 0; //if problem is in the cache return 1
   virtual S solution(P problem) = 0; //returning solution to problem that is in the cache
   virtual void intoCache(P problem,S solution) = 0; //inserting new solution
   virtual ~CacheManager() {}
 };
 
-template <class P, class S>
-class MyClientHandler: public ClientHandler{
+class MyTestClientHandler: public ClientHandler{
 
  private:
-  Solver<P,S> solver;
-  CacheManager<P,S> cache;
+  Solver<string,string> solver;
+  CacheManager<strring, string> cache;
 
  public:
-  MyClientHandler(const Solver<P,S> &sol, CacheManager<P,S> cacheManager);
-  void handleClient(ifstream input, ofstream output);
+  MyClientHandler(const Solver<string,string> &sol, CacheManager<string,string> cacheManager);
+  void handleClient(int socket);
   ~MyClientHandler() {}
 };
 
@@ -110,10 +108,16 @@ template <class P, class S>
 class FileCacheManager: public CacheManager {
 
  public:
-  virtual int handleClient(ifstream input, ofstream output) = 0;
   virtual bool inCache(P problem) = 0;
   virtual S solution(P problem) = 0;
   virtual void intoCache(P problem,S solution) = 0;
   virtual ~FileCacheManager() {}
+};
+
+class StringReverser: public Solver{
+
+public:
+    virtual string solve (string problem) override ;
+    ~StringReverser() {}
 };
 #endif //EX4_GENERAL_H
