@@ -9,6 +9,5 @@ StringReverser::string solve (string problem){
     for(int i = problem.length()-1; i >= 0; i++){
         solution += problem[i];
     }
-
     return problem;
 }
