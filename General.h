@@ -23,7 +23,6 @@
 #include <mutex>
 #include <cstddef>
 
-
 using namespace std;
 using namespace std::literals::chrono_literals;
 
@@ -37,7 +36,6 @@ class ClientHandler {
   virtual void handleClient(int socket) = 0;
   virtual ~ClientHandler() {}
 };
-
 
 namespace server_side {
 /**
@@ -55,71 +53,78 @@ class Server {
  * Solver Interface
  */
 
-template <class P, class S>
+template<class P, class S>
 class Solver {
 
  public:
-  S solve (P problem) = 0;
+  S solve(P problem) = 0;
   virtual ~Solver() {}
 };
 
 /**
  * CacheManager Interface
  */
-
 typedef vector<vector<int>> matrix;
+typedef vector<string> strVector;
 
-template <class P, class S>
+template<class P, class S>
 class CacheManager {
 
  public:
   virtual bool inCache(P problem) = 0; //if problem is in the cache return 1
   virtual S solution(P problem) = 0; //returning solution to problem that is in the cache
-  virtual void intoCache(P problem,S solution) = 0; //inserting new solution
+  virtual void intoCache(P problem, S solution) = 0; //inserting new solution
   virtual ~CacheManager() {}
 };
 
-class MyTestClientHandler: public ClientHandler{
+class MyTestClientHandler : public ClientHandler {
 
  private:
-  Solver<string,string> solver;
-  CacheManager<strring, string> cache;
+  Solver<string, string> solver;
+  CacheManager<string, string> cache;
 
  public:
-  MyClientHandler(const Solver<string,string> &sol, CacheManager<string,string> cacheManager);
+  MyClientHandler(const Solver<string, string> &sol, CacheManager<string, string> cacheManager);
   void handleClient(int socket);
   ~MyClientHandler() {}
 };
 
-class MySerialServer : public server_side::Server{
+class MySerialServer : public server_side::Server {
  private:
   bool isOpen = false;
-  int PORT=0;
-  int client_socket=0;
-  int server_socket=0;
+  int PORT = 0;
+  int client_socket = 0;
+  int server_socket = 0;
  public:
-  void open(int port,ClientHandler *myHandler) override ;
-  void stop() override ;
+  void open(int port, ClientHandler *myHandler) override;
+  void stop() override;
   int newSocket(int port);
-  void start(ClientHandler *myHandler) ;
+  void start(ClientHandler *myHandler);
   virtual ~MySerialServer() {}
   //once server has been opened handel client by calling myHandler.handleClient
 
 };
-template <class P, class S>
-class FileCacheManager: public CacheManager {
+template<typename P, typename S>
+class FileCacheManager : public CacheManager<matrix, strVector> {
+ private:
+  list<pair<string, strVector>> cacheList;
+  map<string, typename list<pair<string, strVector>>::iterator> mapPointers;
+  unsigned int capacity = 5;
 
  public:
-  virtual bool inCache(P problem) = 0;
-  virtual S solution(P problem) = 0;
-  virtual void intoCache(P problem,S solution) = 0;
+  virtual bool inCache(P problem);
+  virtual S getSolution(string problem);
+  virtual void intoCache(string problem, S solution) = 0;
+  void lru(string key);
+  void wFile(string problem, S solution);
+  S rFile(string nameFile);
   virtual ~FileCacheManager() {}
 };
 
-class StringReverser: public Solver{
+class StringReverser : public Solver {
 
-public:
-    virtual string solve (string problem) override ;
-    ~StringReverser() {}
+ public:
+  virtual string solve(string problem) override;
+  ~StringReverser() {}
 };
 #endif //EX4_GENERAL_H

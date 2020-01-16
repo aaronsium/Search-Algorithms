@@ -63,9 +63,9 @@ void MySerialServer::start(ClientHandler *myHandler) {
     //waiting till client connect
     while (client_socket==0) {}
 
-myHandler->handleClient(this->client_socket);   ; // need to check about arguments
+    myHandler->handleClient(this->client_socket);; // need to check about arguments
 // current client is disconnecting
-cout << "client disconnected" << endl;
+    cout << "client disconnected" << endl;
     //reset socket
     client_socket = 0;
   }
