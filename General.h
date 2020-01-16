@@ -24,7 +24,6 @@
 #include <cstddef>
 #include <stdlib.h>
 
-
 using namespace std;
 using namespace std::literals::chrono_literals;
 
@@ -125,12 +124,54 @@ class FileCacheManager : public CacheManager<P, S> {
   virtual ~FileCacheManager() {}
 };
 
-
-
 class StringReverser : public Solver {
 
  public:
   virtual string solve(string problem) override;
   ~StringReverser() {}
+};
+
+class Point {
+ private:
+  double x;
+  double y;
+ public:
+  Point(int x, int y);
+};
+
+template<typename T>
+class State {
+ private:
+  T state;
+  double cost;
+  State<T> cameFrom;
+ public:
+  State(T state);
+  bool Equals(State<T> s);
+};
+
+template<typename T>
+class Searchable {
+ public:
+  virtual State<T> getInitialState() = 0;
+  virtual bool isGoalState(State<T>) = 0;
+  virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
+  virtual int NodesEvaluated() = 0;
+  virtual ~Searchable() {}
+};
+
+template<typename T, typename S>
+
+class Searcher {
+ private:
+  priority_queue<State<T>> openList;
+  int evaluatedNodes;
+
+ public:
+  Searcher();
+  virtual S search(Searchable<T> searchable) = 0;
+  int listSize();
+  int NodesEvaluated();
+  virtual ~Searcher() {}
 };
 #endif //EX4_GENERAL_H
