@@ -22,6 +22,8 @@
 #include <thread>
 #include <mutex>
 #include <cstddef>
+#include <stdlib.h>
+
 
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -105,21 +107,25 @@ class MySerialServer : public server_side::Server {
 
 };
 template<typename P, typename S>
-class FileCacheManager : public CacheManager<matrix, strVector> {
+class FileCacheManager : public CacheManager<P, S> {
  private:
   list<pair<string, strVector>> cacheList;
   map<string, typename list<pair<string, strVector>>::iterator> mapPointers;
   unsigned int capacity = 5;
 
  public:
+  string hashing(P problem);
+  string Convertstr(size_t sz);// convert size_t to string
   virtual bool inCache(P problem);
-  virtual S getSolution(string problem);
+  virtual S getSolution(P problem);
   virtual void intoCache(string problem, S solution) = 0;
   void lru(string key);
-  void wFile(string problem, S solution);
-  S rFile(string nameFile);
+  void wFile(string key, S solution);
+  S rFile(string key);
   virtual ~FileCacheManager() {}
 };
+
+
 
 class StringReverser : public Solver {
 

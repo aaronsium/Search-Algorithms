@@ -4,6 +4,13 @@
 #include "General.h"
 
 template<class P, class S>
+string FileCacheManager<P, S>::hashing(P problem) {
+  hash<P> myHash;
+  // Using operator() to get hash value
+  return to_string(myHash(problem));
+}
+
+template<class P, class S>
 bool FileCacheManager<P, S>::inCache(P problem) {
   if (this->mapPointers.find(problem)!=mapPointers.end()) {
     return true;
@@ -13,44 +20,43 @@ bool FileCacheManager<P, S>::inCache(P problem) {
 }
 
 template<class P, class S>
-void FileCacheManager<P, S>::intoCache(string problem, S soulution) {
-  if (this->name=="") {
-    this->name = soulution.class_name;
-  }
-  bool found = inCache(problem);
-  bool exist = inCache(problem);
+void FileCacheManager<P, S>::intoCache(string, S soulution) {
+  string key = hashing(key);
+  bool found = inCache(key);
+  bool exist = inCache(key);
   // if it doesn't exist both in file and cash
   if (!found && !exist) {
     ////
-    lru(problem);
-    wFile(problem + this->name, soulution);
+    lru(key);
+    wFile(key, soulution);
   } else if (found) {
-    cacheList.erase(mapPointers[problem]);
-    wFile(problem + this->name, soulution);
+    cacheList.erase(mapPointers[key]);
+    wFile(key, soulution);
 
   } else if (exist) {
-    S oldObject = getSolution(problem);
+    S oldObject = getSolution(key);
   }
-  cacheList.push_front(make_pair(problem, soulution));
-  mapPointers[problem] = cacheList.begin();
+  cacheList.push_front(make_pair(key, soulution));
+  mapPointers[key] = cacheList.begin();
 
 }
 
 template<class P, class S>
-S FileCacheManager<P, S>::getSolution(string problem) {
-  bool found = inCache(problem);
-  string check = problem + this->name;
+S FileCacheManager<P, S>::getSolution(P problem) {
+  string key = hashing(problem);
+  bool found = inCache(key);
+  string check = key;
   bool exist = inCache(check);
   // if it doesn't exist both in file and cash
   if (!found & !exist) {
     throw "an error";
     // if it exist only in cache
   } else if (found) {
-    S obj = (mapPointers[problem])->second;
-    cacheList.erase(mapPointers[problem]);
-    cacheList.push_front(make_pair(problem, obj));
-    mapPointers[problem] = cacheList.begin();
-    return mapPointers[problem]->second;
+    S obj = (mapPointers[key])->second;
+    cacheList.erase(mapPointers[key]);
+    cacheList.push_front(make_pair(key, obj));
+    mapPointers[key] = cacheList.begin();
+    return mapPointers[key]->second;
   } else {
     S object = rFile((check));
     wFile(check, object);
@@ -60,8 +66,8 @@ S FileCacheManager<P, S>::getSolution(string problem) {
       cacheList.pop_back();
       mapPointers.erase(least.first);
     }
-    cacheList.push_front(make_pair(problem, object));
-    mapPointers[problem] = cacheList.begin();
+    cacheList.push_front(make_pair(key, object));
+    mapPointers[key] = cacheList.begin();
     return object;
   }
 
@@ -81,8 +87,8 @@ void FileCacheManager<P, S>::lru(string key) {
 }
 
 template<class P, class S>
-void FileCacheManager<P, S>::wFile(string problem, S solution) {
-  ofstream output_file{problem, ios::binary};
+void FileCacheManager<P, S>::wFile(string key, S solution) {
+  ofstream output_file{key, ios::binary};
   if (!output_file.is_open()) {
     cout << "error while opening file";
   } else {
@@ -92,8 +98,8 @@ void FileCacheManager<P, S>::wFile(string problem, S solution) {
 }
 
 template<class P, class S>
-S FileCacheManager<P, S>::rFile(string problem) {
-  ifstream in_file(problem, ios::binary);
+S FileCacheManager<P, S>::rFile(string key) {
+  ifstream in_file(key, ios::binary);
   S object;
   if (!in_file.is_open()) {
     throw "error while opening file";
@@ -103,4 +109,12 @@ S FileCacheManager<P, S>::rFile(string problem) {
     return object;
   }
   return object;
+}
+
+template<class P, class S>
+string FileCacheManager<P, S>::Convertstr(size_t sz) {
+  char buf[24];
+  sprintf(buf, "%u", sz);
+  string newStr(buf);
+  return newStr;
 }
