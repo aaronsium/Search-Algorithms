@@ -4,13 +4,17 @@
 
 #include "General.h"
 template<class T>
-State<T>::State(T state1) {
-  this->state = state1;
+State<T>::State(T status1) {
+  this->status = status1;
 }
 
 template<class T>
-bool State<T>::Equals(State<T> s) {
-  return status.Equals(s.status);
+T State<T>:: getStatus(){
+  return this->status;
+}
+template<class T>
+bool State<T>::equals(State<T> s) {
+  return status.equals(s.getStatus());
 }
 template<typename T>
 void State<T>::SetCameFrom(const State<T> &came_from) {
@@ -23,8 +27,4 @@ double State<T>::GetCost() const {
 template<typename T>
 void State<T>::SetCost(double cost) {
   State::cost = cost;
-}
-template<typename T>
-T State<T>::GetStatus() const {
-  return status;
 }

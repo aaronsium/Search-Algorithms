@@ -27,6 +27,10 @@
 using namespace std;
 using namespace std::literals::chrono_literals;
 
+
+typedef vector<vector<int>> matrix;
+typedef vector<string> strVector;
+
 /**
  * ClientHandler Interface
  */
@@ -132,28 +136,31 @@ class StringReverser : public Solver {
 };
 
 class Point {
- private:
-  double x;
-  double y;
- public:
-  double GetX() const;
-  double GetY() const;
-  Point(int x, int y);
+
+private:
+    double x;
+    double y;
+
+public:
+    Point(int x, int y);
+    double getX();
+    double getY();
+    bool compare(Point other);
 };
 
 template<typename T>
 class State {
  private:
-  T status;
+  T state;
   double cost;
   State<T> cameFrom;
  public:
   State(T state);
-  bool Equals(State<T> s);
+  bool equals(State<T> s);
   void SetCameFrom(const State<T> &came_from);
   double GetCost() const;
   void SetCost(double cost);
-  T GetStatus() const;
+  T getStatus();
 };
 
 template<typename T>
@@ -180,6 +187,7 @@ class Searcher {
   int NodesEvaluated();
   virtual ~Searcher() {}
 };
+
 template<typename T, typename S>
 class BestFirstSearch:public Searcher<T,S>{
  private:
