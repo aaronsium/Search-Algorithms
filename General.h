@@ -136,18 +136,24 @@ class Point {
   double x;
   double y;
  public:
+  double GetX() const;
+  double GetY() const;
   Point(int x, int y);
 };
 
 template<typename T>
 class State {
  private:
-  T state;
+  T status;
   double cost;
   State<T> cameFrom;
  public:
   State(T state);
   bool Equals(State<T> s);
+  void SetCameFrom(const State<T> &came_from);
+  double GetCost() const;
+  void SetCost(double cost);
+  T GetStatus() const;
 };
 
 template<typename T>
@@ -163,7 +169,7 @@ class Searchable {
 template<typename T, typename S>
 
 class Searcher {
- private:
+ protected:
   priority_queue<State<T>> openList;
   int evaluatedNodes;
 
@@ -174,4 +180,28 @@ class Searcher {
   int NodesEvaluated();
   virtual ~Searcher() {}
 };
+template<typename T, typename S>
+class BestFirstSearch:public Searcher<T,S>{
+ private:
+  unordered_set<State<T>> closed;
+ public:
+  virtual S search(Searchable<T> searchable);
+  S backTrace();
+  bool operator<(const State<T>& s1);
+    virtual ~BestFirstSearch() {}
+
+};
+
+
+class SolutionMatrix {
+ private:
+  vector<State<Point>> stateVec;
+  vector<string> strVec;
+ public:
+  SolutionMatrix(State<Point>);
+  vector<string> toMatrix(State<Point> s1, State<Point> s2);
+};
+
+
+
 #endif //EX4_GENERAL_H

@@ -10,5 +10,21 @@ State<T>::State(T state1) {
 
 template<class T>
 bool State<T>::Equals(State<T> s) {
-  return state.Equals(s.state);
+  return status.Equals(s.status);
+}
+template<typename T>
+void State<T>::SetCameFrom(const State<T> &came_from) {
+  cameFrom = came_from;
+}
+template<typename T>
+double State<T>::GetCost() const {
+  return cost;
+}
+template<typename T>
+void State<T>::SetCost(double cost) {
+  State::cost = cost;
+}
+template<typename T>
+T State<T>::GetStatus() const {
+  return status;
 }

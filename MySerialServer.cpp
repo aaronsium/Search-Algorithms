@@ -76,3 +76,5 @@ void MySerialServer::stop() {
   this->isOpen = false;
   close(this->server_socket);
 }
+
+
