@@ -27,6 +27,10 @@
 using namespace std;
 using namespace std::literals::chrono_literals;
 
+
+typedef vector<vector<int>> matrix;
+typedef vector<string> strVector;
+
 /**
  * ClientHandler Interface
  */
@@ -65,8 +69,6 @@ class Solver {
 /**
  * CacheManager Interface
  */
-typedef vector<vector<int>> matrix;
-typedef vector<string> strVector;
 
 template<class P, class S>
 class CacheManager {
@@ -132,22 +134,30 @@ class StringReverser : public Solver {
 };
 
 class Point {
- private:
-  double x;
-  double y;
- public:
-  Point(int x, int y);
+
+private:
+    double x;
+    double y;
+
+public:
+    Point(int x, int y);
+    double getX();
+    double getY();
+    bool compare(Point other);
 };
 
 template<typename T>
 class State {
- private:
-  T state;
-  double cost;
-  State<T> cameFrom;
- public:
-  State(T state);
-  bool Equals(State<T> s);
+
+private:
+    T status;
+    double cost;
+    State<T> cameFrom;
+
+public:
+    State(T status);
+    bool equals(State<T> s);
+    T getStatus();
 };
 
 template<typename T>
@@ -174,4 +184,31 @@ class Searcher {
   int NodesEvaluated();
   virtual ~Searcher() {}
 };
+
+template<class T>
+class Searchable{
+
+public:
+    virtual T getInitialState() = 0;
+    virtual bool isGoalState(state T) = 0;
+    virtual T getAllPossibleState(State T) = 0;
+    ~searchable(){};
+};
+
+class Matrix:Searchable{
+
+private:
+    matrix field;
+    State initial;
+    State goal;
+
+public:
+    Matrix(matrix field, State Initial, State goal);
+    virtual State getInitialState();
+    virtual bool isGoalState(State current);
+    virtual vector<State> getAllPossibleState(State current);
+    int getCost(State current);
+    ~Matrix(){};
+};
+
 #endif //EX4_GENERAL_H

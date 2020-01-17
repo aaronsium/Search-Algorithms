@@ -4,11 +4,16 @@
 
 #include "General.h"
 template<class T>
-State<T>::State(T state1) {
-  this->state = state1;
+State<T>::State(T status1) {
+  this->status = status1;
 }
 
 template<class T>
-bool State<T>::Equals(State<T> s) {
-  return state.Equals(s.state);
+T State<T>:: getStatus(){
+  return this->status;
+}
+
+template<class T>
+bool State<T>::equals(State<T> s) {
+  return state.equals(s.getStatus());
 }
