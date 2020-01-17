@@ -9,10 +9,10 @@ SolutionMatrix::SolutionMatrix(State<Point> stateVec1) {
 }
 
 vector<string> SolutionMatrix::toMatrix(State<Point> s1, State<Point> s2) {
-  double x1 = s1.GetStatus().GetX();
-  double y1 = s1.GetStatus().GetY();
-  double x2 = s2.GetStatus().GetX();
-  double y2 = s2.GetStatus().GetY();
+  double x1 = s1.getStatus().getX();
+  double y1 = s1.getStatus().getY();
+  double x2 = s2.getStatus().getX();
+  double y2 = s2.getStatus().getY();
 
   bool right = false, left = false, up = false, down = false;
 

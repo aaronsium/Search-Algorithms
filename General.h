@@ -151,7 +151,7 @@ public:
 template<typename T>
 class State {
  private:
-  T state;
+  T status;
   double cost;
   State<T> cameFrom;
  public:
