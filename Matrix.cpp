@@ -15,16 +15,16 @@ bool Matrix::isGoalState(State<Point> current) {
 
 vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
   vector<State<Point>> possibleState;
-  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX() - 1, current.getStatus().getY)));
-  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX + 1, current.getStatus().getY)));
-  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX, current.getStatus().getY - 1)));
-  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX, current.getStatus().getY + 1)));
+  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX() - 1, current.getStatus().getY())));
+  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX() + 1, current.getStatus().getY())));
+  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX(), current.getStatus().getY() - 1)));
+  possibleState.push_back(new State<Point>(new Point(current.getStatus().getX(), current.getStatus().getY() + 1)));
 
-  return possibleState.push_back;
+  return possibleState;
 }
 
 int Matrix::getCost(State<Point> current) {
-  return field[current.getStatus().getX][current.getStatus().getY];
+  return field[current.getStatus().getX()][current.getStatus().getY()];
 }
 
 vector<string> Matrix::adaptSolution(vector<State<Point>> stateVector) {
@@ -54,8 +54,4 @@ string Matrix::direction(State<Point> s1, State<Point> s2) {
     return "up");
   }
   if (y2 > y1) {
-    return "down");
-
-  }
-
-}
+    return "down"

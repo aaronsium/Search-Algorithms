@@ -5,10 +5,10 @@
 #include "General.h"
 
 
-MyTestClientHandler<strring, string>::MyClientHandler(const Solver<strring, string> &sol, const CacheManager<strring, string> cacheManager):solver(sol),
+MyTestClientHandler::MyClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager):solver(sol),
 cache(cacheManager) {}
 
-void MyTestClientHandler<strring, string>::handleClient(int socket) {
+void MyTestClientHandler<string, string>::handleClient(int socket) {
 
     char buffer[1024] = {0};
     vector <vector<char>> problem;

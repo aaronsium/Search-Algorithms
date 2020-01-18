@@ -210,6 +210,18 @@ class BestFirstSearch : public Searcher<T, S> {
 
 };
 
+template<class T, class S>
+class BFS : public Searcher<T, S> {
+ private:
+  unordered_set<State<T>> closed;
+ public:
+  virtual S search(Searchable<T> searchable);
+  S backTrace();
+  bool operator<(const State<T> &s1);
+  virtual ~BestFirstSearch() {}
+
+};
+
 class Matrix : public Searchable<Point> {
  private:
   matrix field;
