@@ -27,7 +27,6 @@
 using namespace std;
 using namespace std::literals::chrono_literals;
 
-
 typedef vector<vector<int>> matrix;
 typedef vector<string> strVector;
 
@@ -109,7 +108,7 @@ class MySerialServer : public server_side::Server {
   //once server has been opened handel client by calling myHandler.handleClient
 
 };
-template<typename P, typename S>
+template<class P, class S>
 class FileCacheManager : public CacheManager<P, S> {
  private:
   list<pair<string, strVector>> cacheList;
@@ -137,18 +136,18 @@ class StringReverser : public Solver {
 
 class Point {
 
-private:
-    double x;
-    double y;
+ private:
+  double x;
+  double y;
 
-public:
-    Point(int x, int y);
-    double getX();
-    double getY();
-    bool compare(Point other);
+ public:
+  Point(int x, int y);
+  double getX();
+  double getY();
+  bool compare(Point other);
 };
 
-template<typename T>
+template<class T>
 class State {
  private:
   T status;
@@ -163,7 +162,7 @@ class State {
   T getStatus();
 };
 
-template<typename T>
+template<class T>
 class Searchable {
  public:
   virtual State<T> getInitialState() = 0;
@@ -173,7 +172,7 @@ class Searchable {
   virtual ~Searchable() {}
 };
 
-template<typename T, typename S>
+template<class T, class S>
 
 class Searcher {
  protected:
@@ -188,18 +187,33 @@ class Searcher {
   virtual ~Searcher() {}
 };
 
-template<typename T, typename S>
-class BestFirstSearch:public Searcher<T,S>{
+template<class T, class S>
+class BestFirstSearch : public Searcher<T, S> {
  private:
   unordered_set<State<T>> closed;
  public:
   virtual S search(Searchable<T> searchable);
   S backTrace();
-  bool operator<(const State<T>& s1);
-    virtual ~BestFirstSearch() {}
+  bool operator<(const State<T> &s1);
+  virtual ~BestFirstSearch() {}
 
 };
 
+class Matrix : Searchable<Point> {
+ private:
+  matrix field;
+  State<Point> initial;
+  State<Point> goal;
+
+ public:
+  Matrix(matrix field, State<Point> Initial, State<Point> goal);
+  State<Point> getInitialState();
+  bool isGoalState(State<Point> current);
+  vector<State<Point>> getAllPossibleState(State<Point> current);
+  /////// למה צריך את הפונקציה הזאת ? getcost)
+  int getCost(State<Point> current);
+  ~Matrix() {};
+};
 
 class SolutionMatrix {
  private:
@@ -209,7 +223,5 @@ class SolutionMatrix {
   SolutionMatrix(State<Point>);
   vector<string> toMatrix(State<Point> s1, State<Point> s2);
 };
-
-
 
 #endif //EX4_GENERAL_H
