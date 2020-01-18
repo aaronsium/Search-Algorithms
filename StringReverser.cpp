@@ -4,7 +4,7 @@
 
 #include "General.h"
 
-StringReverser::string solve (string problem){
+string StringReverser:: solve (string problem){
     string solution = " ";
     for(int i = problem.length()-1; i >= 0; i++){
         solution += problem[i];

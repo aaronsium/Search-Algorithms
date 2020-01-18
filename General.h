@@ -53,6 +53,17 @@ class Server {
 };
 }
 
+//class Problem {
+// public:
+//  virtual void adapt(int port, ClientHandler *myHandler) = 0;
+//  virtual void stop() = 0;
+//  virtual ~Server() {}
+//};
+
+
+
+
+
 /**
  * Solver Interface
  */
@@ -61,7 +72,7 @@ template<class P, class S>
 class Solver {
 
  public:
-  S solve(P problem) = 0;
+  virtual S solve(P problem) = 0;
   virtual ~Solver() {}
 };
 
@@ -127,7 +138,7 @@ class FileCacheManager : public CacheManager<P, S> {
   virtual ~FileCacheManager() {}
 };
 
-class StringReverser : public Solver {
+class StringReverser : public Solver<string, string> {
 
  public:
   virtual string solve(string problem) override;
@@ -141,7 +152,7 @@ class Point {
   double y;
 
  public:
-  Point(int x, int y);
+  Point(double x, double y);
   double getX();
   double getY();
   bool compare(Point other);
@@ -199,7 +210,7 @@ class BestFirstSearch : public Searcher<T, S> {
 
 };
 
-class Matrix : Searchable<Point> {
+class Matrix : public Searchable<Point> {
  private:
   matrix field;
   State<Point> initial;
@@ -207,21 +218,24 @@ class Matrix : Searchable<Point> {
 
  public:
   Matrix(matrix field, State<Point> Initial, State<Point> goal);
-  State<Point> getInitialState();
-  bool isGoalState(State<Point> current);
+  State<Point> getInitialState() override;
+  bool isGoalState(State<Point> current) override;
   vector<State<Point>> getAllPossibleState(State<Point> current);
   /////// למה צריך את הפונקציה הזאת ? getcost)
   int getCost(State<Point> current);
+  vector<string> adaptSolution(vector<State<Point>>);
+  string direction(State<Point> s1, State<Point> s2);
   ~Matrix() {};
 };
 
-class SolutionMatrix {
+template<class P, class S, class T>
+class OA : public Solver<P, S> {
  private:
-  vector<State<Point>> stateVec;
-  vector<string> strVec;
+  Searcher<T, S> searcher;
  public:
-  SolutionMatrix(State<Point>);
-  vector<string> toMatrix(State<Point> s1, State<Point> s2);
-};
+  OA(Searchable<T> searchable1, Searcher<P, S> searcher1);
+  S solve(P problem);
+  virtual ~OA() {}
 
+};
 #endif //EX4_GENERAL_H

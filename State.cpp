@@ -6,6 +6,7 @@
 template<class T>
 State<T>::State(T status1) {
   this->status = status1;
+  this->cameFrom =status1;
 }
 
 template<class T>
