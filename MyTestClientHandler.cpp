@@ -5,7 +5,7 @@
 #include "General.h"
 
 
-MyTestClientHandler::MyClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager):solver(sol),
+MyTestClientHandler::MyTestClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager):solver(sol),
 cache(cacheManager) {}
 
 void MyTestClientHandler<string, string>::handleClient(int socket) {

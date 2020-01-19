@@ -29,3 +29,8 @@ template<typename T>
 void State<T>::SetCost(double cost) {
   State::cost = cost;
 }
+
+template<typename T>
+State<T> State<T>:: getPrevious(){
+  return this->cameFrom;
+}

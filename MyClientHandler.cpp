@@ -1,7 +1,6 @@
 //
-// Created by omer on 1/15/20.
+// Created by yaffa on 13/01/2020.
 //
-
 
 #include "General.h"
 
