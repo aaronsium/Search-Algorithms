@@ -6,11 +6,11 @@
 
 template<class T, class S>
 S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
-
-  this->openList.push(searchable.getInitialState());
+  priority_queue<State<T>> openList;
+  openList.push(searchable.getInitialState());
   closed = new unordered_set<State<T>>;////////
-  while (this->openList > 0) {
-    State<T> n = this->openList.top();
+  while (openList > 0) {
+    State<T> n = openList.top();
     this->openList.pop();
     closed.insert(n);
     if (searchable.isGoalState(n)) {
@@ -24,23 +24,20 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       bool isCloseContain = (find(options.begin(), options.end(), opt)!=options.end());
       if ((!isCloseContain) && (!isOpenContain)) {
         opt->SetCameFrom(n);
-        this->openList.push(opt);
+        openList.push(opt);
       } else if (opt->GetCost() < n.GetCost()) {
         n.SetCost(opt->GetCost());
         //popping and pushing again(for the priority process)
         State<T> temp = n;
-        this->openList.pop();
-        this->openList.push(temp);
+        openList.pop();
+        openList.push(temp);
       }
     }
   }
 
 }
 //overloading comparator
-template<class T, class S>
-bool BestFirstSearch<T, S>::operator<(const State<T> &s1) {
-  return this->GetCost() < s1->GetCost();
-}
+
 
 template<class T, class S>
 S BestFirstSearch<T, S>::backTrace() {

@@ -6,7 +6,6 @@
 template<class T>
 State<T>::State(T status1) {
   this->status = status1;
-  this->cameFrom =status1;
 }
 
 template<class T>
@@ -33,4 +32,8 @@ void State<T>::SetCost(double cost) {
 template<typename T>
 State<T> State<T>:: getPrevious(){
   return this->cameFrom;
+}
+template<typename T>
+bool State<T>::operator<(const State<T> &s1) {
+  return this->GetCost() < s1->GetCost();
 }
