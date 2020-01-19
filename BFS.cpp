@@ -26,7 +26,6 @@ S BFS<T, S>::search(Searchable<T> searchable) {
       }
     }
   }
-
 }
 
 template<class T, class S>

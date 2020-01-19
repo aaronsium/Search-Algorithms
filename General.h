@@ -181,6 +181,7 @@ class Searchable {
   virtual bool isGoalState(State<T>) = 0;
   virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
   virtual int NodesEvaluated() = 0;
+  virtual vector<string> adaptSolution(vector<State<Point>> stateVector)=0;
   virtual ~Searchable() {}
 };
 
