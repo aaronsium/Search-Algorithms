@@ -176,7 +176,6 @@ class State {
 private:
     T status;
     double cost;
-    bool visited;
     State<T> cameFrom;
 
 public:
@@ -186,7 +185,8 @@ public:
     double GetCost() const;
     void SetCost(double cost);
     State<T> getPrevious;
-    T getStatus();
+  bool operator<(const State<T> &s1);
+  T getStatus();
 };
 
 template<class T>
@@ -204,7 +204,6 @@ template<class T, class S>
 
 class Searcher {
  protected:
-  priority_queue<State<T>> openList;
   int evaluatedNodes;
 
  public:
@@ -226,7 +225,6 @@ class BestFirstSearch : public Searcher<T, S> {
  public:
   virtual S search(Searchable<T> searchable);
   S backTrace();
-  bool operator<(const State<T> &s1);
   virtual ~BestFirstSearch() {}
 
 };
@@ -278,12 +276,12 @@ private:
     list<State<T>> trace;
 
 public:
-    Searcher();
     virtual S search(Searchable<T> searchable);
     list<State<T>> backTrace(State<T>);
     virtual ~DFS() {}
 
 };
+template<class T, class S>
 
 class AStar : public Searcher<T, S> {
 private:
@@ -292,10 +290,9 @@ private:
     list<State<T>> trace;
 
 public:
-    Searcher();
     virtual S search(Searchable<T> searchable);
     list<State<T>> backTrace(State<T>);
-    virtual ~DFS() {}
+    virtual ~AStar() {}
 
 };
 #endif //EX4_GENERAL_H

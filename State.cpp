@@ -34,3 +34,7 @@ template<typename T>
 State<T> State<T>:: getPrevious(){
   return this->cameFrom;
 }
+template<typename T>
+bool State<T>::operator<(const State<T> &s1) {
+  return this->GetCost() < s1->GetCost();
+}
