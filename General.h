@@ -200,7 +200,11 @@ public:
 
 template<class T>
 class Searchable {
+protected:
+    State<Point> initial;
+    State<Point> goal;
  public:
+    Searchable();
   virtual State<T> getInitialState() = 0;
   virtual bool isGoalState(State<T>) = 0;
   virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
@@ -252,8 +256,6 @@ class BFS : public Searcher<T, S> {
 class Matrix : public Searchable<Point> {
  private:
   matrix field;
-  State<Point> initial;
-  State<Point> goal;
 
  public:
   Matrix(matrix field, State<Point> Initial, State<Point> goal);
@@ -294,8 +296,8 @@ template<class T, class S>
 
 class AStar : public Searcher<T, S> {
 private:
-    stack<State<T>> myStack;
     unordered_set<State<T>> closed;
+    MyQueue openList;
     list<State<T>> trace;
 
 public:
@@ -303,5 +305,30 @@ public:
     list<State<T>> backTrace(State<T>);
     virtual ~AStar() {}
 
+};
+
+template<
+        class State<T>,
+        class Container = std::vector<State<T>>,
+        class Compare = std::less<typename Container::value_type>
+> class MyQueue : public std::priority_queue<State<T>, Container, Compare>
+{
+public:
+    typedef typename
+    std::priority_queue<
+            State<T>,
+            Container,
+            Compare>::container_type::const_iterator const_iterator;
+
+    const_iterator find(const State<T>&val) const
+    {
+        auto first = this->c.cbegin();
+        auto last = this->c.cend();
+        while (first!=last) {
+            if (val.equals(*first)) return first;
+            ++first;
+        }
+        return NULL;
+    }
 };
 #endif //EX4_GENERAL_H
