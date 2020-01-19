@@ -92,7 +92,7 @@ class CacheManager {
   virtual ~CacheManager() {}
 };
 
-class MyTestClientHandler : public ClientHandler {
+class MyClientHandler : public ClientHandler {
 
  private:
   Solver<string, string> solver;
@@ -102,6 +102,18 @@ class MyTestClientHandler : public ClientHandler {
   MyClientHandler(const Solver<string, string> &sol, CacheManager<string, string> cacheManager);
   void handleClient(int socket);
   ~MyClientHandler() {}
+};
+
+class MyTestClientHandler : public ClientHandler {
+
+private:
+    Solver<string, string> solver;
+    CacheManager<string, string> cache;
+
+public:
+    MyTestClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager);
+    void handleClient(int socket) ;
+    ~MyTestClientHandler() {}
 };
 
 class MySerialServer : public server_side::Server {
@@ -160,18 +172,21 @@ class Point {
 
 template<class T>
 class State {
- private:
-  T status;
-  double cost;
-  bool visited;
-  State<T> cameFrom;
- public:
-  State(T state);
-  bool equals(State<T> s);
-  void SetCameFrom(const State<T> &came_from);
-  double GetCost() const;
-  void SetCost(double cost);
-  T getStatus();
+
+private:
+    T status;
+    double cost;
+    bool visited;
+    State<T> cameFrom;
+
+public:
+    State(T state);
+    bool equals(State<T> s);
+    void SetCameFrom(const State<T> &came_from);
+    double GetCost() const;
+    void SetCost(double cost);
+    State<T> getPrevious;
+    T getStatus();
 };
 
 template<class T>
@@ -238,8 +253,7 @@ class Matrix : public Searchable<Point> {
   State<Point> getInitialState() override;
   bool isGoalState(State<Point> current) override;
   vector<State<Point>> getAllPossibleState(State<Point> current);
-  /////// למה צריך את הפונקציה הזאת ? getcost)
-  int getCost(State<Point> current);
+  int pointCost(State<Point> current);
   vector<string> adaptSolution(vector<State<Point>>);
   string direction(State<Point> s1, State<Point> s2);
   ~Matrix() {};
@@ -253,6 +267,35 @@ class OA : public Solver<P, S> {
   OA(Searchable<T> searchable1, Searcher<P, S> searcher1);
   S solve(P problem);
   virtual ~OA() {}
+
+};
+
+template<class T, class S>
+class DFS : public Searcher<T, S> {
+private:
+    stack<State<T>> myStack;
+    unordered_set<State<T>> closed;
+    list<State<T>> trace;
+
+public:
+    Searcher();
+    virtual S search(Searchable<T> searchable);
+    list<State<T>> backTrace(State<T>);
+    virtual ~DFS() {}
+
+};
+
+class AStar : public Searcher<T, S> {
+private:
+    stack<State<T>> myStack;
+    unordered_set<State<T>> closed;
+    list<State<T>> trace;
+
+public:
+    Searcher();
+    virtual S search(Searchable<T> searchable);
+    list<State<T>> backTrace(State<T>);
+    virtual ~DFS() {}
 
 };
 #endif //EX4_GENERAL_H
