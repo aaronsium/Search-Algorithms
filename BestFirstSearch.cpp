@@ -6,6 +6,7 @@
 
 template<class T, class S>
 S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
+
   this->openList.push(searchable.getInitialState());
   closed = new unordered_set<State<T>>;////////
   while (this->openList > 0) {
@@ -13,6 +14,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     this->openList.pop();
     closed.insert(n);
     if (searchable.isGoalState(n)) {
+      this->SetEvaluatedNodes(this->evaluatedNodes + 1);
       return backTrace();
     }
     list<State<T>> options = searchable.getAllPossibleStates(n);
@@ -26,7 +28,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       } else if (opt->GetCost() < n.GetCost()) {
         n.SetCost(opt->GetCost());
         //popping and pushing again(for the priority process)
-        State<T> temp =n;
+        State<T> temp = n;
         this->openList.pop();
         this->openList.push(temp);
       }
@@ -36,18 +38,18 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
 }
 //overloading comparator
 template<class T, class S>
-bool BestFirstSearch<T, S>::operator<(const State<T> &s1){
+bool BestFirstSearch<T, S>::operator<(const State<T> &s1) {
   return this->GetCost() < s1->GetCost();
 }
 
 template<class T, class S>
-S BestFirstSearch<T, S>::backTrace(){
+S BestFirstSearch<T, S>::backTrace() {
   typename std::list<State<T>>::iterator element;
   list<State<T>> trace;
   for (element = closed.begin(); element!=closed.end(); ++element) {
     trace.push_back(element);
   }
-    return trace;
+  return trace;
 }
 
 
