@@ -10,7 +10,7 @@ State<Point> Matrix::getInitialState() {
 }
 
 bool Matrix::isGoalState(State<Point> current) {
-  return (this->goal).compare(current);
+  return (this->goal).equals(current);
 }
 
 vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
