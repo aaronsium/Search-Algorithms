@@ -163,6 +163,7 @@ class State {
  private:
   T status;
   double cost;
+  bool visited;
   State<T> cameFrom;
  public:
   State(T state);
@@ -180,6 +181,7 @@ class Searchable {
   virtual bool isGoalState(State<T>) = 0;
   virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
   virtual int NodesEvaluated() = 0;
+  virtual vector<string> adaptSolution(vector<State<Point>> stateVector)=0;
   virtual ~Searchable() {}
 };
 
@@ -196,6 +198,10 @@ class Searcher {
   int listSize();
   int NodesEvaluated();
   virtual ~Searcher() {}
+  const priority_queue<State<T>> &GetOpenList() const;
+  void SetOpenList(const priority_queue<State<T>> &open_list);
+  int GetEvaluatedNodes() const;
+  void SetEvaluatedNodes(int evaluated_nodes);
 };
 
 template<class T, class S>
@@ -213,12 +219,11 @@ class BestFirstSearch : public Searcher<T, S> {
 template<class T, class S>
 class BFS : public Searcher<T, S> {
  private:
-  unordered_set<State<T>> closed;
+  unordered_set<State<T>> visited;
  public:
   virtual S search(Searchable<T> searchable);
   S backTrace();
-  bool operator<(const State<T> &s1);
-  virtual ~BestFirstSearch() {}
+  virtual ~BFS() {}
 
 };
 
