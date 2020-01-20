@@ -25,7 +25,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       if ((!isCloseContain) && (!isOpenContain)) {
         opt->SetCameFrom(n);
         openList.push(opt);
-      } else if (opt->GetCost() < n.GetCost()) {
+      } else if (opt->GetCost() < n.GetCost()/*n צריך להיות c שהגיע מ-a ונמצא ב open*/) {
         n.SetCost(opt->GetCost());
         //popping and pushing again(for the priority process)
         State<T> temp = n;
