@@ -188,14 +188,14 @@ private:
     State<T> cameFrom;
 
 public:
-    State(T state);
-    bool equals(State<T> s, const State<T> &came_from, double cost);
+    State(T state, const State<T> &came_from, double cost);
+    bool equals(State<T> s);
     void SetCameFrom(const State<T> &came_from);
     double GetCost() const;
     void SetCost(double cost);
-    State<T> getPrevious;
-  bool operator<(const State<T> &s1);
-  T getStatus();
+    State<T> getPrevious();
+    bool operator<(const State<T> &s1);
+    T getStatus();
 };
 
 template<class T>
@@ -256,6 +256,8 @@ class BFS : public Searcher<T, S> {
 class Matrix : public Searchable<Point> {
  private:
   matrix field;
+  State<Point> initial;
+  State<Point> goal;
 
  public:
   Matrix(matrix field, State<Point> Initial, State<Point> goal);
@@ -308,11 +310,10 @@ public:
 };
 
 template<
-        class State<T>,
+        class T,
         class Container = std::vector<State<T>>,
         class Compare = std::less<typename Container::value_type>
-> class MyQueue : public std::priority_queue<State<T>, Container, Compare>
-{
+> class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
 public:
     typedef typename
     std::priority_queue<

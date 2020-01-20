@@ -4,7 +4,7 @@
 
 #include "General.h"
 template<class T>
-State<T>::State(T status1, const State<T> &came_from, double cost) {
+State<T>::State(T status1, const State<T> &came_from, double c) {
   this->status = status1;
   this->cameFrom = came_from;
   this->cost = c;
