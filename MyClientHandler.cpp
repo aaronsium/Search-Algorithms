@@ -5,18 +5,19 @@
 #include "General.h"
 
 
-MyClientHandler<P,S>::MyClientHandler(const Solver<matrix, matrix> &sol, const CacheManager<matrix, matrix> cacheManager):
-        solver(sol), cache(cacheManager) {}
+MyClientHandler::MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, matrix>* cacheManager){
+        this->solver= sol;
+        this->cache = cacheManager;}
 
 
-void MyTestClientHandler<matrix, matrix>::handleClient(int socket) {
+void MyClientHandler::handleClient(int socket) {
 
     char buffer[1024] = {0};
     matrix problem;
     matrix solution;
     string message = " ";
 
-    while (read(client_socket, buffer, 1024)) {
+    while (read(socket, buffer, 1024)) {
         char delimiter = ',';
         int m = 0;
         int j = 0;
@@ -24,7 +25,7 @@ void MyTestClientHandler<matrix, matrix>::handleClient(int socket) {
             break;
         }
 
-        vector<char> v;
+        vector<int> v;
         for (int i = 0; buffer[i] != '\n'; i++) {
             // find next value
             while ((buffer[j] != delimiter) && (buffer[j] != '\0')) {
@@ -47,17 +48,17 @@ void MyTestClientHandler<matrix, matrix>::handleClient(int socket) {
     }
 
     //searching for solution in the cache
-    if (buffer.inCache) {
-        solution = cacheManager.solution(problem);
+    if (this->cache->inCache(problem)) {
+        solution = this->cache->solution(problem);
         //if solution wasn't found create one
     } else {
-        solution = solver.solve(problem);
-        cache.intoCache(problem, solution);
+        solution = this->solver->solve(problem);
+      this->cache->intoCache(problem, solution);
     }
 
-    for (int i = 0; i < solution.size; i++) {
-        for (int j = 0; j < solution[i].size; j++) {
-            message += solution[j];
+    for (int i = 0; i < solution.size(); i++) {
+        for (int j = 0; j < solution[i].size(); j++) {
+            message += solution[j]; // need to convert int to string
         }
     }
 
