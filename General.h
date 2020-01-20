@@ -104,11 +104,11 @@ class CacheManager {
 class MyClientHandler : public ClientHandler {
 
  private:
-  Solver<string, string> solver;
-  CacheManager<string, string> cache;
+  Solver<matrix, matrix>* solver;
+  CacheManager<matrix, matrix> *cache;
 
  public:
-  MyClientHandler(const Solver<string, string> &sol, CacheManager<string, string> cacheManager);
+  MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, matrix>* cacheManager);
   void handleClient(int socket);
   ~MyClientHandler() {}
 };
@@ -116,11 +116,11 @@ class MyClientHandler : public ClientHandler {
 class MyTestClientHandler : public ClientHandler {
 
 private:
-    Solver<string, string> solver;
-    CacheManager<string, string> cache;
+  Solver<string, string> *solver;
+  CacheManager<string, string> *cache;
 
 public:
-    MyTestClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager);
+    MyTestClientHandler(Solver<string, string>* sol, CacheManager<string, string>* cacheManager);
     void handleClient(int socket) ;
     ~MyTestClientHandler() {}
 };
@@ -189,7 +189,7 @@ private:
 
 public:
     State(T state);
-    bool equals(State<T> s);
+    bool equals(State<T> s, const State<T> &came_from, double cost);
     void SetCameFrom(const State<T> &came_from);
     double GetCost() const;
     void SetCost(double cost);
