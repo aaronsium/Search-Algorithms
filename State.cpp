@@ -4,8 +4,10 @@
 
 #include "General.h"
 template<class T>
-State<T>::State(T status1) {
+State<T>::State(T status1, const State<T> &came_from, double cost) {
   this->status = status1;
+  this->cameFrom = came_from;
+  this->cost = c;
 }
 
 template<class T>
@@ -25,8 +27,8 @@ double State<T>::GetCost() const {
   return cost;
 }
 template<typename T>
-void State<T>::SetCost(double cost) {
-  State::cost = cost;
+void State<T>::SetCost(double c) {
+  this->cost = c;
 }
 
 template<typename T>
