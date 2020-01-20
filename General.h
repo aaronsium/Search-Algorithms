@@ -185,7 +185,7 @@ class State {
 private:
     T status;
     double cost;
-    State<T> cameFrom;
+    State<T> *cameFrom;
 
 public:
     State(T state, const State<T> &came_from, double cost);

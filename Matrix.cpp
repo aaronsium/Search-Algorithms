@@ -13,9 +13,17 @@ bool Matrix::isGoalState(State<Point> current) {
   return (this->goal).equals(current);
 }
 
+
 vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
     vector<State<Point>> possibleState;
-    State<Point> o1 = new State(new Point(current.getStatus().getX() - 1, current.getStatus().getY()),
+
+  State<Point> t5(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
+                  current, current.GetCost() + pointCost(t5));
+
+
+
+
+    State<Point> o1 = new State<Point>(new Point(current.getStatus().getX() - 1, current.getStatus().getY()),
                                 current, current.GetCost() + pointCost(o1));
     possibleState.push_back(o1);
 
