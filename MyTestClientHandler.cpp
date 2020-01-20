@@ -5,29 +5,31 @@
 #include "General.h"
 
 
-MyTestClientHandler::MyTestClientHandler(const Solver<string, string> &sol, const CacheManager<string, string> cacheManager):solver(sol),
-cache(cacheManager) {}
+MyTestClientHandler::MyTestClientHandler(Solver<string, string>* sol, CacheManager<string, string>* cacheManager){
+  this->solver= sol;
+  this->cache = cacheManager;}
 
-void MyTestClientHandler<string, string>::handleClient(int socket) {
+
+void MyTestClientHandler:: handleClient(int socket) {
 
     char buffer[1024] = {0};
     vector <vector<char>> problem;
     string solution;
 
-    while (read(client_socket, buffer, 1024)) {
+    while (read(socket, buffer, 1024)) {
         if (!strcmp(buffer, "end")) {
             break;
         }
 
         //searching for solution in the cache
-        if (buffer.inCache) {
-            solution = cacheManager.solution(buffer);
+        if (this->cache->inCache(buffer)) {
+            solution = this->cache->solution(buffer);
             //if solution wasn't found create one
         } else {
-            solution = solver.solve(problem);
-            cache.intoCache(buffer, solution);
+            solution = solver-> solve(problem);
+          this->cache->intoCache(buffer, solution);
         }
 
-        write(socket, message.c_str(), message.length());
+        write(socket, solution.c_str(), solution.length());
     }
 }
