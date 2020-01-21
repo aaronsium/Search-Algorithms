@@ -27,7 +27,8 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       if ((!isCloseContain) && (!isOpenContain)) {
         opt->SetCameFrom(n);
         openList.push(opt);
-      } else if (opt->GetCost() < n.GetCost()/*n צריך להיות c שהגיע מ-a ונמצא ב open*/) {
+      } else if (opt->GetCost() < n.GetCost()/* ם n צריך להיות c שהגיע מ-a ונמצא ב open*/) {
+          //יכול גם להיות מהתנאי הקודם שהוא נמצא ב-closed ולא ב-opened, או שהוא נמצא בשניהם.
         n.SetCost(opt->GetCost());
         //popping and pushing again(for the priority process)
         State<T> temp = n;
@@ -35,8 +36,38 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
         openList.push(temp);
       }
     }
-  }
+      //שמתי פה הצעה למימוש במקום מה שנמצא בתוך ה-for אם תרצה להציץ...
+      //כשמורידים את התיחום רואים את ההערות בעברית משולבת אנגלית בצורה לא מבולגנת. מתנצלת מראש אם יש שגיאות חח
+      
+      /*
+       ************************************************
+      //iterator to check if option in opened
+      MyQueue<>::iterator inOpen = openList.find(option); //להגדיר קודם את openList ל-MyQueue
+      //iterator to check if option in closed
+      std::list<State<T>>::iterator inClosed;
+      for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
+          if(inClosed->equals.option) {
+              break;
+          }
+      }
 
+      if((inOpen == NULL) && (inClosed == closed.end)){
+          opt->SetCameFrom(n);
+          openList.push(opt);
+      } else if(inClosed != closed.end){//באלגוריתם של אלי אם b קורה והסעיף הראשון בתוכו לא, זה אומר שהסטייט בcloesd.(אם כבר עברנו עליו בעבר אבל הוא לא בopen)
+          if(inOpen != NULL){//יכול להיות שהסעיף השני כן קורה ואז הוא נמצא גם ב-opened וגם ב-closed
+              //popping and pushing again(for the priority process)
+              openList.pop(*inOpen);
+          }
+          openList.push(opt);
+          closed.pop(*inClosed);
+      } else {// אם הוא לא ב- closed אז הוא חייב להיות ב-opened
+          openList.pop(*inOpen);
+          openList.push(opt);
+      }
+       ***********************************************
+       */
+  }
 }
 //overloading comparator
 
