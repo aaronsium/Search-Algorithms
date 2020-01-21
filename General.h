@@ -313,11 +313,11 @@ template<
         class T,
         class Container = std::vector<State<T>>,
         class Compare = std::less<typename Container::value_type>
-> class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
+>
+class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
 public:
     typedef typename
-    std::priority_queue<
-            State<T>,
+    std::priority_queue<State<T>,
             Container,
             Compare>::container_type::const_iterator const_iterator;
 

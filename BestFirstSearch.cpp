@@ -15,6 +15,8 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     closed.insert(n);
     if (searchable.isGoalState(n)) {
       this->SetEvaluatedNodes(this->evaluatedNodes + 1);
+
+        //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה ומקבל וקטור?
       return backTrace();
     }
     list<State<T>> options = searchable.getAllPossibleStates(n);

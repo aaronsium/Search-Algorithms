@@ -17,26 +17,20 @@ bool Matrix::isGoalState(State<Point> current) {
 vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
     vector<State<Point>> possibleState;
 
-  State<Point> t5(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
-                  current, current.GetCost() + pointCost(t5));
-
-
-
-
-    State<Point> o1 = new State<Point>(new Point(current.getStatus().getX() - 1, current.getStatus().getY()),
-                                current, current.GetCost() + pointCost(o1));
+    State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
+                    current, current.GetCost() + pointCost(o1));
     possibleState.push_back(o1);
 
-    State<Point> o2 = new State(new Point(current.getStatus().getX() + 1, current.getStatus().getY()),
-                                current, current.GetCost() + pointCost(o1));
+    State<Point> o2(Point(current.getStatus().getX() + 1, current.getStatus().getY()),
+                    current, current.GetCost() + pointCost(o2));
     possibleState.push_back(o1);
 
-    State<Point> o3 = new State(new Point(current.getStatus().getX(), current.getStatus().getY() - 1),
-                                current, current.GetCost() + pointCost(o1));
+    State<Point> o3(Point(current.getStatus().getX(), current.getStatus().getY() - 1),
+                    current, current.GetCost() + pointCost(o3));
     possibleState.push_back(o1);
 
-    State<Point> o4 = new State(new Point(current.getStatus().getX(), current.getStatus().getY() + 1),
-                                current, current.GetCost() + pointCost(o1));
+    State<Point> o4(Point(current.getStatus().getX(), current.getStatus().getY() + 1),
+                    current, current.GetCost() + pointCost(o4));
     possibleState.push_back(o1);
 
     return possibleState;

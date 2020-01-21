@@ -28,10 +28,17 @@ S DFS<T, S>::search(Searchable<T> s){
 
         list<State<T>> PossibleStates = s.getAllPossibleStates();
         while(!PossibleStates.empty){
+            int inClosed = 0;
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
 
-            if(closed(option) == closed.end()){
+            std::list<State<T>>::iterator it;
+            for (it = closed.begin(); it != closed.end(); ++it){
+                if(it->equals.option) {
+                    inClosed = 1;
+                }
+            }
+            if(!inClosed){
                 this->myStack.push(option);
             }
         }
@@ -56,6 +63,7 @@ list<State<T>> DFS<T, S>::backTrace(State<T> state){
     while(previous != NULL){
         trace.push_back(previous);
         previous = previous.getPrevious;
+        this->SetEvaluatedNodes(this->evaluatedNodes + 1);
     }
 
     return trace;
