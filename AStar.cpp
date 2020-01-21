@@ -17,22 +17,32 @@ S AStar<T, S>::search(Searchable<T> s){
             }
         }
 
+        while (!openList.empty()){
+            opened.push_back(openList.top);
+            openList.pop;
+        }
+
         list<State<T>> PossibleStates = s.getAllPossibleStates();
         while(!PossibleStates.empty){
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
 
             //iterator to check if option in open
-            MyQueue<>::iterator inOpen = openList.find(option);
+            typename list<State<T>>::iterator inOpen;
+            for (inOpen = opened.begin(); inOpen != opened.end(); ++inOpen){
+                if(inOpen->equals.option) {
+                    break;
+                }
+            }
             //iterator to check if option in closed
-            std::list<State<T>>::iterator inClosed;
+            typename list<State<T>>::iterator inClosed;
             for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
                 if(inClosed->equals.option) {
                     break;
                 }
             }
 
-            if(inOpen != NULL){
+            if(inOpen != opened.end){
                 if(option.GetCost <= inOpen->GetCost){
                     openList.pop(*inOpen);
                     openList.push(option);
@@ -44,6 +54,10 @@ S AStar<T, S>::search(Searchable<T> s){
             } else {
                 this->openList.push(option);
             }
+        }
+        while (!opened.empty()){
+            openList.push(opened.top);
+            opened.pop_front();
         }
 
         closed.insert(state);
