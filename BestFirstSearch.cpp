@@ -16,7 +16,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     if (searchable.isGoalState(n)) {
       this->SetEvaluatedNodes(this->evaluatedNodes + 1);
 
-        //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה ומקבל וקטור?
+        //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה שמקבל וקטור?
       return backTrace();
     }
     list<State<T>> options = searchable.getAllPossibleStates(n);
@@ -38,9 +38,9 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     }
       //שמתי פה הצעה למימוש במקום מה שנמצא בתוך ה-for אם תרצה להציץ...
       //כשמורידים את התיחום רואים את ההערות בעברית משולבת אנגלית בצורה לא מבולגנת. מתנצלת מראש אם יש שגיאות חח
-      
-      /*
-       ************************************************
+
+     /*
+      ***********************************************
       //iterator to check if option in opened
       MyQueue<>::iterator inOpen = openList.find(option); //להגדיר קודם את openList ל-MyQueue
       //iterator to check if option in closed
@@ -55,18 +55,23 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
           opt->SetCameFrom(n);
           openList.push(opt);
       } else if(inClosed != closed.end){//באלגוריתם של אלי אם b קורה והסעיף הראשון בתוכו לא, זה אומר שהסטייט בcloesd.(אם כבר עברנו עליו בעבר אבל הוא לא בopen)
-          if(inOpen != NULL){//יכול להיות שהסעיף השני כן קורה ואז הוא נמצא גם ב-opened וגם ב-closed
-              //popping and pushing again(for the priority process)
-              openList.pop(*inOpen);
+        if(opt->GetCost() < inClosed->GetCost()){
+          if (inOpen != NULL) {//יכול להיות שהסעיף השני כן קורה ואז הוא נמצא גם ב-opened וגם ב-closed
+            //popping and pushing again(for the priority process)
+            openList.pop(*inOpen);
           }
           openList.push(opt);
           closed.pop(*inClosed);
+        }
       } else {// אם הוא לא ב- closed אז הוא חייב להיות ב-opened
-          openList.pop(*inOpen);
-          openList.push(opt);
+           if(opt->GetCost() < inOpen->GetCost()) {
+             openList.pop(*inOpen);
+             openList.push(opt);
+        }
       }
-       ***********************************************
-       */
+
+    ***********************************************
+            */
   }
 }
 //overloading comparator
