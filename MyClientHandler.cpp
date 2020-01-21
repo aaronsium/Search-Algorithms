@@ -57,7 +57,7 @@ void MyClientHandler::handleClient(int socket) {
     }
 
     for (int i = 0; i < solution.size(); i++) {
-        message = message + to_string(solution[i]);
+        message = message + solution[i];
     }
 
     write(socket, message.c_str(), message.length());

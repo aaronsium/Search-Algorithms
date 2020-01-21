@@ -7,13 +7,13 @@
 void server_side::boot::Main::main(int arg, char *args[]) {
 
 
-MySerialServer server;
-  ClientHandler *client = MyTestClientHandler;
-  stringstream geek(args[0]);
-  int port = 0;
-  geek >> port;
-  server.open(port,client);
-
+//MySerialServer server;
+//  ClientHandler *client = MyTestClientHandler;
+//  stringstream geek(args[0]);
+//  int port = 0;
+//  geek >> port;
+//  server.open(port,client);
+//
 
 
 }

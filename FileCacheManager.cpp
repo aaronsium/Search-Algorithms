@@ -118,3 +118,4 @@ string FileCacheManager<P, S>::Convertstr(size_t sz) {
   string newStr(buf);
   return newStr;
 }
+
