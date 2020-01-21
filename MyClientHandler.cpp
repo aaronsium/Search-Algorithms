@@ -7,7 +7,8 @@
 
 MyClientHandler::MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager){
         this->solver= sol;
-        this->cache = cacheManager;}
+        this->cache = cacheManager;
+}
 
 
 void MyClientHandler::handleClient(int socket) {
@@ -16,35 +17,39 @@ void MyClientHandler::handleClient(int socket) {
     matrix problem;
     vector<string> solution;
     string message = " ";
+    int colRow = 3;
 
-    while (read(socket, buffer, 1024)) {
+    while ((read(socket, buffer, 1024)) && (colRow > 0)) {
         char delimiter = ',';
         int m = 0;
         int j = 0;
         if (!strcmp(buffer, "end")) {
-            break;
-        }
+            colRow--;
+        } else {
+            if (colRow < 3) {
+                colRow--;
+            }
 
-        vector<int> v;
-        for (int i = 0; buffer[i] != '\n'; i++) {
-            // find next value
-            while ((buffer[j] != delimiter) && (buffer[j] != '\0')) {
+            vector<int> v;
+            for (int i = 0; buffer[i] != '\n'; i++) {
+                // find next value
+                while ((buffer[j] != delimiter) && (buffer[j] != '\0')) {
+                    j++;
+                }
+                // separate value from the rest of the string
+                string token = "";
+                while (m < j) {
+                    token += buffer[m];
+                    m++;
+                }
+                m++;
+
+                v.push_back(strtof((string(token)).c_str(), 0));
+
                 j++;
             }
-            // separate value from the rest of the string
-            string token = "";
-            while (m < j) {
-                token += buffer[m];
-                m++;
-            }
-            m++;
-
-            v.push_back(strtof((string(token)).c_str(), 0));
-
-            j++;
+            problem.push_back(v);
         }
-
-        problem.push_back(v);
     }
 
     //searching for solution in the cache
