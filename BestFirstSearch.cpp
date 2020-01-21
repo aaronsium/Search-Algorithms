@@ -19,59 +19,55 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
         //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה שמקבל וקטור?
       return backTrace();
     }
+
+    while (!openList.empty()){
+      opened.push_back(openList.top);
+      openList.pop;
+    }
+
     list<State<T>> options = searchable.getAllPossibleStates(n);
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
-      bool isOpenContain = (find(options.begin(), options.end(), opt)!=options.end());
-      bool isCloseContain = (find(options.begin(), options.end(), opt)!=options.end());
-      if ((!isCloseContain) && (!isOpenContain)) {
+      //iterator to check if option in opened
+      list<State<T>>::iterator inOpen;
+      for (inOpen = opened.begin(); inOpen != opened.end(); ++inOpen){
+        if(inOpen->equals.option) {
+          break;
+        }
+      }
+
+      //iterator to check if option in closed
+      list<State<T>>::iterator inClosed;
+      for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
+        if(inClosed->equals.option) {
+          break;
+        }
+      }
+
+      if((inOpen == opened.end) && (inClosed == closed.end)){
         opt->SetCameFrom(n);
         openList.push(opt);
-      } else if (opt->GetCost() < n.GetCost()/* ם n צריך להיות c שהגיע מ-a ונמצא ב open*/) {
-          //יכול גם להיות מהתנאי הקודם שהוא נמצא ב-closed ולא ב-opened, או שהוא נמצא בשניהם.
-        n.SetCost(opt->GetCost());
-        //popping and pushing again(for the priority process)
-        State<T> temp = n;
-        openList.pop();
-        openList.push(temp);
-      }
-    }
-      //שמתי פה הצעה למימוש במקום מה שנמצא בתוך ה-for אם תרצה להציץ...
-      //כשמורידים את התיחום רואים את ההערות בעברית משולבת אנגלית בצורה לא מבולגנת. מתנצלת מראש אם יש שגיאות חח
-
-     /*
-      ***********************************************
-      //iterator to check if option in opened
-      MyQueue<>::iterator inOpen = openList.find(option); //להגדיר קודם את openList ל-MyQueue
-      //iterator to check if option in closed
-      std::list<State<T>>::iterator inClosed;
-      for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
-          if(inClosed->equals.option) {
-              break;
-          }
-      }
-
-      if((inOpen == NULL) && (inClosed == closed.end)){
-          opt->SetCameFrom(n);
-          openList.push(opt);
       } else if(inClosed != closed.end){//באלגוריתם של אלי אם b קורה והסעיף הראשון בתוכו לא, זה אומר שהסטייט בcloesd.(אם כבר עברנו עליו בעבר אבל הוא לא בopen)
         if(opt->GetCost() < inClosed->GetCost()){
-          if (inOpen != NULL) {//יכול להיות שהסעיף השני כן קורה ואז הוא נמצא גם ב-opened וגם ב-closed
+          if (inOpen != opened.end) {//יכול להיות שהסעיף השני כן קורה ואז הוא נמצא גם ב-opened וגם ב-closed
             //popping and pushing again(for the priority process)
             openList.pop(*inOpen);
           }
-          openList.push(opt);
+          openList.push_back(opt);
           closed.pop(*inClosed);
         }
       } else {// אם הוא לא ב- closed אז הוא חייב להיות ב-opened
-           if(opt->GetCost() < inOpen->GetCost()) {
-             openList.pop(*inOpen);
-             openList.push(opt);
+        if(opt->GetCost() < inOpen->GetCost()) {
+          openList.pop(*inOpen);
+          openList.push_back(opt);
         }
       }
+    }
 
-    ***********************************************
-            */
+    while (!opened.empty()){
+      openList.push(opened.top);
+      opened.pop_front();
+    }
   }
 }
 //overloading comparator

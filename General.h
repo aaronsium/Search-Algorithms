@@ -198,6 +198,30 @@ public:
     T getStatus();
 };
 
+template<
+        class T,
+        class Container = std::vector<State<T>>,
+        class Compare = std::less<typename Container::value_type>
+>
+class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
+public:
+    typedef typename
+    std::priority_queue<State<T>,
+            Container,
+            Compare>::container_type::const_iterator const_iterator;
+
+    const_iterator find(const State<T>&val) const
+    {
+        auto first = this->c.cbegin();
+        auto last = this->c.cend();
+        while (first!=last) {
+            if (val.equals(*first)) return first;
+            ++first;
+        }
+        return NULL;
+    }
+};
+
 template<class T>
 class Searchable {
 protected:
@@ -233,12 +257,16 @@ class Searcher {
 
 template<class T, class S>
 class BestFirstSearch : public Searcher<T, S> {
- private:
-  unordered_set<State<T>> closed;
- public:
-  virtual S search(Searchable<T> searchable);
-  S backTrace();
-  virtual ~BestFirstSearch() {}
+
+private:
+    priority_queue<State<T>> openList;
+    list<State<T>> opened;
+    unordered_set<State<T>> closed;
+
+public:
+    virtual S search(Searchable<T> searchable);
+    S backTrace();
+    virtual ~BestFirstSearch() {}
 
 };
 
@@ -309,27 +337,4 @@ public:
 
 };
 
-template<
-        class T,
-        class Container = std::vector<State<T>>,
-        class Compare = std::less<typename Container::value_type>
->
-class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
-public:
-    typedef typename
-    std::priority_queue<State<T>,
-            Container,
-            Compare>::container_type::const_iterator const_iterator;
-
-    const_iterator find(const State<T>&val) const
-    {
-        auto first = this->c.cbegin();
-        auto last = this->c.cend();
-        while (first!=last) {
-            if (val.equals(*first)) return first;
-            ++first;
-        }
-        return NULL;
-    }
-};
 #endif //EX4_GENERAL_H
