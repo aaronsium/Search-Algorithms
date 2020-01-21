@@ -5,7 +5,7 @@
 #include "General.h"
 
 
-MyClientHandler::MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, matrix>* cacheManager){
+MyClientHandler::MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, vector<string>>* cacheManager){
         this->solver= sol;
         this->cache = cacheManager;}
 

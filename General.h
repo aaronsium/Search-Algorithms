@@ -95,10 +95,10 @@ class MyClientHandler : public ClientHandler {
 
  private:
   Solver<matrix, matrix>* solver;
-  CacheManager<matrix, matrix> *cache;
+  CacheManager<matrix, vector<string>> *cache;
 
  public:
-  MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, matrix>* cacheManager);
+  MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, vector<string>>* cacheManager);
   void handleClient(int socket);
   ~MyClientHandler() {}
 };
