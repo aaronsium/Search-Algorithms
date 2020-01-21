@@ -327,7 +327,7 @@ template<class T, class S>
 class AStar : public Searcher<T, S> {
 private:
     unordered_set<State<T>> closed;
-    MyQueue openList;
+    priority_queue<State<T>> openList;
     list<State<T>> trace;
 
 public:

@@ -29,7 +29,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
       //iterator to check if option in opened
-      list<State<T>>::iterator inOpen;
+      typename list<State<T>>::iterator inOpen;
       for (inOpen = opened.begin(); inOpen != opened.end(); ++inOpen){
         if(inOpen->equals.option) {
           break;
@@ -37,7 +37,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       }
 
       //iterator to check if option in closed
-      list<State<T>>::iterator inClosed;
+      typename list<State<T>>::iterator inClosed;
       for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
         if(inClosed->equals.option) {
           break;
