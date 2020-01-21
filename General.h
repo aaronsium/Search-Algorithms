@@ -98,7 +98,7 @@ class MyClientHandler : public ClientHandler {
   CacheManager<matrix, vector<string>> *cache;
 
  public:
-  MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, vector<string>>* cacheManager);
+  MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager);
   void handleClient(int socket);
   ~MyClientHandler() {}
 };
@@ -236,12 +236,8 @@ class Searcher {
  public:
   Searcher();
   virtual S search(Searchable<T> searchable) = 0;
-  int listSize();
   int NodesEvaluated();
   virtual ~Searcher() {}
-  const priority_queue<State<T>> &GetOpenList() const;
-  void SetOpenList(const priority_queue<State<T>> &open_list);
-  int GetEvaluatedNodes() const;
   void SetEvaluatedNodes(int evaluated_nodes);
 };
 
@@ -255,7 +251,7 @@ private:
 
 public:
     virtual S search(Searchable<T> searchable);
-  list<State<T>> backTrace();
+    vector<State<T>> backTrace();
     virtual ~BestFirstSearch() {}
 
 };

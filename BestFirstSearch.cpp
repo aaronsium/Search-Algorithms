@@ -16,7 +16,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     if (searchable.isGoalState(n)) {
 
         //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה שמקבל וקטור?
-      return backTrace();
+      return searchable.adaptSolution(backTrace());
     }
 
     while (!openList.empty()){
@@ -74,9 +74,9 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
 
 
 template<class T, class S>
-list<State<T>> BestFirstSearch<T, S>::backTrace() {
+vector<State<T>> BestFirstSearch<T, S>::backTrace() {
   typename std::list<State<T>>::iterator element;
-  list<State<T>> trace;
+  vector<State<T>> trace;
   for (element = closed.begin(); element!=closed.end(); ++element) {
     trace.push_back(element);
   }
