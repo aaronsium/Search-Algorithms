@@ -16,6 +16,8 @@ S AStar<T, S>::search(Searchable<T> s){
                 traceVector.push_back(this->trace.back());
                 this->trace.pop_back();
             }
+
+            return s.adaptSolution(traceVector);
         }
 
         while (!openList.empty()){
