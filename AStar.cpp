@@ -1,7 +1,7 @@
 //
 // Created by yaffa on 1/19/20.
 //
-
+#include "General.h"
 template<class T, class S>
 S AStar<T, S>::search(Searchable<T> s){
     this->openList.push(s.getInitialState());
@@ -11,7 +11,8 @@ S AStar<T, S>::search(Searchable<T> s){
         this->openList.pop();
 
         if (s.isGoalState(state)) {
-            while(!this->trace.empty()){
+          list<State<T>> traceVector;
+          while(!this->trace.empty()){
                 traceVector.push_back(this->trace.back());
                 this->trace.pop_back();
             }
@@ -65,7 +66,7 @@ S AStar<T, S>::search(Searchable<T> s){
 }
 
 template<class T, class S>
-S AStar<T, S>::backTrace() {
+list<State<T>> AStar<T, S>::backTrace(State<T>) {
     typename std::list<State<T>>::iterator element;
     list<State<T>> trace;
     for (element = closed.begin(); element!=closed.end(); ++element) {

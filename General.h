@@ -322,17 +322,20 @@ public:
     virtual ~DFS() {}
 
 };
-template<class T, class S>
 
+template<class T, class S>
 class AStar : public Searcher<T, S> {
 private:
     unordered_set<State<T>> closed;
     priority_queue<State<T>> openList;
     list<State<T>> trace;
+    list<State<T>> opened;
 
-public:
+
+ public:
     virtual S search(Searchable<T> searchable);
     list<State<T>> backTrace(State<T>);
+
     virtual ~AStar() {}
 
 };
