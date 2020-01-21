@@ -5,7 +5,7 @@
 #include "General.h"
 
 
-MyClientHandler::MyClientHandler(Solver<matrix, matrix>* sol, CacheManager<matrix, vector<string>>* cacheManager){
+MyClientHandler::MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager){
         this->solver= sol;
         this->cache = cacheManager;}
 
@@ -14,7 +14,7 @@ void MyClientHandler::handleClient(int socket) {
 
     char buffer[1024] = {0};
     matrix problem;
-    matrix solution;
+    vector<string> solution;
     string message = " ";
 
     while (read(socket, buffer, 1024)) {
@@ -57,10 +57,7 @@ void MyClientHandler::handleClient(int socket) {
     }
 
     for (int i = 0; i < solution.size(); i++) {
-        for (int j = 0; j < solution[i].size(); j++) {
-
-            message = message + to_string(solution[i][j]); // need to convert int to string
-        }
+        message = message + to_string(solution[i]);
     }
 
     write(socket, message.c_str(), message.length());

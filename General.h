@@ -94,7 +94,7 @@ class CacheManager {
 class MyClientHandler : public ClientHandler {
 
  private:
-  Solver<matrix, matrix>* solver;
+  Solver<matrix, vector<string>>* solver;
   CacheManager<matrix, vector<string>> *cache;
 
  public:
