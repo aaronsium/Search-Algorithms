@@ -32,7 +32,7 @@ S DFS<T, S>::search(Searchable<T> s){
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
 
-            std::list<State<T>>::iterator it;
+          typename  std::list<State<T>>::iterator it;
             for (it = closed.begin(); it != closed.end(); ++it){
                 if(it->equals.option) {
                     inClosed = 1;

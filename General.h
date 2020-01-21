@@ -23,6 +23,7 @@
 #include <mutex>
 #include <cstddef>
 #include <stdlib.h>
+#include <string>
 
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -61,17 +62,6 @@ class Server {
   virtual ~Server() {}
 };
 }
-
-//class Problem {
-// public:
-//  virtual void adapt(int port, ClientHandler *myHandler) = 0;
-//  virtual void stop() = 0;
-//  virtual ~Server() {}
-//};
-
-
-
-
 
 /**
  * Solver Interface

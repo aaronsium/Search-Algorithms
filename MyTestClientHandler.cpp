@@ -13,7 +13,6 @@ MyTestClientHandler::MyTestClientHandler(Solver<string, string>* sol, CacheManag
 void MyTestClientHandler:: handleClient(int socket) {
 
     char buffer[1024] = {0};
-    vector <vector<char>> problem;
     string solution;
 
     while (read(socket, buffer, 1024)) {
@@ -26,7 +25,7 @@ void MyTestClientHandler:: handleClient(int socket) {
             solution = this->cache->solution(buffer);
             //if solution wasn't found create one
         } else {
-            solution = solver-> solve(problem);
+            solution = solver-> solve(buffer);
           this->cache->intoCache(buffer, solution);
         }
 

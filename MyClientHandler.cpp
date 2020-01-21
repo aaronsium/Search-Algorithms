@@ -58,7 +58,8 @@ void MyClientHandler::handleClient(int socket) {
 
     for (int i = 0; i < solution.size(); i++) {
         for (int j = 0; j < solution[i].size(); j++) {
-            message += solution[j]; // need to convert int to string
+
+            message = message + to_string(solution[i][j]); // need to convert int to string
         }
     }
 
