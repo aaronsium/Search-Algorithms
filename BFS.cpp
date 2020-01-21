@@ -29,6 +29,6 @@ S BFS<T, S>::search(Searchable<T> searchable) {
 }
 
 template<class T, class S>
-S BFS<T, S>::backTrace() {
+unordered_set<State<T>> BFS<T, S>::backTrace() {
   return visited;
 }

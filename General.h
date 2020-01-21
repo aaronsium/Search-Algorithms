@@ -255,7 +255,7 @@ private:
 
 public:
     virtual S search(Searchable<T> searchable);
-    S backTrace();
+  list<State<T>> backTrace();
     virtual ~BestFirstSearch() {}
 
 };
@@ -266,7 +266,7 @@ class BFS : public Searcher<T, S> {
   unordered_set<State<T>> visited;
  public:
   virtual S search(Searchable<T> searchable);
-  S backTrace();
+  unordered_set<State<T>> backTrace();
   virtual ~BFS() {}
 
 };

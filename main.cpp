@@ -8,9 +8,6 @@ int main(int arg, char *args[]) {
  OA <matrix,matrix,Point> oa = ("הבעיה",BFS<Point,vector<State<Point>> );
   FileCacheManager<matrix,string> *cash;
   ClientHandler *client = MyTestClientHandler(oa,cash)
-  stringstream geek(args[0]);
-  int port = 0;
-  geek >> port;
-  server.open(port,client);
+  server.open(stoi(args[0]),client);
   return 0;
 }

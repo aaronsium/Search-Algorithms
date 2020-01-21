@@ -14,7 +14,6 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     this->openList.pop();
     closed.insert(n);
     if (searchable.isGoalState(n)) {
-      this->SetEvaluatedNodes(this->evaluatedNodes + 1);
 
         //אתה מחזיר פה רשימה אבל לא צריך להמיר את זה דרך adaptSolution שבמטריצה שמקבל וקטור?
       return backTrace();
@@ -28,6 +27,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
     list<State<T>> options = searchable.getAllPossibleStates(n);
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
+      this->SetEvaluatedNodes(this->evaluatedNodes + 1);
       //iterator to check if option in opened
       typename list<State<T>>::iterator inOpen;
       for (inOpen = opened.begin(); inOpen != opened.end(); ++inOpen){
@@ -74,7 +74,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
 
 
 template<class T, class S>
-S BestFirstSearch<T, S>::backTrace() {
+list<State<T>> BestFirstSearch<T, S>::backTrace() {
   typename std::list<State<T>>::iterator element;
   list<State<T>> trace;
   for (element = closed.begin(); element!=closed.end(); ++element) {
