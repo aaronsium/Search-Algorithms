@@ -293,7 +293,7 @@ class OA : public Solver<P, S> {
  private:
   Searcher<T, S> searcher;
  public:
-  OA(Searchable<T> searchable1, Searcher<P, S> searcher1);
+  OA(Searcher<P, S> searcher1);
   S solve(P problem);
   virtual ~OA() {}
 

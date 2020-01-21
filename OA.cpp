@@ -4,7 +4,7 @@
 #include "General.h"
 
 template<class P, class S, class T>
- OA<P, S, T>::OA(Searchable<T> searchable1, Searcher<P,S> searcher1) {
+ OA<P, S, T>::OA( Searcher<P,S> searcher1) {
  this->searcher=searcher1;
 }
 
