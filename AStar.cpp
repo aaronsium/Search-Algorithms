@@ -45,18 +45,18 @@ S AStar<T, S>::search(Searchable<T> s){
             if(inOpen != opened.end){
                 if(option.GetCost <= inOpen->GetCost){
                     openList.pop(*inOpen);
-                    openList.push(option);
+                    openList.push_back(option);
                 }
             } else if(inClosed != closed.end()){
                 if(option.GetCost <= inClosed->GetCost){}
                     closed.pop(*inClosed);
-                    this->openList.push(option);
+                    this->openList.push_back(option);
             } else {
-                this->openList.push(option);
+                this->openList.push_back(option);
             }
         }
         while (!opened.empty()){
-            openList.push(opened.top);
+            openList.push_back(opened.top);
             opened.pop_front();
         }
 
