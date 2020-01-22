@@ -114,7 +114,7 @@ private:
 public:
     MyTestClientHandler(Solver<string, string>* sol, CacheManager<string, string>* cacheManager);
     void handleClient(int socket) ;
-    ~MyTestClientHandler() {}
+    ~MyTestClientHandler() override = default;
 };
 
 class MySerialServer : public server_side::Server {
@@ -128,7 +128,7 @@ class MySerialServer : public server_side::Server {
   void stop() override;
   int newSocket(int port);
   void start(ClientHandler *myHandler);
-  virtual ~MySerialServer() {}
+  ~MySerialServer() override {}
   //once server has been opened handel client by calling myHandler.handleClient
 
 };
@@ -149,14 +149,14 @@ class FileCacheManager : public CacheManager<P, S> {
   void lru(string key);
   void wFile(string key, S solution);
   S rFile(string key);
-  virtual ~FileCacheManager() {}
+  virtual ~FileCacheManager() = default;
 };
 
 class StringReverser : public Solver<string, string> {
 
  public:
   virtual string solve(string problem) override;
-  ~StringReverser() {}
+  ~StringReverser() override {}
 };
 
 class Point {
@@ -211,10 +211,10 @@ protected:
     Searchable();
   virtual State<T> getInitialState() = 0;
   virtual bool isGoalState(State<T>) = 0;
-  virtual list<State<T>> getAllPossibleStates(State<T> s) = 0;
+  virtual list<State<T>> getAllPossibleStates(State<T> current) = 0;
   virtual int NodesEvaluated() = 0;
   virtual vector<string> adaptSolution(vector<State<Point>> stateVector)=0;
-  virtual ~Searchable() {}
+  virtual ~Searchable() = default;
 };
 
 template<class T, class S>
@@ -227,7 +227,7 @@ class Searcher {
   Searcher();
   virtual S search(Searchable<T>* searchable) = 0;
   int NodesEvaluated();
-  virtual ~Searcher() {}
+  virtual ~Searcher() = default;
   void SetEvaluatedNodes(int evaluated_nodes);
 };
 
@@ -242,7 +242,7 @@ private:
 public:
     virtual S search(Searchable<T>* searchable);
     vector<State<T>> backTrace();
-    virtual ~BestFirstSearch() {}
+    virtual ~BestFirstSearch() = default;
 };
 
 template<class T, class S>
@@ -252,7 +252,7 @@ class BFS : public Searcher<T, S> {
  public:
     virtual S search(Searchable<T>* searchable);
   unordered_set<State<T>> backTrace();
-  virtual ~BFS() {}
+  virtual ~BFS() = default;
 };
 
 class Matrix : public Searchable<Point> {
@@ -265,11 +265,12 @@ class Matrix : public Searchable<Point> {
   Matrix(matrix field);
   State<Point> getInitialState() override;
   bool isGoalState(State<Point> current) override;
-  vector<State<Point>> getAllPossibleState(State<Point> current);
+  list<State<Point>> getAllPossibleStates(State<Point> current) override;
   int pointCost(State<Point> current);
-  vector<string> adaptSolution(vector<State<Point>>);
+  vector<string> adaptSolution(vector<State<Point>>) override;
   string direction(State<Point> s1, State<Point> s2);
-  ~Matrix() {};
+   int NodesEvaluated() override ;
+  ~Matrix() override {};
 };
 
 
@@ -280,7 +281,7 @@ class OA : public Solver<P, S> {
  public:
     OA(Searcher<P, S>* searcher1);
   S solve(P problem);
-  virtual ~OA() {};
+  virtual ~OA() = default;;
 };
 
 template<class T, class S>
@@ -293,7 +294,7 @@ private:
 public:
     virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
-    virtual ~DFS() {}
+    virtual ~DFS() = default;
 
 };
 
@@ -310,7 +311,7 @@ private:
     virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
 
-    virtual ~AStar() {}
+    virtual ~AStar() = default;
 
 };
 

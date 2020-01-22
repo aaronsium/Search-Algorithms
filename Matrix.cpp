@@ -18,8 +18,8 @@ bool Matrix::isGoalState(State<Point> current) {
 }
 
 
-vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
-    vector<State<Point>> possibleState;
+list<State<Point>> Matrix::getAllPossibleStates(State<Point> current) {
+  list<State<Point>> possibleState;
 
     State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
                     &current, current.GetCost() + pointCost(o1));
@@ -73,4 +73,8 @@ string Matrix::direction(State<Point> s1, State<Point> s2) {
     if (y2 < y1) {
         return "down";
     }
+}
+
+int Matrix::NodesEvaluated() {///////סתם מימוש
+  return 1;
 }

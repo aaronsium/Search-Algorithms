@@ -10,6 +10,7 @@ template<class P, class S, class T>
 
 template<class P, class S, class T>
 S OA<P, S, T>:: solve(P problem) { // P is a matrix in our case
+  
  S solution = this->searcher->search(problem);// solving the problem by search -> store the solution
  return solution;// adapt the solution to the problem's type
 }
