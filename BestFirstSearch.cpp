@@ -8,7 +8,6 @@ template<class T, class S>
 S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
   priority_queue<State<T>> openList;
   openList.push(searchable.getInitialState());
-  closed = new unordered_set<State<T>>;////////
   while (!openList.empty()) {
     State<T> n = openList.top();
     this->openList.pop();
@@ -49,15 +48,15 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
         if(opt->GetCost() < inClosed->GetCost()){
           if (inOpen != opened.end()) {
             //popping and pushing again(for the priority process)
-            openList.pop(*inOpen);
+              opened.remove(*inOpen);
           }
           openList.push(*opt);
-          closed.pop(*inClosed);
+          closed.erase(*inClosed);
         }
       } else {
         if(opt->GetCost() < inOpen->GetCost()) {
-          openList.pop(*inOpen);
-          openList.push(*opt);
+            opened.remove(*inOpen);
+            opened.push_back(*opt);
         }
       }
     }
