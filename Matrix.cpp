@@ -3,7 +3,11 @@
 //
 
 #include "General.h"
-Matrix::Matrix(matrix f, State<Point> ini, State<Point> g) : field(f), initial(ini), goal(g) {}
+Matrix::Matrix(matrix f):
+    field(f),
+    initial(State<Point> (Point(f[0][f.size()-2], f[1][f.size()-2]), NULL, 0)),
+    goal(State<Point> (Point(f[0][f.size()-1], f[1][f.size()-1]), NULL, 0))
+{}
 
 State<Point> Matrix::getInitialState() {
   return this->initial;
