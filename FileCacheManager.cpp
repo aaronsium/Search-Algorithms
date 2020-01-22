@@ -4,14 +4,6 @@
 #include "General.h"
 
 template<class P, class S>
-list<pair<string, strVector>> FileCacheManager<P, S>:: getCacheList(){
-  return this->cacheLis;
-}
-template<class P, class S>
-list<pair<string, strVector>> FileCacheManager<P, S>::getmapPointers(){
-  return this->mapPointers;
-}
-template<class P, class S>
 string FileCacheManager<P, S>::hashing(P problem) {
   hash<P> myHash;
   // Using operator() to get hash value

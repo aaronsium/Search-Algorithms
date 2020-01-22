@@ -18,19 +18,19 @@ vector<State<Point>> Matrix::getAllPossibleState(State<Point> current) {
     vector<State<Point>> possibleState;
 
     State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
-                    current, current.GetCost() + pointCost(o1));
+                    &current, current.GetCost() + pointCost(o1));
     possibleState.push_back(o1);
 
     State<Point> o2(Point(current.getStatus().getX() + 1, current.getStatus().getY()),
-                    current, current.GetCost() + pointCost(o2));
+                    &current, current.GetCost() + pointCost(o2));
     possibleState.push_back(o1);
 
     State<Point> o3(Point(current.getStatus().getX(), current.getStatus().getY() - 1),
-                    current, current.GetCost() + pointCost(o3));
+                    &current, current.GetCost() + pointCost(o3));
     possibleState.push_back(o1);
 
     State<Point> o4(Point(current.getStatus().getX(), current.getStatus().getY() + 1),
-                    current, current.GetCost() + pointCost(o4));
+                    &current, current.GetCost() + pointCost(o4));
     possibleState.push_back(o1);
 
     return possibleState;

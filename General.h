@@ -150,9 +150,6 @@ class FileCacheManager : public CacheManager<P, S> {
   void lru(string key);
   void wFile(string key, S solution);
   S rFile(string key);
-   list<pair<string, strVector>> getCacheList();
-   list<pair<string, strVector>> getmapPointers();
-
   virtual ~FileCacheManager() {}
 };
 
