@@ -279,7 +279,7 @@ class OA : public Solver<P, S> {
   Searcher<P, S>* searcher;
  public:
     OA(Searcher<P, S>* searcher1);
-  S solve(P* problem);
+  S solve(P problem);
   virtual ~OA() {};
 };
 
