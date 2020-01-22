@@ -7,9 +7,9 @@
 template<class T, class S>
 S BFS<T, S>::search(Searchable<T> searchable) {
   State<T> start = searchable.getInitialState();
-  queue<State<T>> q = this->openList;
+  queue<State<T>> q;
   q.push(start);
-  visited.push(start);
+  visited.insert(start);
   while (!q.empty()) {
     State<T> current = q.front();
     q.pop();
@@ -21,8 +21,8 @@ S BFS<T, S>::search(Searchable<T> searchable) {
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
       if ((!std::count(visited.begin(), visited.end(), opt))) {
-        visited.push_back(opt);
-        q.push(opt);
+        visited.insert(*opt);
+        q.push(*opt);
       }
     }
   }

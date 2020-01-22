@@ -71,8 +71,6 @@ template<class P, class S>
 class Solver {
 
  public:
-  virtual Solver * create () const = 0;
-  virtual Solver* clone() const = 0;
   virtual S solve(P problem) = 0;
   virtual ~Solver() {}
 };
@@ -92,8 +90,6 @@ class CacheManager {
   virtual void intoCache(P problem, S solution) = 0; //inserting new solution
   virtual list<pair<string, strVector>> getCacheList()=0;
   virtual list<pair<string, strVector>> getmapPointers()=0;
-  virtual CacheManager * create () const = 0;
-  virtual CacheManager* clone() const = 0;
   virtual ~CacheManager() {}
 };
 
@@ -156,8 +152,6 @@ class FileCacheManager : public CacheManager<P, S> {
   S rFile(string key);
    list<pair<string, strVector>> getCacheList();
    list<pair<string, strVector>> getmapPointers();
-  virtual FileCacheManager* clone() const { return new FileCacheManager(*this); };
-  FileCacheManager * create () const{return new FileCacheManager();}
 
   virtual ~FileCacheManager() {}
 };
@@ -191,38 +185,14 @@ private:
     State<T> *cameFrom;
 
 public:
-    State(T state, const State<T> &came_from, double cost);
+    State(T state, State<T>* came_from, double cost);
     bool equals(State<T> s);
-    void SetCameFrom(const State<T> &came_from);
+    void SetCameFrom(State<T>* came_from);
     double GetCost() const;
     void SetCost(double cost);
-    State<T> getPrevious();
-    bool operator<(const State<T> &s1);
+    State<T>* getPrevious();
+    bool operator<(State<T>* s1);
     T getStatus();
-};
-
-template<
-        class T,
-        class Container = std::vector<State<T>>,
-        class Compare = std::less<typename Container::value_type>
->
-class MyQueue : public std::priority_queue<State<T>, Container, Compare> {
-public:
-    typedef typename
-    std::priority_queue<State<T>,
-            Container,
-            Compare>::container_type::const_iterator const_iterator;
-
-    const_iterator find(const State<T>&val) const
-    {
-        auto first = this->c.cbegin();
-        auto last = this->c.cend();
-        while (first!=last) {
-            if (val.equals(*first)) return first;
-            ++first;
-        }
-        return NULL;
-    }
 };
 
 template<class T>
@@ -247,13 +217,11 @@ class Searcher {
   int evaluatedNodes;
 
  public:
-  Searcher();
+  Searcher(){};
   virtual S search(Searchable<T> searchable) = 0;
   int NodesEvaluated();
   virtual ~Searcher() {}
   void SetEvaluatedNodes(int evaluated_nodes);
-  virtual Searcher * create () const = 0;
-  virtual Searcher* clone() const = 0;
 };
 
 template<class T, class S>
@@ -276,12 +244,9 @@ class BFS : public Searcher<T, S> {
  private:
   unordered_set<State<T>> visited;
  public:
-  virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T> searchable);
   unordered_set<State<T>> backTrace();
   virtual ~BFS() {}
-  virtual BFS* clone() const { return new BFS(*this); };
-  BFS * create () const{return new BFS();}
-
 };
 
 class Matrix : public Searchable<Point> {
@@ -305,14 +270,11 @@ class Matrix : public Searchable<Point> {
 template<class P, class S, class T>
 class OA : public Solver<P, S> {
  private:
-  Searcher<T, S> searcher;
+  Searcher<P, S>* searcher;
  public:
-  explicit OA(Searcher<P, S> searcher1);
-  OA(const OA& rhs) {};
+    OA(Searcher<P, S>* searcher1);
   S solve(P problem);
   virtual ~OA() {};
-  virtual OA* clone() const { return new OA(*this); };
-  OA * create () const{return new OA();}
 };
 
 template<class T, class S>

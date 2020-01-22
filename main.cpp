@@ -11,7 +11,7 @@ int main(int arg, char *args[]) {
   search = new BFS<matrix,vector<string>> ();
 
   Solver<matrix,vector<string>> *solv;
-  solv = new OA<matrix,vector<string>,Point>> (search);
+  solv = new OA<matrix,vector<string>,Point>(search);
 
   CacheManager<matrix,vector<string>> *cash2;
   cash2 = new FileCacheManager<matrix,vector<string>> ();
