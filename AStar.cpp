@@ -11,7 +11,7 @@ S AStar<T, S>::search(Searchable<T> s){
         this->openList.pop();
 
         if (s.isGoalState(state)) {
-          list<State<T>> traceVector;
+          vector<State<T>> traceVector;
           while(!this->trace.empty()){
                 traceVector.push_back(this->trace.back());
                 this->trace.pop_back();
@@ -46,12 +46,12 @@ S AStar<T, S>::search(Searchable<T> s){
 
             if(inOpen != opened.end()){
                 if(option.GetCost <= inOpen->GetCost){
-                    openList.pop(*inOpen);
-                    openList.push(option);
+                    opened.remove(*inOpen);
+                    opened.push_back(option);
                 }
             } else if(inClosed != closed.end()){
                 if(option.GetCost <= inClosed->GetCost){}
-                    closed.pop(*inClosed);
+                    closed.erase(*inClosed);
                     this->openList.push(option);
             } else {
                 this->openList.push(option);
