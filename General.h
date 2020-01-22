@@ -24,6 +24,7 @@
 #include <cstddef>
 #include <stdlib.h>
 #include <string>
+#include <functional>
 
 using namespace std;
 using namespace std::literals::chrono_literals;
@@ -190,6 +191,17 @@ public:
     T getStatus();
 };
 
+
+namespace std {
+
+template<class T>
+struct hash<State<T>> {
+  size_t operator ()(State<T> value) const {
+    return static_cast<size_t>(value);
+  }
+};
+}
+
 template<class T>
 class Searchable {
 protected:
@@ -212,7 +224,7 @@ class Searcher {
   int evaluatedNodes;
 
  public:
-  Searcher(){};
+  Searcher();
   virtual S search(Searchable<T> searchable) = 0;
   int NodesEvaluated();
   virtual ~Searcher() {}
