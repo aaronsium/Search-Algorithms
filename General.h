@@ -231,7 +231,6 @@ public:
     virtual S search(Searchable<T> searchable);
     vector<State<T>> backTrace();
     virtual ~BestFirstSearch() {}
-
 };
 
 template<class T, class S>
