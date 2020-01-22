@@ -5,11 +5,6 @@
 #include "General.h"
 
 
-MyClientHandler::MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager){
-        this->solver= sol;
-        this->cache = cacheManager;}
-
-
 void MyClientHandler::handleClient(int socket) {
 
     char buffer[1024] = {0};
@@ -49,7 +44,7 @@ void MyClientHandler::handleClient(int socket) {
 
     //searching for solution in the cache
     if (this->cache->inCache(problem)) {
-        solution = this->cache->solution(problem);
+        solution = this->cache->getSolution(problem);
         //if solution wasn't found create one
     } else {
         solution = this->solver->solve(problem);

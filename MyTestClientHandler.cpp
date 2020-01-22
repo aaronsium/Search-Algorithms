@@ -22,7 +22,7 @@ void MyTestClientHandler:: handleClient(int socket) {
 
         //searching for solution in the cache
         if (this->cache->inCache(buffer)) {
-            solution = this->cache->solution(buffer);
+            solution = this->cache->getSolution(buffer);
             //if solution wasn't found create one
         } else {
             solution = solver-> solve(buffer);

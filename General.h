@@ -71,6 +71,8 @@ template<class P, class S>
 class Solver {
 
  public:
+  virtual Solver * create () const = 0;
+  virtual Solver* clone() const = 0;
   virtual S solve(P problem) = 0;
   virtual ~Solver() {}
 };
@@ -86,8 +88,12 @@ class CacheManager {
 
  public:
   virtual bool inCache(P problem) = 0; //if problem is in the cache return 1
-  virtual S solution(P problem) = 0; //returning solution to problem that is in the cache
+  virtual S getSolution(P problem) = 0; //returning solution to problem that is in the cache
   virtual void intoCache(P problem, S solution) = 0; //inserting new solution
+  virtual list<pair<string, strVector>> getCacheList()=0;
+  virtual list<pair<string, strVector>> getmapPointers()=0;
+  virtual CacheManager * create () const = 0;
+  virtual CacheManager* clone() const = 0;
   virtual ~CacheManager() {}
 };
 
@@ -98,7 +104,8 @@ class MyClientHandler : public ClientHandler {
   CacheManager<matrix, vector<string>> *cache;
 
  public:
-  MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager);
+  MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager): solver(sol),
+                                                                                                            cache(cacheManager){};
   void handleClient(int socket);
   ~MyClientHandler() {}
 };
@@ -138,14 +145,20 @@ class FileCacheManager : public CacheManager<P, S> {
   unsigned int capacity = 5;
 
  public:
+  FileCacheManager();
   string hashing(P problem);
   string Convertstr(size_t sz);// convert size_t to string
   virtual bool inCache(P problem);
   virtual S getSolution(P problem);
-  virtual void intoCache(string problem, S solution) = 0;
+  virtual void intoCache(P problem, S solution) ;
   void lru(string key);
   void wFile(string key, S solution);
   S rFile(string key);
+   list<pair<string, strVector>> getCacheList();
+   list<pair<string, strVector>> getmapPointers();
+  virtual FileCacheManager* clone() const { return new FileCacheManager(*this); };
+  FileCacheManager * create () const{return new FileCacheManager();}
+
   virtual ~FileCacheManager() {}
 };
 
@@ -239,6 +252,8 @@ class Searcher {
   int NodesEvaluated();
   virtual ~Searcher() {}
   void SetEvaluatedNodes(int evaluated_nodes);
+  virtual Searcher * create () const = 0;
+  virtual Searcher* clone() const = 0;
 };
 
 template<class T, class S>
@@ -264,6 +279,8 @@ class BFS : public Searcher<T, S> {
   virtual S search(Searchable<T> searchable);
   unordered_set<State<T>> backTrace();
   virtual ~BFS() {}
+  virtual BFS* clone() const { return new BFS(*this); };
+  BFS * create () const{return new BFS();}
 
 };
 
@@ -284,15 +301,18 @@ class Matrix : public Searchable<Point> {
   ~Matrix() {};
 };
 
+
 template<class P, class S, class T>
 class OA : public Solver<P, S> {
  private:
   Searcher<T, S> searcher;
  public:
-  OA(Searcher<P, S> searcher1);
+  explicit OA(Searcher<P, S> searcher1);
+  OA(const OA& rhs) {};
   S solve(P problem);
-  virtual ~OA() {}
-
+  virtual ~OA() {};
+  virtual OA* clone() const { return new OA(*this); };
+  OA * create () const{return new OA();}
 };
 
 template<class T, class S>

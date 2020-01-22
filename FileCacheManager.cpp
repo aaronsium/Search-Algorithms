@@ -4,6 +4,14 @@
 #include "General.h"
 
 template<class P, class S>
+list<pair<string, strVector>> FileCacheManager<P, S>:: getCacheList(){
+  return this->cacheLis;
+}
+template<class P, class S>
+list<pair<string, strVector>> FileCacheManager<P, S>::getmapPointers(){
+  return this->mapPointers;
+}
+template<class P, class S>
 string FileCacheManager<P, S>::hashing(P problem) {
   hash<P> myHash;
   // Using operator() to get hash value
@@ -20,23 +28,23 @@ bool FileCacheManager<P, S>::inCache(P problem) {
 }
 
 template<class P, class S>
-void FileCacheManager<P, S>::intoCache(string, S soulution) {
-  string key = hashing(key);
+void FileCacheManager<P, S>::intoCache(P problem, S solution) {
+  string key = hashing(problem);
   bool found = inCache(key);
   bool exist = inCache(key);
   // if it doesn't exist both in file and cash
   if (!found && !exist) {
     ////
     lru(key);
-    wFile(key, soulution);
+    wFile(key, solution);
   } else if (found) {
     cacheList.erase(mapPointers[key]);
-    wFile(key, soulution);
+    wFile(key, solution);
 
   } else if (exist) {
     S oldObject = getSolution(key);
   }
-  cacheList.push_front(make_pair(key, soulution));
+  cacheList.push_front(make_pair(key, solution));
   mapPointers[key] = cacheList.begin();
 
 }
@@ -118,4 +126,6 @@ string FileCacheManager<P, S>::Convertstr(size_t sz) {
   string newStr(buf);
   return newStr;
 }
+
+
 
