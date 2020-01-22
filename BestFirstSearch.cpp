@@ -5,15 +5,15 @@
 #include "General.h"
 
 template<class T, class S>
-S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
+S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
   priority_queue<State<T>> openList;
-  openList.push(searchable.getInitialState());
+  openList.push(searchable->getInitialState());
   while (!openList.empty()) {
     State<T> n = openList.top();
     this->openList.pop();
     closed.insert(n);
-    if (searchable.isGoalState(n)) {
-      return searchable.adaptSolution(backTrace());
+    if (searchable->isGoalState(n)) {
+      return searchable->adaptSolution(backTrace());
     }
 
     while (!openList.empty()){
@@ -21,7 +21,7 @@ S BestFirstSearch<T, S>::search(Searchable<T> searchable) {
       openList.pop;
     }
 
-    list<State<T>> options = searchable.getAllPossibleStates(n);
+    list<State<T>> options = searchable->getAllPossibleStates(n);
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
       this->SetEvaluatedNodes(this->evaluatedNodes + 1);

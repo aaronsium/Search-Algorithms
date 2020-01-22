@@ -225,7 +225,7 @@ class Searcher {
 
  public:
   Searcher();
-  virtual S search(Searchable<T> searchable) = 0;
+  virtual S search(Searchable<T>* searchable) = 0;
   int NodesEvaluated();
   virtual ~Searcher() {}
   void SetEvaluatedNodes(int evaluated_nodes);
@@ -240,7 +240,7 @@ private:
     unordered_set<State<T>> closed;
 
 public:
-    virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T>* searchable);
     vector<State<T>> backTrace();
     virtual ~BestFirstSearch() {}
 };
@@ -250,7 +250,7 @@ class BFS : public Searcher<T, S> {
  private:
   unordered_set<State<T>> visited;
  public:
-    virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T>* searchable);
   unordered_set<State<T>> backTrace();
   virtual ~BFS() {}
 };
@@ -279,7 +279,7 @@ class OA : public Solver<P, S> {
   Searcher<P, S>* searcher;
  public:
     OA(Searcher<P, S>* searcher1);
-  S solve(P problem);
+  S solve(P* problem);
   virtual ~OA() {};
 };
 
@@ -291,7 +291,7 @@ private:
     list<State<T>> trace;
 
 public:
-    virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
     virtual ~DFS() {}
 
@@ -307,7 +307,7 @@ private:
 
 
  public:
-    virtual S search(Searchable<T> searchable);
+    virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
 
     virtual ~AStar() {}

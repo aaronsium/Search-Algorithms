@@ -7,7 +7,8 @@ template<class P, class S>
 string FileCacheManager<P, S>::hashing(P problem) {
   hash<P> myHash;
   // Using operator() to get hash value
-  return to_string(myHash(problem));
+  size_t key_hash = std::hash<P>()(problem);
+  return to_string(myHash(key_hash));
 }
 
 template<class P, class S>

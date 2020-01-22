@@ -3,20 +3,20 @@
 //
 #include "General.h"
 template<class T, class S>
-S AStar<T, S>::search(Searchable<T> s){
-    this->openList.push(s.getInitialState());
+S AStar<T, S>::search(Searchable<T>* s){
+    this->openList.push(s->getInitialState());
 
     while (!this->openList.empty()) {
         State <T> state = this->openList.top();
         this->openList.pop();
 
-        if (s.isGoalState(state)) {
+        if (s->isGoalState(state)) {
           vector<State<T>> traceVector;
           while(!this->trace.empty()){
                 traceVector.push_back(this->trace.back());
                 this->trace.pop_back();
             }
-            return s.adaptSolution(traceVector);
+            return s->adaptSolution(traceVector);
         }
 
         while (!openList.empty()){
@@ -24,7 +24,7 @@ S AStar<T, S>::search(Searchable<T> s){
             openList.pop;
         }
 
-        list<State<T>> PossibleStates = s.getAllPossibleStates(state);
+        list<State<T>> PossibleStates = s->getAllPossibleStates(state);
         while(!PossibleStates.empty){
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();

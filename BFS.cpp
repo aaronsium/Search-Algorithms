@@ -5,8 +5,8 @@
 #include "General.h"
 
 template<class T, class S>
-S BFS<T, S>::search(Searchable<T> searchable) {
-  State<T> start = searchable.getInitialState();
+S BFS<T, S>::search(Searchable<T> *searchable) {
+  State<T> start = searchable->getInitialState();
   queue<State<T>> q;
   q.push(start);
   visited.insert(start);
@@ -14,10 +14,10 @@ S BFS<T, S>::search(Searchable<T> searchable) {
     State<T> current = q.front();
     q.pop();
     this->SetEvaluatedNodes(this->evaluatedNodes + 1);// add 1 to node's counter
-    if (searchable.isGoalState(current)) {
+    if (searchable->isGoalState(current)) {
       return visited;
     }
-    list<State<T>> options = searchable.getAllPossibleStates(current);
+    list<State<T>> options = searchable->getAllPossibleStates(current);
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
       if ((!std::count(visited.begin(), visited.end(), opt))) {

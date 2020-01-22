@@ -4,8 +4,8 @@
 #include "General.h"
 
 template<class T, class S>
-S DFS<T, S>::search(Searchable<T> s){
-    this->myStack.push(s.getInitialState());
+S DFS<T, S>::search(Searchable<T>* s){
+    this->myStack.push(s->getInitialState());
     int flag = 0;
 
     while(!(this->myStack).empty){
@@ -13,7 +13,7 @@ S DFS<T, S>::search(Searchable<T> s){
         myStack.pop;
         closed.insert(state);
 
-        if (s.isGoalState(state)) {
+        if (s->isGoalState(state)) {
             list<State<T>> t = backTrace(state);
             int traceSize = t.size();
             if(flag == 0){
@@ -26,7 +26,7 @@ S DFS<T, S>::search(Searchable<T> s){
             }
         }
 
-        list<State<T>> PossibleStates = s.getAllPossibleStates(state);
+        list<State<T>> PossibleStates = s->getAllPossibleStates(state);
         while(!PossibleStates.empty){
             int inClosed = 0;
             State<T> option = PossibleStates.front();
@@ -50,7 +50,7 @@ S DFS<T, S>::search(Searchable<T> s){
         this->trace.pop_back();
     }
 
-    return s.adaptSolution(traceVector);
+    return s->adaptSolution(traceVector);
 }
 
 
