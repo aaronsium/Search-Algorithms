@@ -6,7 +6,7 @@ template<class T, class S>
 S AStar<T, S>::search(Searchable<T> s){
     this->openList.push(s.getInitialState());
 
-    while (this->openList > 0) {
+    while (!this->openList.empty()) {
         State <T> state = this->openList.top();
         this->openList.pop();
 
@@ -20,11 +20,11 @@ S AStar<T, S>::search(Searchable<T> s){
         }
 
         while (!openList.empty()){
-            opened.push_back(openList.top);
+            opened.push_back(openList.top());
             openList.pop;
         }
 
-        list<State<T>> PossibleStates = s.getAllPossibleStates();
+        list<State<T>> PossibleStates = s.getAllPossibleStates(state);
         while(!PossibleStates.empty){
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
@@ -32,33 +32,33 @@ S AStar<T, S>::search(Searchable<T> s){
             //iterator to check if option in open
             typename list<State<T>>::iterator inOpen;
             for (inOpen = opened.begin(); inOpen != opened.end(); ++inOpen){
-                if(inOpen->equals.option) {
+                if(inOpen->equals(option)) {
                     break;
                 }
             }
             //iterator to check if option in closed
             typename list<State<T>>::iterator inClosed;
             for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
-                if(inClosed->equals.option) {
+                if(inClosed->equals(option)) {
                     break;
                 }
             }
 
-            if(inOpen != opened.end){
+            if(inOpen != opened.end()){
                 if(option.GetCost <= inOpen->GetCost){
                     openList.pop(*inOpen);
-                    openList.push_back(option);
+                    openList.push(option);
                 }
             } else if(inClosed != closed.end()){
                 if(option.GetCost <= inClosed->GetCost){}
                     closed.pop(*inClosed);
-                    this->openList.push_back(option);
+                    this->openList.push(option);
             } else {
-                this->openList.push_back(option);
+                this->openList.push(option);
             }
         }
         while (!opened.empty()){
-            openList.push_back(opened.top);
+            openList.push(opened.front());
             opened.pop_front();
         }
 
@@ -71,7 +71,7 @@ list<State<T>> AStar<T, S>::backTrace(State<T>) {
     typename std::list<State<T>>::iterator element;
     list<State<T>> trace;
     for (element = closed.begin(); element!=closed.end(); ++element) {
-        trace.push_back(element);
+        trace.push_back(*element);
         this->SetEvaluatedNodes(this->evaluatedNodes + 1);
     }
     this->trace = trace;
