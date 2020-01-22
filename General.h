@@ -262,7 +262,7 @@ class Matrix : public Searchable<Point> {
   State<Point> goal;
 
  public:
-  Matrix(matrix field, State<Point> Initial, State<Point> goal);
+  Matrix(matrix field);
   State<Point> getInitialState() override;
   bool isGoalState(State<Point> current) override;
   vector<State<Point>> getAllPossibleState(State<Point> current);
