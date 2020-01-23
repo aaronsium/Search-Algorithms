@@ -3,7 +3,7 @@
 #include "CacheManager.h"
 #include "ClientHandler.h"
 #include "FileCacheManager.h"
-#include "MyClaientHandler.h"
+#include "MyClientHandler.h"
 #include "MySerialServer.h"
 #include "OA.h"
 #include "Point.h"
