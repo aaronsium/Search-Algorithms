@@ -277,9 +277,9 @@ class Matrix : public Searchable<Point> {
 template<class P, class S, class T>
 class OA : public Solver<P, S> {
  private:
-  Searcher<P, S>* searcher;
+  Searcher<T, S>* searcher;
  public:
-    OA(Searcher<P, S>* searcher1);
+    OA(Searcher<T, S>* searcher1);
   S solve(P problem);
   virtual ~OA() = default;;
 };
