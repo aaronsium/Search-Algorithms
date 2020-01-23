@@ -2,11 +2,20 @@
 #include "General.h"
 #include "OA.cpp"
 #include "FileCacheManager.cpp"
-//#include "Matrix.cpp"
+#include "Matrix.cpp"
 #include "AStar.cpp"
 #include "BestFirstSearch.cpp"
-//#include "State.cpp"
+#include "State.cpp"
 #include "Point.cpp"
+#include "AStar.cpp"
+#include "BFS.cpp"
+#include "BestFirstSearch.cpp"
+#include "DFS.cpp"
+#include "FileCacheManager.cpp"
+#include "MyClientHandler.cpp"
+#include "MySerialServer.cpp"
+#include "Searcher.cpp"
+#include "StringReverser.cpp"
 
 
 

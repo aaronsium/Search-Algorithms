@@ -166,10 +166,11 @@ class Point {
   double y;
 
  public:
+  Point();
   Point(double x, double y);
   double getX();
   double getY();
-  bool compare(Point other);
+  bool equals(Point other);
 };
 
 template<class T>

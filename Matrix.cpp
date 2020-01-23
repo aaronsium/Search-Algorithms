@@ -78,3 +78,4 @@ string Matrix::direction(State<Point> s1, State<Point> s2) {
 int Matrix::NodesEvaluated() {///////סתם מימוש
   return 1;
 }
+

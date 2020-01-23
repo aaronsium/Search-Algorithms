@@ -17,6 +17,6 @@ double Point:: getY(){
   return this->y;
 }
 
-bool Point::compare(Point other) {
+bool Point::equals(Point other) {
   return (this->x == other.getX())&&(this->y == other.getY());
 }
