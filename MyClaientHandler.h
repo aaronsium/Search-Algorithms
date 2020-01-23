@@ -6,6 +6,17 @@
 #define EX4__MYCLAIENTHANDLER_H_
 
 #include "ClientHandler.h"
+#include "Solver.h"
+#include "CacheManager.h"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <unistd.h>
+#include <cstring>
+
+using namespace std;
+
 
 typedef vector<vector<int>> matrix;
 

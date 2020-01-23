@@ -7,7 +7,7 @@
 
 #include "Searcher.h"
 #include "State.h"
-#include "searchable.h"
+#include "Searchable.h"
 #include <list>
 #include <vector>
 
@@ -21,8 +21,6 @@ class AStar : public Searcher<T, S> {
   list<State<T>> opened;
 
  public:
-  virtual S search(Searchable<T> *searchable);
-  list<State<T>> backTrace(State<T>);
   virtual ~AStar() = default;
 
   /////////////////////////////////////////////////////////////////////////

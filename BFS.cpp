@@ -33,6 +33,6 @@ vector<State<T>>BFS<T, S>::backTrace() {
   return visited;
 }
 
-void TemporaryFunction3 (){
-  BFS<Point,vector<string>> x;
-}
+//void TemporaryFunction3 (){
+//  BFS<Point,vector<string>> x;
+//}

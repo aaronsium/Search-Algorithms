@@ -7,7 +7,7 @@
 
 #include "Searcher.h"
 #include "State.h"
-#include "searchable.h"
+#include "Searchable.h"
 #include <vector>
 
 
@@ -47,9 +47,9 @@ vector<State<T>>backTrace() {
   return visited;
 }
 
-void TemporaryFunction3 (){
-  BFS<Point,vector<string>> x;
-}
+//void TemporaryFunction3 (){
+//  BFS<Point,vector<string>> x;
+//}
 
 
 

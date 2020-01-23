@@ -6,7 +6,7 @@
 #define EX4__BESTFIRSTSEARCH_H_
 #include "Searcher.h"
 #include "State.h"
-#include "searchable.h"
+#include "Searchable.h"
 
 
 template<class T, class S>
@@ -18,8 +18,6 @@ class BestFirstSearch : public Searcher<T, S> {
   list<State<T>> closed;
 
  public:
-  virtual S search(Searchable<T> *searchable);
-  vector<State<T>> backTrace();
   virtual ~BestFirstSearch() = default;
 
   ///////////////////////////////////////////////
@@ -34,10 +32,10 @@ class BestFirstSearch : public Searcher<T, S> {
     return trace;
   }
 
-  void TemporaryFunction2() {
-    BestFirstSearch<Point, vector < string>>
-    x;
-  }
+//  void TemporaryFunction2() {
+//    BestFirstSearch<Point, vector < string>>
+//    x;
+//  }
 
 };
 

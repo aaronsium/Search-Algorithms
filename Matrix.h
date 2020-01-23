@@ -6,7 +6,7 @@
 #define EX4__MATRIX_H_
 #include "Point.h"
 #include "Searchable.h"
-
+#include "State.h"
 
 typedef vector<vector<int>> matrix;
 
@@ -17,14 +17,6 @@ class Matrix : public Searchable<Point> {
   State<Point> goal;
 
  public:
-  Matrix(matrix field);
-  State<Point> getInitialState() override;
-  bool isGoalState(State<Point> current) override;
-  list<State<Point>> getAllPossibleStates(State<Point> current) override;
-  int pointCost(State<Point> current);
-  vector<string> adaptSolution(vector<State<Point>>) override;
-  string direction(State<Point> s1, State<Point> s2);
-  int NodesEvaluated() override ;
   ~Matrix() override {};
 
   //////////////////////////////////////////////////////////////
