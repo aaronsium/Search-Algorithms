@@ -5,7 +5,7 @@
 #include "General.h"
 
 template<class T, class S>
-S BFS<T, S>::search(Searchable<T> *searchable) {
+vector<State<T>> BFS<T, S>::search(Searchable<T> *searchable) {
   State<T> start = searchable->getInitialState();
   queue<State<T>> q;
   q.push(start);

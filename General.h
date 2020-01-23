@@ -255,12 +255,12 @@ class BestFirstSearch : public Searcher<T, S> {
 };
 
 template<class T, class S>
-class BFS : public Searcher<T, S> {
+class BFS : public Searcher<T, vector<State<T>>> {
 
  private:
-    list<State<T>> visited;
+    vector<State<T>> visited;
  public:
-    virtual S search(Searchable<T>* searchable);
+    virtual vector<State<T>> search(Searchable<T>* searchable);
     list<State<T>> backTrace();
     virtual ~BFS() = default;
 };
