@@ -17,6 +17,12 @@ double Point:: getY(){
   return this->y;
 }
 
-bool Point::equals(Point other) {
+bool Point::equals(Point other) const {
   return (this->x == other.getX())&&(this->y == other.getY());
+}
+
+Point& Point::operator=(const Point& s1 ) {
+  this->x = s1.x;
+  this->y = s1.y;
+  return (*this);
 }

@@ -1,10 +1,6 @@
 
-#include "General.h"
 #include "OA.cpp"
-#include "FileCacheManager.cpp"
 #include "Matrix.cpp"
-#include "AStar.cpp"
-#include "BestFirstSearch.cpp"
 #include "State.cpp"
 #include "Point.cpp"
 #include "AStar.cpp"
@@ -25,7 +21,7 @@ int main(int arg, char *args[]) {
 
 
   Searcher<Point,vector<string>> *search;
-  search = new BFS<Point,vector<string>> ();
+  search = new BestFirstSearch<Point,vector<string>> ();
 
   Solver<matrix,vector<string>> *solv;
   solv = new OA<matrix,vector<string>,Point>(search);

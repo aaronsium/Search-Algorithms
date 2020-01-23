@@ -11,11 +11,11 @@ State<T>::State(T status1, State<T>* came_from, double c) {
 }
 
 template<class T>
-T State<T>:: getStatus(){
+ T State<T>:: getStatus() const{
   return this->status;
 }
 template<class T>
-bool State<T>::equals(State<T> s) {
+bool State<T>::equals(State<T> s) const {
   return status.equals(s.getStatus());
 }
 template<typename T>
@@ -35,7 +35,19 @@ template<typename T>
 State<T>* State<T>:: getPrevious(){
   return this->cameFrom;
 }
-template<typename T>
-bool State<T>::operator<(State<T>* s1) {
-  return this->GetCost() < s1->GetCost();
+template<class T>
+bool State<T>::operator<(const State<T>& s1)  const{
+  return (this->GetCost() < s1.GetCost());
+}
+template<class T>
+bool State<T>::operator==(const State<T>& s1)  const{
+  return status.equals(s1.getStatus());
+}
+
+template<class T>
+State<T>& State<T>::operator=(const State<T>& s1 ) {
+  this->status = s1.status;
+  this->cameFrom = s1.cameFrom;
+  this->cost = s1.cost;
+return (*this);
 }

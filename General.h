@@ -170,8 +170,10 @@ class Point {
   Point(double x, double y);
   double getX();
   double getY();
-  bool equals(Point other);
-};
+  bool equals(Point other) const;
+  Point& operator=(const Point& s1 ) ;
+
+  };
 
 template<class T>
 class State {
@@ -183,13 +185,15 @@ private:
 
 public:
     State(T state, State<T>* came_from, double cost);
-    bool equals(State<T> s);
+    bool equals(State<T> s) const;
     void SetCameFrom(State<T>* came_from);
     double GetCost() const;
     void SetCost(double cost);
     State<T>* getPrevious();
-    bool operator<(State<T>* s1);
-    T getStatus();
+    bool operator<(const State<T>& s1)const ;
+    State<T>& operator=(const State<T> &s1 ) ;
+    bool operator==(const State<T> &s1 ) const;
+    T getStatus() const;
 };
 
 
