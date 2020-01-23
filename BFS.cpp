@@ -29,7 +29,7 @@ vector<State<T>> BFS<T, S>::search(Searchable<T> *searchable) {
 }
 
 template<class T, class S>
-list<State<T>> BFS<T, S>::backTrace() {
+vector<State<T>>BFS<T, S>::backTrace() {
   return visited;
 }
 

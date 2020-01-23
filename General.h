@@ -150,8 +150,8 @@ public:
 template<class S>
 class FileCacheManager : public CacheManager<string, S> {
  private:
-  list<pair<string, string>> cacheList;
-  map<string, typename list<pair<string, string>>::iterator> mapPointers;
+  list<pair<string, S>> cacheList;
+  map<string, typename list<pair<string, S>>::iterator> mapPointers;
   unsigned int capacity = 5;
 
  public:
@@ -199,6 +199,7 @@ private:
     State<T> *cameFrom;
 
 public:
+    State();
     State(T state, State<T>* came_from, double cost);
     bool equals(State<T> s) const;
     void SetCameFrom(State<T>* came_from);
@@ -261,7 +262,7 @@ class BFS : public Searcher<T, vector<State<T>>> {
     vector<State<T>> visited;
  public:
     virtual vector<State<T>> search(Searchable<T>* searchable);
-    list<State<T>> backTrace();
+  vector<State<T>> backTrace();
     virtual ~BFS() = default;
 };
 
