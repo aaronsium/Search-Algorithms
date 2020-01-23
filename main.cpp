@@ -1,22 +1,13 @@
 
-#include "AStar.h"
 #include "BestFirstSearch.h"
-#include "BFS.h"
 #include "CacheManager.h"
 #include "ClientHandler.h"
-#include "DFS.h"
 #include "FileCacheManager.h"
-#include "Matrix.h"
 #include "MyClaientHandler.h"
 #include "MySerialServer.h"
-#include "MyTestClientHandler.h"
 #include "OA.h"
 #include "Point.h"
-#include "Searchable.h"
 #include "Searcher.h"
-#include "server_side::Server.h"
-#include "State.h"
-#include "State.h"
 #include "StringReverser.h"
 
 
