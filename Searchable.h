@@ -24,14 +24,14 @@
 #include <stdlib.h>
 #include <string>
 #include <functional>
-
+#include "Searchable.h"
+#include "Point.h"
+#include "State.h"
 using namespace std;
 using namespace std::literals::chrono_literals;
 typedef vector<vector<int>> matrix;
 typedef vector<string> strVector;
-#include "Searchable.h"
-#include "Point.h"
-#include "State.h"
+
 
 template<class T>
 class Searchable {
