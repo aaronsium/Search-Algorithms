@@ -54,7 +54,7 @@ void MyClientHandler::handleClient(int socket) {
 
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
-        solution = this->cache->getSolution(problem);
+        solution = this->cache->getSolution(strProblem);
         //if solution wasn't found create one
     } else {
         solution = this->solver->solve(problem);
