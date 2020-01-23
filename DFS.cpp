@@ -8,10 +8,10 @@ S DFS<T, S>::search(Searchable<T>* s){
     this->myStack.push(s->getInitialState());
     int flag = 0;
 
-    while(!(this->myStack).empty){
+    while(!(this->myStack).empty()){
         State<T> state = myStack.top();
-        myStack.pop;
-        closed.insert(state);
+        myStack.pop();
+        closed.push_back(state);
 
         if (s->isGoalState(state)) {
             list<State<T>> t = backTrace(state);
@@ -27,7 +27,7 @@ S DFS<T, S>::search(Searchable<T>* s){
         }
 
         list<State<T>> PossibleStates = s->getAllPossibleStates(state);
-        while(!PossibleStates.empty){
+        while(!PossibleStates.empty()){
             int inClosed = 0;
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
@@ -67,4 +67,8 @@ list<State<T>> DFS<T, S>::backTrace(State<T> state){
     }
 
     return trace;
+}
+
+void TemporaryFunction (){
+  DFS<Point,vector<string>> x;
 }

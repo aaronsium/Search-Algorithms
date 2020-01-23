@@ -21,11 +21,11 @@ S AStar<T, S>::search(Searchable<T>* s){
 
         while (!openList.empty()){
             opened.push_back(openList.top());
-            openList.pop;
+            openList.pop();
         }
 
         list<State<T>> PossibleStates = s->getAllPossibleStates(state);
-        while(!PossibleStates.empty){
+        while(!PossibleStates.empty()){
             State<T> option = PossibleStates.front();
             PossibleStates.pop_front();
 
@@ -45,12 +45,12 @@ S AStar<T, S>::search(Searchable<T>* s){
             }
 
             if(inOpen != opened.end()){
-                if(option.GetCost <= inOpen->GetCost){
+                if(option.GetCost() <= inOpen->GetCost()){
                     opened.remove(*inOpen);
                     opened.push_back(option);
                 }
             } else if(inClosed != closed.end()){
-                if(option.GetCost <= inClosed->GetCost){}
+                if(option.GetCost() <= inClosed->GetCost()){}
                     closed.remove(*inClosed);
                     this->openList.push(option);
             } else {
@@ -76,4 +76,8 @@ list<State<T>> AStar<T, S>::backTrace(State<T>) {
     }
     this->trace = trace;
     return trace;
+}
+
+void TemporaryFunction (){
+ AStar<Point,vector<string>> x;
 }

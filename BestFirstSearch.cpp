@@ -81,4 +81,6 @@ vector<State<T>> BestFirstSearch<T, S>::backTrace() {
   return trace;
 }
 
-
+void TemporaryFunction (){
+  BestFirstSearch<Point,vector<string>> x;
+}

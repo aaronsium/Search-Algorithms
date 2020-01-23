@@ -32,3 +32,7 @@ template<class T, class S>
 list<State<T>> BFS<T, S>::backTrace() {
   return visited;
 }
+
+void TemporaryFunction (){
+  BFS<Point,vector<string>> x;
+}
