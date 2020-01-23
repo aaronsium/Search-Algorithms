@@ -40,14 +40,11 @@ void MyClientHandler::handleClient(int socket) {
                 m++;
                 if(lineNum == 0) {
                     v.push_back(stoi(token));
+                    problem.push_back(v);
                 } else{
                     problem[i].push_back(stoi(token));
                 }
-
                 j++;
-                if(lineNum == 0) {
-                    problem.push_back(v);
-                }
             }
         }
         lineNum ++;
