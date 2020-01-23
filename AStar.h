@@ -7,6 +7,9 @@
 
 #include "Searcher.h"
 #include "State.h"
+#include "searchable.h"
+#include <list>
+#include <vector>
 
 template<class T, class S>
 class AStar : public Searcher<T, S> {

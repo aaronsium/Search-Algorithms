@@ -7,6 +7,8 @@
 
 #include "Searcher.h"
 #include "State.h"
+#include "searchable.h"
+
 
 template<class T, class S>
 class DFS : public Searcher<T, S> {

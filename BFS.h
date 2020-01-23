@@ -7,6 +7,8 @@
 
 #include "Searcher.h"
 #include "State.h"
+#include "searchable.h"
+#include <vector>
 
 
 
