@@ -26,7 +26,7 @@
 #include <functional>
 #include "MyTestClientHandler.h"
 #include "ClientHandler.h"
-#include "server_side::Server.h.h"
+#include "server_side::Server.h"
 
 class MySerialServer : public server_side::Server {
 private:
