@@ -2,7 +2,7 @@
 // Created by aharon on 16/01/2020.
 //
 
-#include "General.h"
+#include "Point.h"
 
 Point::Point(double x1, double y1) {
   this->x = x1;

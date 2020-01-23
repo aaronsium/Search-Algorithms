@@ -2,7 +2,7 @@
 // Created by yaffa on 1/15/20.
 //
 
-#include "General.h"
+#include "StringReverser.h"
 
 string StringReverser:: solve (string problem){
     string solution = " ";

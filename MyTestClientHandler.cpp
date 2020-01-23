@@ -2,7 +2,7 @@
 // Created by yaffa on 13/01/2020.
 //
 
-#include "General.h"
+#include "MyTestClientHandler.h"
 
 
 MyTestClientHandler::MyTestClientHandler(Solver<string, string>* sol, CacheManager<string, string>* cacheManager){
