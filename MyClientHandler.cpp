@@ -11,6 +11,7 @@ void MyClientHandler::handleClient(int socket) {
     matrix problem;
     vector<string> solution;
     string message = " ";
+    string strProblem = " ";
     int colRow = 3;
     int lineNum = 0;
 
@@ -45,18 +46,19 @@ void MyClientHandler::handleClient(int socket) {
                     problem[i].push_back(stoi(token));
                 }
                 j++;
+                strProblem += token + " ";
             }
         }
         lineNum ++;
     }
 
     //searching for solution in the cache
-    if (this->cache->inCache(problem)) {
+    if (this->cache->inCache(strProblem)) {
         solution = this->cache->getSolution(problem);
         //if solution wasn't found create one
     } else {
         solution = this->solver->solve(problem);
-      this->cache->intoCache(problem, solution);
+      this->cache->intoCache(strProblem, solution);
     }
 
     for (int i = 0; i < solution.size(); i++) {
