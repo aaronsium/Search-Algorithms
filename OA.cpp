@@ -1,7 +1,7 @@
 //
 // Created by aharon on 18/01/2020.
 //
-#include "General.h"
+#include "OA.h"
 
 template<class P, class S, class T>
  OA<P, S, T>::OA(Searcher<T,S>* searcher1) {

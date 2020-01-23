@@ -2,7 +2,7 @@
 // Created by aharon on 13/01/2020.
 //
 
-#include "General.h"
+#include "MySerialServer.h"
 void MySerialServer::open(int port, ClientHandler *myHandler) {
   //opening a new thread which will run the server
   newSocket(port);
