@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <unordered_map>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -28,7 +27,6 @@
 
 using namespace std;
 using namespace std::literals::chrono_literals;
-
 typedef vector<vector<int>> matrix;
 typedef vector<string> strVector;
 
@@ -96,10 +94,10 @@ class MyClientHandler : public ClientHandler {
 
  private:
   Solver<matrix, vector<string>>* solver;
-  CacheManager<matrix, vector<string>> *cache;
+  CacheManager<string, vector<string>> *cache;
 
  public:
-  MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<matrix, vector<string>>* cacheManager): solver(sol),
+  MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<string, vector<string>>* cacheManager): solver(sol),
                                                                                                             cache(cacheManager){};
   void handleClient(int socket);
   ~MyClientHandler() {}
@@ -132,20 +130,20 @@ class MySerialServer : public server_side::Server {
   //once server has been opened handel client by calling myHandler.handleClient
 
 };
-template<class P, class S>
-class FileCacheManager : public CacheManager<P, S> {
+template<class S>
+class FileCacheManager : public CacheManager<string, S> {
  private:
-  list<pair<string, strVector>> cacheList;
-  map<string, typename list<pair<string, strVector>>::iterator> mapPointers;
+  list<pair<string, string>> cacheList;
+  map<string, typename list<pair<string, string>>::iterator> mapPointers;
   unsigned int capacity = 5;
 
  public:
   FileCacheManager();
-  string hashing(P problem);
+  string hashing(string problem);
   string Convertstr(size_t sz);// convert size_t to string
-  virtual bool inCache(P problem);
-  virtual S getSolution(P problem);
-  virtual void intoCache(P problem, S solution) ;
+  virtual bool inCache(string problem);
+  virtual S getSolution(string problem);
+  virtual void intoCache(string problem, S solution) ;
   void lru(string key);
   void wFile(string key, S solution);
   S rFile(string key);
@@ -197,15 +195,7 @@ public:
 };
 
 
-namespace std {
 
-template<class T>
-struct hash<State<T>> {
-  size_t operator ()(State<T> value) const {
-    return static_cast<size_t>(value);
-  }
-};
-}
 
 template<class T>
 class Searchable {

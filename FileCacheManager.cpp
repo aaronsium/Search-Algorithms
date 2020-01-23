@@ -3,16 +3,15 @@
 //
 #include "General.h"
 
-template<class P, class S>
-string FileCacheManager<P, S>::hashing(P problem) {
-  hash<P> myHash;
+template<class S>
+string FileCacheManager<S>::hashing(string problem) {
+  hash<string> myHash;
   // Using operator() to get hash value
-  size_t key_hash = std::hash<P>()(problem);
-  return to_string(myHash(key_hash));
+  return to_string(myHash(problem));
 }
 
-template<class P, class S>
-bool FileCacheManager<P, S>::inCache(P problem) {
+template<class S>
+bool FileCacheManager<S>::inCache(string problem) {
   if (this->mapPointers.find(problem)!=mapPointers.end()) {
     return true;
   } else {
@@ -20,8 +19,8 @@ bool FileCacheManager<P, S>::inCache(P problem) {
   }
 }
 
-template<class P, class S>
-void FileCacheManager<P, S>::intoCache(P problem, S solution) {
+template<class S>
+void FileCacheManager<S>::intoCache(string problem, S solution) {
   string key = hashing(problem);
   bool found = inCache(key);
   bool exist = inCache(key);
@@ -42,8 +41,8 @@ void FileCacheManager<P, S>::intoCache(P problem, S solution) {
 
 }
 
-template<class P, class S>
-S FileCacheManager<P, S>::getSolution(P problem) {
+template<class S>
+S FileCacheManager<S>::getSolution(string problem) {
   string key = hashing(problem);
   bool found = inCache(key);
   string check = key;
@@ -74,8 +73,8 @@ S FileCacheManager<P, S>::getSolution(P problem) {
 
 }
 
-template<class P, class S>
-void FileCacheManager<P, S>::lru(string key) {
+template<class S>
+void FileCacheManager<S>::lru(string key) {
   // if cash is full
   if (cacheList.size()==this->capacity) {
     auto least = cacheList.back();
@@ -87,8 +86,8 @@ void FileCacheManager<P, S>::lru(string key) {
   }
 }
 
-template<class P, class S>
-void FileCacheManager<P, S>::wFile(string key, S solution) {
+template<class S>
+void FileCacheManager<S>::wFile(string key, S solution) {
   ofstream output_file{key, ios::binary};
   if (!output_file.is_open()) {
     cout << "error while opening file";
@@ -98,8 +97,8 @@ void FileCacheManager<P, S>::wFile(string key, S solution) {
   }
 }
 
-template<class P, class S>
-S FileCacheManager<P, S>::rFile(string key) {
+template<class S>
+S FileCacheManager<S>::rFile(string key) {
   ifstream in_file(key, ios::binary);
   S object;
   if (!in_file.is_open()) {
@@ -112,8 +111,8 @@ S FileCacheManager<P, S>::rFile(string key) {
   return object;
 }
 
-template<class P, class S>
-string FileCacheManager<P, S>::Convertstr(size_t sz) {
+template<class S>
+string FileCacheManager<S>::Convertstr(size_t sz) {
   char buf[24];
   sprintf(buf, "%u", sz);
   string newStr(buf);

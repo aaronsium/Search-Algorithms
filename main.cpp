@@ -26,8 +26,8 @@ int main(int arg, char *args[]) {
   Solver<matrix,vector<string>> *solv;
   solv = new OA<matrix,vector<string>,Point>(search);
 
-  CacheManager<matrix,vector<string>> *cash2;
-  cash2 = new FileCacheManager<matrix,vector<string>> ();
+  CacheManager<string,vector<string>> *cash2;
+  cash2 = new FileCacheManager<vector<string>> ();
 
   MyClientHandler client(solv,cash2);
 

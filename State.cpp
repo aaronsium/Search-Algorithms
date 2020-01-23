@@ -51,3 +51,14 @@ State<T>& State<T>::operator=(const State<T>& s1 ) {
   this->cost = s1.cost;
 return (*this);
 }
+
+
+namespace std {
+
+template<class T>
+struct hash<State<T>> {
+  size_t operator ()(State<T> value) const {
+    return static_cast<size_t>(value);
+  }
+};
+}
