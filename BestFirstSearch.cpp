@@ -18,7 +18,7 @@ S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
 
     while (!openList.empty()){
       opened.push_back(openList.top());
-      openList.pop;
+      openList.pop();
     }
 
     list<State<T>> options = searchable->getAllPossibleStates(n);
