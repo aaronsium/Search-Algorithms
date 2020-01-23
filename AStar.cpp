@@ -78,6 +78,6 @@ list<State<T>> AStar<T, S>::backTrace(State<T>) {
     return trace;
 }
 
-void TemporaryFunction (){
+void TemporaryFunction1 (){
  AStar<Point,vector<string>> x;
 }

@@ -69,6 +69,6 @@ list<State<T>> DFS<T, S>::backTrace(State<T> state){
     return trace;
 }
 
-void TemporaryFunction (){
+void TemporaryFunction4 (){
   DFS<Point,vector<string>> x;
 }

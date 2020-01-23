@@ -118,6 +118,8 @@ string FileCacheManager<S>::Convertstr(size_t sz) {
   string newStr(buf);
   return newStr;
 }
-
+void TemporaryFunction5 (){
+  FileCacheManager<vector<string>> x;
+}
 
 
