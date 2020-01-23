@@ -2,7 +2,7 @@
 // Created by yaffa on 1/17/20.
 //
 
-#include "General.h"
+#include "Matrix.h"
 Matrix::Matrix(matrix f):
     field(f),
     initial(State<Point> (Point(f[0][f.size()-2], f[1][f.size()-2]), NULL, 0)),

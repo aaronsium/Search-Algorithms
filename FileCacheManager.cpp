@@ -1,7 +1,7 @@
 //
 // Created by aharon on 14/01/2020.
 //
-#include "General.h"
+#include "FileCacheManager.h"
 
 template<class S>
 string FileCacheManager<S>::hashing(string problem) {
