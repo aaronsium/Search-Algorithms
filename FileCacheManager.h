@@ -5,6 +5,16 @@
 #ifndef EX4__FILECACHEMANAGER_H_
 #define EX4__FILECACHEMANAGER_H_
 #include "CacheManager.h"
+#include <string>
+#include <list>
+#include <map>
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+
 template<class S>
 class FileCacheManager : public CacheManager<string, S> {
  private:
