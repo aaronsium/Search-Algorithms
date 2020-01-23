@@ -20,7 +20,7 @@ vector<State<T>> BFS<T, S>::search(Searchable<T> *searchable) {
     list<State<T>> options = searchable->getAllPossibleStates(current);
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
-      if ((!std::count(visited.begin(), visited.end(), opt))) {
+      if ((!std::count(visited.begin(), visited.end(), (*opt)))) {
         visited.push_back(*opt);
         q.push(*opt);
       }
