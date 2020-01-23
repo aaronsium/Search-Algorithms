@@ -35,7 +35,7 @@ S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
 
       //iterator to check if option in closed
 //      for (std::list<T>::iterator it = mylist.begin(); it != mylist.end(); ++it)
-      typename unordered_set<State<T>>::iterator inClosed;
+      typename list<State<T>>::iterator inClosed;
       for (inClosed = closed.begin(); inClosed != closed.end(); ++inClosed){
         if(inClosed->equals(*opt)) {
           break;
@@ -73,7 +73,7 @@ S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
 
 template<class T, class S>
 vector<State<T>> BestFirstSearch<T, S>::backTrace() {
-  typename std::unordered_set<State<T>>::iterator element;
+  typename std:: list<State<T>>::iterator element;
   vector<State<T>> trace;
   for (element = closed.begin(); element!=closed.end(); ++element) {
     trace.push_back(*element);

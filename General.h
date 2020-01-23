@@ -299,7 +299,7 @@ template<class T, class S>
 class DFS : public Searcher<T, S> {
 private:
     stack<State<T>> myStack;
-    list<State<T>><State<T>> closed;
+    list<State<T>> closed;
     list<State<T>> trace;
 
 public:
