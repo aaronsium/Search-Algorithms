@@ -11,7 +11,7 @@ template<class P, class S, class T>
 template<class P, class S, class T>
 S OA<P, S, T>:: solve(P problem) { // P is a matrix in our case
 
-  Searchable<T> *able;
+  Searchable<Point> *able;
   able = new Matrix(problem);
 
  S solution = this->searcher->search(able);// solving the problem by search -> store the solution
