@@ -12,6 +12,7 @@ void MyClientHandler::handleClient(int socket) {
     vector<string> solution;
     string message = " ";
     int colRow = 3;
+    int lineNum = 0;
 
     while ((read(socket, buffer, 1024)) && (colRow > 0)) {
         char delimiter = ',';
@@ -24,8 +25,8 @@ void MyClientHandler::handleClient(int socket) {
                 colRow--;
             }
 
-            vector<int> v;
             for (int i = 0; buffer[i] != '\n'; i++) {
+                vector<int> v;
                 // find next value
                 while ((buffer[j] != delimiter) && (buffer[j] != '\0')) {
                     j++;
@@ -37,13 +38,19 @@ void MyClientHandler::handleClient(int socket) {
                     m++;
                 }
                 m++;
-
-                v.push_back(strtof((string(token)).c_str(), 0));
+                if(lineNum == 0) {
+                    v.push_back(stoi(token));
+                } else{
+                    problem[i].push_back(stoi(token));
+                }
 
                 j++;
+                if(lineNum == 0) {
+                    problem.push_back(v);
+                }
             }
-            problem.push_back(v);
         }
+        lineNum ++;
     }
 
     //searching for solution in the cache
