@@ -51,7 +51,7 @@ S AStar<T, S>::search(Searchable<T>* s){
                 }
             } else if(inClosed != closed.end()){
                 if(option.GetCost <= inClosed->GetCost){}
-                    closed.erase(*inClosed);
+                    closed.remove(*inClosed);
                     this->openList.push(option);
             } else {
                 this->openList.push(option);
@@ -62,7 +62,7 @@ S AStar<T, S>::search(Searchable<T>* s){
             opened.pop_front();
         }
 
-        closed.insert(state);
+        closed.push_back(state);
     }
 }
 

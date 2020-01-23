@@ -130,6 +130,23 @@ class MySerialServer : public server_side::Server {
   //once server has been opened handel client by calling myHandler.handleClient
 
 };
+
+class MyParallelServer : public server_side::Server {
+private:
+    bool isOpen = false;
+    int PORT = 0;
+    int client_socket = 0;
+    int server_socket = 0;
+public:
+    void open(int port, ClientHandler *myHandler) override;
+    void stop() override;
+    int newSocket(int port);
+    void start(ClientHandler *myHandler);
+    ~MyParallelServer() override {}
+    //once server has been opened handel client by calling myHandler.handleClient
+
+};
+
 template<class S>
 class FileCacheManager : public CacheManager<string, S> {
  private:
@@ -194,9 +211,6 @@ public:
     T getStatus() const;
 };
 
-
-
-
 template<class T>
 class Searchable {
 protected:
@@ -229,12 +243,12 @@ class Searcher {
 template<class T, class S>
 class BestFirstSearch : public Searcher<T, S> {
 
-private:
+ private:
     priority_queue<State<T>> openList;
     list<State<T>> opened;
-    unordered_set<State<T>> closed;
+    list<State<T>> closed;
 
-public:
+ public:
     virtual S search(Searchable<T>* searchable);
     vector<State<T>> backTrace();
     virtual ~BestFirstSearch() = default;
@@ -242,12 +256,13 @@ public:
 
 template<class T, class S>
 class BFS : public Searcher<T, S> {
+
  private:
-  unordered_set<State<T>> visited;
+    list<State<T>> visited;
  public:
     virtual S search(Searchable<T>* searchable);
-  unordered_set<State<T>> backTrace();
-  virtual ~BFS() = default;
+    list<State<T>> backTrace();
+    virtual ~BFS() = default;
 };
 
 class Matrix : public Searchable<Point> {
@@ -271,43 +286,41 @@ class Matrix : public Searchable<Point> {
 
 template<class P, class S, class T>
 class OA : public Solver<P, S> {
- private:
-  Searcher<T, S>* searcher;
- public:
+
+private:
+    Searcher<T, S>* searcher;
+public:
     OA(Searcher<T, S>* searcher1);
-  S solve(P problem);
-  virtual ~OA() = default;;
+    S solve(P problem);
+    virtual ~OA() = default;;
 };
 
 template<class T, class S>
 class DFS : public Searcher<T, S> {
 private:
     stack<State<T>> myStack;
-    unordered_set<State<T>> closed;
+    list<State<T>><State<T>> closed;
     list<State<T>> trace;
 
 public:
     virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
     virtual ~DFS() = default;
-
 };
 
 template<class T, class S>
 class AStar : public Searcher<T, S> {
+
 private:
-    unordered_set<State<T>> closed;
+    list<State<T>> closed;
     priority_queue<State<T>> openList;
     list<State<T>> trace;
     list<State<T>> opened;
 
-
  public:
     virtual S search(Searchable<T>* searchable);
     list<State<T>> backTrace(State<T>);
-
     virtual ~AStar() = default;
-
 };
 
 #endif //EX4_GENERAL_H

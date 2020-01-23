@@ -9,7 +9,7 @@ S BFS<T, S>::search(Searchable<T> *searchable) {
   State<T> start = searchable->getInitialState();
   queue<State<T>> q;
   q.push(start);
-  visited.insert(start);
+  visited.push_back(start);
   while (!q.empty()) {
     State<T> current = q.front();
     q.pop();
@@ -21,7 +21,7 @@ S BFS<T, S>::search(Searchable<T> *searchable) {
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
       if ((!std::count(visited.begin(), visited.end(), opt))) {
-        visited.insert(*opt);
+        visited.push_back(*opt);
         q.push(*opt);
       }
     }
@@ -29,6 +29,6 @@ S BFS<T, S>::search(Searchable<T> *searchable) {
 }
 
 template<class T, class S>
-unordered_set<State<T>> BFS<T, S>::backTrace() {
+list<State<T>> BFS<T, S>::backTrace() {
   return visited;
 }

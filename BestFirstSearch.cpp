@@ -11,7 +11,7 @@ S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
   while (!openList.empty()) {
     State<T> n = openList.top();
     this->openList.pop();
-    closed.insert(n);
+    closed.push_back(n);
     if (searchable->isGoalState(n)) {
       return searchable->adaptSolution(backTrace());
     }
@@ -52,7 +52,7 @@ S BestFirstSearch<T, S>::search(Searchable<T>* searchable) {
               opened.remove(*inOpen);
           }
           openList.push(*opt);
-          closed.erase(*inClosed);
+          closed.remove(*inClosed);
         }
       } else {
         if(opt->GetCost() < inOpen->GetCost()) {
