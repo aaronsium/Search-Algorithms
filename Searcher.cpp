@@ -2,7 +2,7 @@
 // Created by aharon on 16/01/2020.
 //
 
-#include "General.h"
+#include "Searcher.h"
 template<class T, class S>
 Searcher<T, S>::Searcher() {
   evaluatedNodes = 0;

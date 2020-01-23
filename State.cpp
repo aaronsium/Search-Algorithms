@@ -2,7 +2,7 @@
 // Created by aharon on 17/01/2020.
 //
 
-#include "General.h"
+#include "State.h"
 template<class T>
 State<T>::State(T status1, State<T>* came_from, double c) {
   this->status = status1;
