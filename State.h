@@ -14,11 +14,11 @@ private:
     State<T> *cameFrom;
 
 public:
-    State(T status1, State<T>* came_from, double c) {
-      this->status = status1;
-      this->cameFrom = came_from;
-      this->cost = c;
-    }
+    State(T status1, State<T>* came_from, double c):
+      status(status1),
+      cameFrom(came_from),
+      cost(c)
+    {}
 
 
     T getStatus() const{
