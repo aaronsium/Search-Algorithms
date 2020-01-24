@@ -30,7 +30,6 @@ int main(int arg, char *args[]) {
 
   MyClientHandler client(solv,cash2);
 
-
-  server.open(stoi(args[0]),&client);
+  server.open(atoi(args[1]),&client);
   return 0;
 }

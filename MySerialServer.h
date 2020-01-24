@@ -37,8 +37,8 @@ private:
 public:
     void open(int port, ClientHandler *myHandler) {
         //opening a new thread which will run the server
-        newSocket(port);
-        thread serverThread(&MySerialServer::start, this, myHandler);
+      thread serverThread(&MySerialServer::start, this, myHandler);
+      newSocket(port);
         serverThread.detach();
 
     }
@@ -74,27 +74,30 @@ public:
         }
         while (isOpen) {
             cout << "waiting" << endl;
-            //timeout
+//            timeout
             struct timeval tv;
             tv.tv_sec = 120;
             setsockopt(server_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
 
             int client_socket = accept(server_socket, (struct sockaddr *) &address, (socklen_t *) &address);
+          cout << "xxxxx" << endl;
+
             if (client_socket==-1) {
                 cerr << "Error accepting client" << endl;
                 return -4;
             } else {
-                isOpen = true;
+              cout << "client connected" << endl;
+              isOpen = true;
             }
             //updating the socket by getting a new client
             this->client_socket = client_socket;
-            while (client_socket==0) {}
+          while (client_socket==0) {}
         }
     }
 
     void start(ClientHandler *myHandler) {
-        cout << "Server is now listening" << endl;
         //when server opened we can open client thread
+        while(!isOpen){}
         while (isOpen) {
             cout << "Server is now listening" << endl;
             //waiting till client connect
