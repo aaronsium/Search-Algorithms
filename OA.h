@@ -8,6 +8,7 @@
 #include "OA.h"
 #include "Solver.h"
 #include "Searcher.h"
+#include "Matrix.h"
 
 template<class P, class S, class T>
 class OA : public Solver<P, S> {
