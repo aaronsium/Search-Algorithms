@@ -1,9 +1,28 @@
 
-#include "Point.cpp"
-#include "MySerialServer.cpp"
-#include "Searcher.cpp"
-#include "BestFirstSearch.cpp"
-#include "OA.cpp"
+#include "AStar.h"
+#include "BestFirstSearch.h"
+#include "BFS.h"
+#include "CacheManager.h"
+#include "ClientHandler.h"
+#include "DFS.h"
+#include "FileCacheManager.h"
+#include "Matrix.h"
+#include "MyClientHandler.h"
+#include "MySerialServer.h"
+#include "MyTestClientHandler.h"
+#include "OA.h"
+#include "Point.h"
+#include "Searchable.h"
+#include "Searcher.h"
+#include "server_side"
+#include "State.h"
+#include "State.h"
+#include "StringReverser.h"
+
+
+
+
+
 
 int main(int arg, char *args[]) {
   MySerialServer server;

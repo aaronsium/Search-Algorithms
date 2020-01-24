@@ -2,31 +2,8 @@
 // Created by yaffa on 13/01/2020.
 //
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <bits/stdc++.h>
-#include <arpa/inet.h>
-#include <fstream>
-#include <algorithm>
-#include <cstring>
-#include <chrono>
-#include <thread>
-#include <mutex>
-#include <cstddef>
-#include <stdlib.h>
-#include <string>
-#include <functional>
-#include "MyClientHandler.h"
+#include "General.h"
 
-using namespace std;
-using namespace std::literals::chrono_literals;
-typedef vector<vector<int>> matrix;
-typedef vector<string> strVector;
 
 void MyClientHandler::handleClient(int socket) {
 
