@@ -4,8 +4,8 @@
 
 #ifndef EX4__MATRIX_H_
 #define EX4__MATRIX_H_
-#include "Point.h"
 #include "Searchable.h"
+#include "Point.h"
 #include "State.h"
 
 typedef vector<vector<int>> matrix;

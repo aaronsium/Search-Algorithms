@@ -20,6 +20,7 @@ public:
       this->cost = c;
     }
 
+
     T getStatus() const{
       return this->status;
     }
@@ -59,11 +60,11 @@ public:
       return (*this);
     }
 
-    struct hash<State<T>> {
-        size_t operator ()(State<T> value) const {
-          return static_cast<size_t>(value);
-        }
-    }
+//    struct hash<State<T>> {
+//        size_t operator ()(State<T> value) const {
+//          return static_cast<size_t>(value);
+//        }
+//    }
 };
 
 #endif //EX4_STATE_H

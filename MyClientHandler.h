@@ -27,6 +27,8 @@
 #include "MyClientHandler.h"
 #include "Solver.h"
 #include "ClientHandler.h"
+#include "Matrix.h"
+
 
 typedef vector<vector<int>> matrix;
 
@@ -34,11 +36,11 @@ typedef vector<vector<int>> matrix;
 class MyClientHandler : public ClientHandler {
 
 private:
-    Solver<matrix, vector<string>>* solver;
+    Solver<Matrix, vector<string>>* solver;
     CacheManager<string, vector<string>> *cache;
 
 public:
-    MyClientHandler(Solver<matrix, vector<string>>* sol, CacheManager<string, vector<string>>* cacheManager): solver(sol),
+    MyClientHandler(Solver<Matrix, vector<string>>* sol, CacheManager<string, vector<string>>* cacheManager): solver(sol),
                                                                                                               cache(cacheManager){};
     void handleClient(int socket) {
 
