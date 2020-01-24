@@ -15,11 +15,20 @@ protected:
     int evaluatedNodes;
 
 public:
-    Searcher();
+    Searcher() {
+        evaluatedNodes = 0;
+    }
+
     virtual S search(Searchable<T>* searchable) = 0;
-    int NodesEvaluated();
+    int NodesEvaluated() {
+        return evaluatedNodes;
+    }
+
+    void SetEvaluatedNodes(int evaluated_nodes) {
+        evaluatedNodes = evaluated_nodes;
+    }
+
     virtual ~Searcher() = default;
-    void SetEvaluatedNodes(int evaluated_nodes);
 };
 
 #endif //EX4_SEARCHER_H

@@ -35,7 +35,14 @@ typedef vector<string> strVector;
 class StringReverser : public Solver<string, string> {
 
 public:
-    virtual string solve(string problem) override;
+    virtual string solve (string problem){
+        string solution = " ";
+        for(int i = problem.length()-1; i >= 0; i++){
+            solution += problem[i];
+        }
+        return problem;
+    }
+
     ~StringReverser() override {}
 };
 

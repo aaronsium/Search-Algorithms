@@ -15,8 +15,19 @@ class OA : public Solver<P, S> {
 private:
     Searcher<T, S>* searcher;
 public:
-    OA(Searcher<T, S>* searcher1);
-    S solve(P problem);
+    OA(Searcher<T,S>* searcher1) {
+        this->searcher=searcher1;
+    }
+
+    S solve(P problem) { // P is a matrix in our case
+
+        Searchable<Point> *able;
+        able = new Matrix(problem);
+
+        S solution = this->searcher->search(able);// solving the problem by search -> store the solution
+        return solution;// adapt the solution to the problem's type
+    }
+
     virtual ~OA() = default;
 };
 

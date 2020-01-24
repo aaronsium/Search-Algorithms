@@ -14,57 +14,56 @@ private:
     State<T> *cameFrom;
 
 public:
-    State();
+    State(T status1, State<T>* came_from, double c) {
+      this->status = status1;
+      this->cameFrom = came_from;
+      this->cost = c;
+    }
 
+    T getStatus() const{
+      return this->status;
+    }
 
-  State(T status1, State<T>* came_from, double c) {
-    this->status = status1;
-    this->cameFrom = came_from;
-    this->cost = c;
-  }
+    bool equals(State<T> s) const {
+      return status.equals(s.getStatus());
+    }
 
-  T getStatus() const{
-    return this->status;
-  }
-  bool equals(State<T> s) const {
-    return status.equals(s.getStatus());
-  }
-  void SetCameFrom(State<T>* came_from) {
-    cameFrom = came_from;
-  }
-  double GetCost() const {
-    return cost;
-  }
-  void SetCost(double c) {
-    this->cost = c;
-  }
+    void SetCameFrom(State<T>* came_from) {
+      cameFrom = came_from;
+    }
 
-  State<T>* getPrevious(){
-    return this->cameFrom;
-  }
-  bool operator<(const State<T>& s1)  const{
-    return (this->GetCost() < s1.GetCost());
-  }
-  bool operator==(const State<T>& s1)  const{
-    return status.equals(s1.getStatus());
-  }
+    double GetCost() const {
+      return cost;
+    }
 
-  State<T>& operator=(const State<T>& s1 ) {
-    this->status = s1.status;
-    this->cameFrom = s1.cameFrom;
-    this->cost = s1.cost;
-    return (*this);
-  }
+    void SetCost(double c) {
+      this->cost = c;
+    }
 
+    State<T>* getPrevious(){
+      return this->cameFrom;
+    }
 
-//namespace std {
-//
-//struct hash<State<T>> {
-//  size_t operator ()(State<T> value) const {
-//    return static_cast<size_t>(value);
-//  }
-//};
-//}
+    bool operator<(const State<T>& s1)  const{
+      return (this->GetCost() < s1.GetCost());
+    }
+
+    bool operator==(const State<T>& s1)  const{
+      return status.equals(s1.getStatus());
+    }
+
+    State<T>& operator=(const State<T>& s1 ) {
+      this->status = s1.status;
+      this->cameFrom = s1.cameFrom;
+      this->cost = s1.cost;
+      return (*this);
+    }
+
+    struct hash<State<T>> {
+        size_t operator ()(State<T> value) const {
+          return static_cast<size_t>(value);
+        }
+    }
 };
 
 #endif //EX4_STATE_H
