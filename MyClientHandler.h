@@ -77,10 +77,10 @@ public:
                     }
                     m++;
                     if(lineNum == 0) {
-                        v.push_back(stoi(token));
+                        v.push_back(atoi(token.c_str()));
                         problem.push_back(v);
                     } else{
-                        problem[i].push_back(stoi(token));
+                        problem[i].push_back(atoi(token.c_str()));
                     }
                     j++;
                     strProblem += token + " ";

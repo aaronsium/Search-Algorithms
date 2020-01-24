@@ -81,7 +81,6 @@ public:
 
             int client_socket = accept(server_socket, (struct sockaddr *) &address, (socklen_t *) &address);
           cout << "xxxxx" << endl;
-
             if (client_socket==-1) {
                 cerr << "Error accepting client" << endl;
                 return -4;
@@ -91,7 +90,7 @@ public:
             }
             //updating the socket by getting a new client
             this->client_socket = client_socket;
-          while (client_socket==0) {}
+          while (this->client_socket!=0) {}
         }
     }
 
