@@ -39,7 +39,7 @@ protected:
     State<Point> initial;
     State<Point> goal;
 public:
-    Searchable();
+    Searchable(){};
     virtual State<T> getInitialState() = 0;
     virtual bool isGoalState(State<T>) = 0;
     virtual list<State<T>> getAllPossibleStates(State<T> current) = 0;

@@ -23,8 +23,8 @@ class FileCacheManager : public CacheManager<string, S> {
   unsigned int capacity = 5;
 
  public:
-  FileCacheManager();
-  virtual ~FileCacheManager() ;
+  FileCacheManager(){};
+  ~FileCacheManager()  {} ;
 
   ////////////////////////////////////////////////////////
   string hashing(string problem) {
