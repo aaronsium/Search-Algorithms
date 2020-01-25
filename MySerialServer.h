@@ -80,7 +80,6 @@ public:
             setsockopt(server_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
 
             int client_socket = accept(server_socket, (struct sockaddr *) &address, (socklen_t *) &address);
-          cout << "xxxxx" << endl;
             if (client_socket==-1) {
                 cerr << "Error accepting client" << endl;
                 return -4;
@@ -101,7 +100,7 @@ public:
             cout << "Server is now listening" << endl;
             //waiting till client connect
             while (client_socket==0) {}
-
+          cout << "xxxxx" << endl;
             myHandler->handleClient(this->client_socket);; // need to check about arguments
 // current client is disconnecting
             cout << "client disconnected" << endl;
