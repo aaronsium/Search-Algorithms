@@ -49,14 +49,13 @@ class MyClientHandler : public ClientHandler {
     vector<string> solution;
     string message = " ";
     string strProblem = " ";
-    int colRow = 3;
-    int lineNum = 0;
     bool isN = false;
     int countStr = 0;
     bool check = true;
     string tempStr;
     int maxLine = 0;
-    int sizeCounter = 0;
+    int colCounter = 0;
+      int rowCounter = 0;
     while (check) {
       read(socket, buffer, 1024);
       string copy(buffer);
@@ -67,21 +66,17 @@ class MyClientHandler : public ClientHandler {
     }
     char *temp12 = const_cast<char *>(tempStr.c_str());
     char *tempBuffer = strtok(temp12, "\n");
-    while (tempBuffer!=NULL && (colRow > 1)) {
+    while (tempBuffer!=NULL) {
       char delimiter = ',';
       int m = 0;
       int j = 0;
-      sizeCounter = 0;
       if (!strcmp(tempBuffer, "end")) {
-        colRow--;
-        continue;
+          continue;
       } else {
-        if (colRow < 3) {
-          colRow--;
-        }
         string str = tempBuffer;
-        str = str + '\n';
-        for (int i = 0; str[m - 1]!='\n'; i++) {
+        str = str + "\n";
+          int i = 0;
+        for (i; str[m - 1]!='\n'; i++) {
           vector<int> v;
           // find next value
           while ((str[j]!=delimiter) && (str[j]!='\n')) {
@@ -94,7 +89,10 @@ class MyClientHandler : public ClientHandler {
             m++;
           }
           m++;
-          if (lineNum==0) {
+          if (colCounter == 0 || i > colCounter) {
+              while (v.size() < rowCounter){
+                  v.push_back(-1);
+              }
             v.push_back(atoi(token.c_str()));
             problem.push_back(v);
           } else {
@@ -102,12 +100,14 @@ class MyClientHandler : public ClientHandler {
           }
           j++;
           strProblem += token + " ";
-          sizeCounter++;
+            if(i > colCounter){
+                colCounter = i;
+            }
         }
-        cout << strProblem << endl;
+          rowCounter++;
+          cout << strProblem << endl;
         strProblem = "";
       }
-      lineNum++;
       tempBuffer = strtok(NULL, "\n");
     }
     cout << "yyyyy" << endl;
