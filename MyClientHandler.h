@@ -112,6 +112,10 @@ class MyClientHandler : public ClientHandler {
       }
       tempBuffer = strtok(NULL, "\n");
     }
+      for(int q = rowCounter-2; q < problem[0].size(); q++){
+          for(int p = 2; p < problem.size();p++){
+              problem[p].push_back(-1);
+          }}
 
       for(int q = 0; q < problem[0].size(); q++){
           for(int p = 0; p < problem.size();p++){
