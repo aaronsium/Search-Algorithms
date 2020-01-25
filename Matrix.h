@@ -20,6 +20,7 @@ class Matrix : public Searchable<Point> {
   ~Matrix() override {};
 
   //////////////////////////////////////////////////////////////
+  Matrix();
   Matrix(matrix f):
       field(f),
       initial(State<Point> (Point(f[0][f[0].size()-2], f[1][f[1].size()-2]), NULL, 0)),
