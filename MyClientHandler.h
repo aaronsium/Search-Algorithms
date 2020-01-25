@@ -71,6 +71,7 @@ class MyClientHandler : public ClientHandler {
       int m = 0;
       int j = 0;
       if (!strcmp(tempBuffer, "end")) {
+          tempBuffer = NULL;
           continue;
       } else {
         string str = tempBuffer;
@@ -105,11 +106,18 @@ class MyClientHandler : public ClientHandler {
             }
         }
           rowCounter++;
-          cout << strProblem << endl;
+//          cout << strProblem << endl;
         strProblem = "";
       }
       tempBuffer = strtok(NULL, "\n");
     }
+
+      for(int q = 0; q < problem[0].size(); q++){
+          for(int p = 0; p < problem.size();p++){
+              cout << problem[p][q] << " ";
+          }
+          cout << endl;
+      }
     cout << "yyyyy" << endl;
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
