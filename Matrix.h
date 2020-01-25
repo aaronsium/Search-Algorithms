@@ -20,6 +20,7 @@ class Matrix : public Searchable<Point> {
   ~Matrix() override {};
 
   //////////////////////////////////////////////////////////////
+  Matrix(){}
   Matrix(matrix f):
       field(f),
       initial(State<Point> (Point(f[0][f[0].size()-2], f[1][f[1].size()-2]), NULL, 0)),
@@ -38,21 +39,29 @@ class Matrix : public Searchable<Point> {
   list<State<Point>> getAllPossibleStates(State<Point> current) {
     list<State<Point>> possibleState;
 
-    State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
-                    &current, current.GetCost() + pointCost(o1));
-    possibleState.push_back(o1);
+    if(current.getStatus().getX() - 1 >= 0) {
+      State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
+                      &current, current.GetCost() + pointCost(o1));
+      possibleState.push_back(o1);
+    }
 
-    State<Point> o2(Point(current.getStatus().getX() + 1, current.getStatus().getY()),
-                    &current, current.GetCost() + pointCost(o2));
-    possibleState.push_back(o1);
+    if(current.getStatus().getX() < this->field.size()) {
+      State<Point> o2(Point(current.getStatus().getX() + 1, current.getStatus().getY()),
+                      &current, current.GetCost() + pointCost(o2));
+      possibleState.push_back(o2);
+    }
 
-    State<Point> o3(Point(current.getStatus().getX(), current.getStatus().getY() - 1),
-                    &current, current.GetCost() + pointCost(o3));
-    possibleState.push_back(o1);
+    if(current.getStatus().getY() - 1 >= 0) {
+      State<Point> o3(Point(current.getStatus().getX(), current.getStatus().getY() - 1),
+                      &current, current.GetCost() + pointCost(o3));
+      possibleState.push_back(o3);
+    }
 
-    State<Point> o4(Point(current.getStatus().getX(), current.getStatus().getY() + 1),
-                    &current, current.GetCost() + pointCost(o4));
-    possibleState.push_back(o1);
+    if(current.getStatus().getX() < this->field[0].size()) {
+      State<Point> o4(Point(current.getStatus().getX(), current.getStatus().getY() + 1),
+                      &current, current.GetCost() + pointCost(o4));
+      possibleState.push_back(o4);
+    }
 
     return possibleState;
   }
