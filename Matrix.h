@@ -46,7 +46,7 @@ class Matrix : public Searchable<Point> {
     }
 
     if(current.getStatus().getX() < this->field.size()) {
-      Point p2(current.getStatus().getX(), current.getStatus().getY());
+      Point p2(current.getStatus().getX() + 1, current.getStatus().getY());
       State<Point> o2(Point(p2), &current, current.GetCost() + pointCost(p2));
       possibleState.push_back(o2);
     }
