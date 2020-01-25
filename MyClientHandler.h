@@ -57,6 +57,7 @@ class MyClientHandler : public ClientHandler {
     int colCounter = 0;
       int rowCounter = 0;
     while (check) {
+      char buffer[1024] = {0};
       read(socket, buffer, 1024);
       string copy(buffer);
       if (copy.find("end")!=std::string::npos) {
