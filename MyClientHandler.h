@@ -129,8 +129,7 @@ class MyClientHandler : public ClientHandler {
       solution = this->cache->getSolution(strProblem);
       //if solution wasn't found create one
     } else {///// אולי בלבול יכול להיות שהצריך לשלוח את המטריצה הגדולה (סולבר)
-    Matrix bigMatrix =  Matrix(problem);
-      solution = this->solver->solve(bigMatrix);
+      solution = this->solver->solve(Matrix(problem));
       this->cache->intoCache(strProblem, solution);//////hash להוסיף
     }
 
