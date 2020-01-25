@@ -22,8 +22,8 @@ class Matrix : public Searchable<Point> {
   //////////////////////////////////////////////////////////////
   Matrix(matrix f):
       field(f),
-      initial(State<Point> (Point(f[0][f.size()-2], f[1][f.size()-2]), NULL, 0)),
-      goal(State<Point> (Point(f[0][f.size()-1], f[1][f.size()-1]), NULL, 0))
+      initial(State<Point> (Point(f[0][f[0].size()-2], f[1][f[1].size()-2]), NULL, 0)),
+      goal(State<Point> (Point(f[0][f[0].size()-1], f[1][f[1].size()-1]), NULL, 0))
   {}
 
   State<Point> getInitialState() {
