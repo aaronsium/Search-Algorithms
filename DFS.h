@@ -43,7 +43,7 @@ class DFS : public Searcher<T, S> {
         }
       }
 
-      list<State<T>> PossibleStates = s->getAllPossibleStates(state);
+      list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
       while(!PossibleStates.empty()){
         int inClosed = 0;
         State<T> option = PossibleStates.front();
