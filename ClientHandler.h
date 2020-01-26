@@ -13,7 +13,9 @@ class ClientHandler {
 
 public:
     virtual void handleClient(int socket) = 0;
-    virtual ~ClientHandler() {}
+  static ClientHandler *Create();
+  virtual ClientHandler *Clone() = 0;
+  virtual ~ClientHandler() {}
 };
 
 #endif //EX4_CLIENTHANDLER_H

@@ -39,6 +39,10 @@ class MyClientHandler : public ClientHandler {
   CacheManager<string, vector<string>> *cache;
 
  public:
+  MyClientHandler(){}
+  MyClientHandler(const MyClientHandler& rhs){}
+  ClientHandler *Clone(){}
+  void ChangeAttributes(){}
   MyClientHandler(Solver<Matrix, vector<string>> *sol, CacheManager<string, vector<string>> *cacheManager)
       : solver(sol),
         cache(cacheManager) {};
