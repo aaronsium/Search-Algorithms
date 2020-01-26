@@ -13,8 +13,8 @@ class ClientHandler {
 
 public:
     virtual void handleClient(int socket) = 0;
-  static ClientHandler *Create();
-  virtual ClientHandler *Clone() = 0;
+  virtual ClientHandler *create() const =0;
+  virtual ClientHandler *clone() const = 0;
   virtual ~ClientHandler() {}
 };
 

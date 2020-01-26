@@ -1,5 +1,6 @@
 
 #include "BFS.h"
+#include "BestFirstSearch.h"
 #include "AStar.h"
 #include "DFS.h"
 #include "BFS.h"
@@ -11,19 +12,13 @@
 #include "Point.h"
 #include "Searcher.h"
 #include "StringReverser.h"
-
-
-
-
-
-
+#include "MyParallelServer.h"
 
 int main(int arg, char *args[]) {
-  MySerialServer server;
-
+  MyParallelServer server;
 
   Searcher<Point,vector<string>> *search;
-  search = new BestFirstSearch<Point,vector<string>> ();
+  search = new BFS<Point,vector<string>> ();
 
   Solver<Matrix,vector<string>> *solv;
   solv = new OA<Matrix,vector<string>,Point>(search);

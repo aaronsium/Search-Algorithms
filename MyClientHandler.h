@@ -40,9 +40,17 @@ class MyClientHandler : public ClientHandler {
 
  public:
   MyClientHandler(){}
-  MyClientHandler(const MyClientHandler& rhs){}
-  ClientHandler *Clone(){}
-  void ChangeAttributes(){}
+//  MyClientHandler(const MyClientHandler& rhs){}
+  MyClientHandler* clone()  const{
+    return new MyClientHandler(*this);
+  }
+  MyClientHandler* create() const{
+    return new MyClientHandler();
+  }
+
+
+//  Circle* Circle::clone()  const { return new Circle(*this); }
+//  Circle* Circle::create() const { return new Circle();      }
   MyClientHandler(Solver<Matrix, vector<string>> *sol, CacheManager<string, vector<string>> *cacheManager)
       : solver(sol),
         cache(cacheManager) {};
@@ -53,6 +61,7 @@ class MyClientHandler : public ClientHandler {
     vector<string> solution;
     string message = " ";
     string strProblem = " ";
+    string tempToken="";
     bool isN = false;
     int countStr = 0;
     bool check = true;
@@ -105,14 +114,15 @@ class MyClientHandler : public ClientHandler {
             problem[i].push_back(atoi(token.c_str()));
           }
           j++;
-          strProblem += token + " ";
+          tempToken += token + " ";
             if(i > colCounter){
                 colCounter = i;
             }
         }
           rowCounter++;
 //          cout << strProblem << endl;
-        strProblem = "";
+        strProblem = strProblem + tempToken;
+        tempToken= "";
       }
       tempBuffer = strtok(NULL, "\n");
     }
@@ -127,11 +137,13 @@ class MyClientHandler : public ClientHandler {
           }
           cout << endl;
       }
+    hash<string> myHash;
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
       solution = this->cache->getSolution(strProblem);
       //if solution wasn't found create one
     } else {///// אולי בלבול יכול להיות שהצריך לשלוח את המטריצה הגדולה (סולבר)
+
       solution = this->solver->solve(Matrix(problem));
       this->cache->intoCache(strProblem, solution);//////hash להוסיף
     }

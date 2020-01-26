@@ -34,7 +34,8 @@ class FileCacheManager : public CacheManager<string, S> {
   }
 
   bool inCache(string problem) {
-    if (this->mapPointers.find(problem)!=mapPointers.end()) {
+    string key = hashing(problem);
+    if (this->mapPointers.find(key)!=mapPointers.end()) {
       return true;
     } else {
       return false;
@@ -69,7 +70,7 @@ class FileCacheManager : public CacheManager<string, S> {
     bool exist = inCache(check);
     // if it doesn't exist both in file and cash
     if (!found & !exist) {
-      throw "an error";
+//      throw "an error";
       // if it exist only in cache
     } else if (found) {
       S obj = (mapPointers[key])->second;
