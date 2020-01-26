@@ -20,7 +20,7 @@ template<class T, class S>
 class BestFirstSearch : public Searcher<T, S> {
  private:
 
-  priority_queue<State<T>, vector<State<T>>, compare<T> > openList;
+  priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
   list<State<T>> opened;
   list<State<T>> closed;
 

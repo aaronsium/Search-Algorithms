@@ -11,13 +11,19 @@
 #include "Searchable.h"
 #include <list>
 #include <vector>
-
+template<class T>
+// comparator for min priority_queue<
+struct compare {
+  bool operator()(const State<T> &l, const State<T> &r) {
+    return l < r;
+  }
+};
 template<class T, class S>
 class AStar : public Searcher<T, S> {
 
  private:
   list<State<T>> closed;
-  priority_queue<State<T>> openList;
+  priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
   list<State<T>> trace;
   list<State<T>> opened;
 

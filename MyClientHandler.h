@@ -127,7 +127,6 @@ class MyClientHandler : public ClientHandler {
           }
           cout << endl;
       }
-    cout << "yyyyy" << endl;
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
       solution = this->cache->getSolution(strProblem);
