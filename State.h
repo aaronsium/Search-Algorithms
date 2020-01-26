@@ -21,6 +21,9 @@ public:
       cost(c)
     {}
 
+    State<T>* copy(){
+        return new State<T>(this->getStatus(), this->getPrevious(), this->GetCost());
+    }
 
     T getStatus() const{
       return this->status;

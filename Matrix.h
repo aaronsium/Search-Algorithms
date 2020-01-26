@@ -36,42 +36,42 @@ class Matrix : public Searchable<Point> {
   }
 
 
-  list<State<Point>> getAllPossibleStates(State<Point> current) {
+  list<State<Point>> getAllPossibleStates(State<Point>* current) {
     list<State<Point>> possibleState;
 
-    if(current.getStatus().getX() - 1 >= 0) {
-      Point p1(current.getStatus().getX() - 1, current.getStatus().getY());
-        if(pointCost(p1) != -1){
-            State<Point> o1(p1, &current, current.GetCost() + pointCost(p1));
-            possibleState.push_back(o1);
-        }
-    }
+      if((current->getStatus().getX() - 1) >= 0) {
+          Point p1(current->getStatus().getX() - 1, current->getStatus().getY());
+          if(pointCost(p1) != -1){
+              State<Point> o1(p1, current, current->GetCost() + pointCost(p1));
+              possibleState.push_back(o1);
+          }
+      }
 
-    if(current.getStatus().getX() + 1< this->field.size()) {
-      Point p2(current.getStatus().getX() + 1, current.getStatus().getY());
-        if(pointCost(p2) != -1){
-            State<Point> o2(Point(p2), &current, current.GetCost() + pointCost(p2));
-            possibleState.push_back(o2);
-        }
-    }
+      if((current->getStatus().getX() + 1) < this->field.size()) {
+          Point p2(current->getStatus().getX() + 1, current->getStatus().getY());
+          if(pointCost(p2) != -1){
+              State<Point> o2(Point(p2), current, current->GetCost() + pointCost(p2));
+              possibleState.push_back(o2);
+          }
+      }
 
-    if(current.getStatus().getY() - 1 >= 0) {
-      Point p3(current.getStatus().getX(), current.getStatus().getY() - 1);
-        if(pointCost(p3) != -1) {
-            State<Point> o3(p3, &current, current.GetCost() + pointCost(p3));
-            possibleState.push_back(o3);
-        }
-    }
+      if((current->getStatus().getY() - 1) >= 0) {
+          Point p3(current->getStatus().getX(), current->getStatus().getY() - 1);
+          if(pointCost(p3) != -1) {
+              State<Point> o3(p3, current, current->GetCost() + pointCost(p3));
+              possibleState.push_back(o3);
+          }
+      }
 
-    if(current.getStatus().getY() + 1< this-> field[0].size()) {
-      Point p4(current.getStatus().getX(), current.getStatus().getY() + 1);
-        if(pointCost(p4) != -1) {
-            State<Point> o4(Point(p4), &current, current.GetCost() + pointCost(p4));
-            possibleState.push_back(o4);
-        }
-    }
+      if((current->getStatus().getY() + 1)< this-> field[0].size()) {
+          Point p4(current->getStatus().getX(), current->getStatus().getY() + 1);
+          if(pointCost(p4) != -1) {
+              State<Point> o4(Point(p4), current, current->GetCost() + pointCost(p4));
+              possibleState.push_back(o4);
+          }
+      }
 
-    return possibleState;
+      return possibleState;
   }
 
   int pointCost(Point current) {
@@ -102,10 +102,10 @@ class Matrix : public Searchable<Point> {
       return "left";
     }
     if (y2 > y1) {
-      return "up";
+      return "down";
     }
     if (y2 < y1) {
-      return "down";
+      return "up";
     }
   }
 

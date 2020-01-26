@@ -42,7 +42,7 @@ public:
     Searchable(){};
     virtual State<T> getInitialState() = 0;
     virtual bool isGoalState(State<T>) = 0;
-    virtual list<State<T>> getAllPossibleStates(State<T> current) = 0;
+    virtual list<State<T>> getAllPossibleStates(State<T>* current) = 0;
     virtual int NodesEvaluated() = 0;
     virtual vector<string> adaptSolution(vector<State<Point>> stateVector)=0;
     virtual ~Searchable() = default;

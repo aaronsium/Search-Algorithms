@@ -18,6 +18,10 @@ public:
         this->y = y1;
     }
 
+    Point* copy(){
+        return new Point(this->x, this->y);
+    }
+
     double getX(){
         return this->x;
     }
