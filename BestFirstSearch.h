@@ -7,20 +7,27 @@
 #include "Searcher.h"
 #include "State.h"
 #include "Searchable.h"
-
+using namespace std;
+template<class T>
+// comparator for min priority_queue<
+struct compare {
+  bool operator()(const State<T> &l, const State<T> &r) {
+    return l < r;
+  }
+};
 
 template<class T, class S>
 class BestFirstSearch : public Searcher<T, S> {
-
  private:
-  priority_queue<State<T>> openList;
+
+  priority_queue<State<T>, vector<State<T>>, compare<T> > openList;
   list<State<T>> opened;
   list<State<T>> closed;
 
  public:
   virtual ~BestFirstSearch() = default;
   ///////////////////////////////////////////////
-  S search(Searchable<T>* searchable) {
+  S search(Searchable<T> *searchable) {
     this->openList.push(searchable->getInitialState());
     while (!this->openList.empty()) {
       State<T> n = this->openList.top();
@@ -30,7 +37,7 @@ class BestFirstSearch : public Searcher<T, S> {
         return searchable->adaptSolution(backTrace());
       }
 
-      while (!this->openList.empty()){
+      while (!this->openList.empty()) {
         this->opened.push_back(this->openList.top());
         this->openList.pop();
       }
@@ -41,8 +48,8 @@ class BestFirstSearch : public Searcher<T, S> {
         this->SetEvaluatedNodes(this->evaluatedNodes + 1);
         //iterator to check if option in opened
         typename list<State<T>>::iterator inOpen;
-        for (inOpen = this->opened.begin(); inOpen != this->opened.end(); ++inOpen){
-          if(inOpen->equals(*opt)) {
+        for (inOpen = this->opened.begin(); inOpen!=this->opened.end(); ++inOpen) {
+          if (inOpen->equals(*opt)) {
             break;
           }
         }
@@ -50,18 +57,18 @@ class BestFirstSearch : public Searcher<T, S> {
         //iterator to check if option in closed
 //      for (std::list<T>::iterator it = mylist.begin(); it != mylist.end(); ++it)
         typename list<State<T>>::iterator inClosed;
-        for (inClosed = this->closed.begin(); inClosed != this->closed.end(); ++inClosed){
-          if(inClosed->equals(*opt)) {
+        for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
+          if (inClosed->equals(*opt)) {
             break;
           }
         }
 
-        if((inOpen == this->opened.end()) && (inClosed == this->closed.end())){
+        if ((inOpen==this->opened.end()) && (inClosed==this->closed.end())) {
           opt->SetCameFrom(&n);
           this->opened.push_back(*opt);
-        } else if(inClosed != this->closed.end()){
-          if(opt->GetCost() < inClosed->GetCost()){
-            if (inOpen != this->opened.end()) {
+        } else if (inClosed!=this->closed.end()) {
+          if (opt->GetCost() < inClosed->GetCost()) {
+            if (inOpen!=this->opened.end()) {
               //popping and pushing again(for the priority process)
               this->opened.remove(*inOpen);
             }
@@ -69,14 +76,14 @@ class BestFirstSearch : public Searcher<T, S> {
             this->closed.remove(*inClosed);
           }
         } else {
-          if(opt->GetCost() < inOpen->GetCost()) {
+          if (opt->GetCost() < inOpen->GetCost()) {
             this->opened.remove(*inOpen);
             this->opened.push_back(*opt);
           }
         }
       }
 
-      while (!opened.empty()){
+      while (!opened.empty()) {
         openList.push(opened.front());
         opened.pop_front();
       }
@@ -84,7 +91,7 @@ class BestFirstSearch : public Searcher<T, S> {
   }
 
   vector<State<T>> backTrace() {
-    typename std::list<State < T>>
+    typename std::list<State<T>>
     ::iterator element;
     vector<State<T>> trace;
     for (element = closed.begin(); element!=closed.end(); ++element) {
