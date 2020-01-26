@@ -11,13 +11,21 @@
 #include "Searchable.h"
 #include <list>
 #include <vector>
+using namespace std;
+template<class T>
 // comparator for min priority_queue<
+struct compare {
+    bool operator()(const State<T> &l, const State<T> &r) {
+        return (l.GetCost() < r.GetCost());
+    }
+};
+
 template<class T, class S>
 class AStar : public Searcher<T, S> {
 
  private:
   list<State<T>> closed;
-  priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
+    priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
   list<State<T>> trace;
   list<State<T>> opened;
 
@@ -41,46 +49,45 @@ class AStar : public Searcher<T, S> {
         return s->adaptSolution(traceVector);
       }
 
-      while (!openList.empty()) {
-        opened.push_back(openList.top());
-        openList.pop();
-      }
+        while (!this->openList.empty()) {
+            this->opened.push_back(this->openList.top());
+            this->openList.pop();
+        }
 
       list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
-      while (!PossibleStates.empty()) {
-        State<T> option = PossibleStates.front();
-        PossibleStates.pop_front();
-
-        //iterator to check if option in open
-        typename list<State < T>>
-        ::iterator inOpen;
-        for (inOpen = opened.begin(); inOpen!=opened.end(); ++inOpen) {
-          if (inOpen->equals(option)) {
-            break;
+        typename std::list<State<T>>::iterator option;
+        for (option = PossibleStates.begin(); option!=PossibleStates.end(); ++option){
+          //iterator to check if option in opened
+          typename std::list<State<T>>::iterator inOpen;
+          for (inOpen = this->opened.begin(); inOpen!= this->opened.end(); ++inOpen) {
+            if (inOpen->equals(*option)) {
+              break;
+            }
           }
-        }
-        //iterator to check if option in closed
-        typename list<State < T>>
-        ::iterator inClosed;
-        for (inClosed = closed.begin(); inClosed!=closed.end(); ++inClosed) {
-          if (inClosed->equals(option)) {
-            break;
+          //iterator to check if option in closed
+          typename std::list<State<T>>::iterator inClosed;
+          for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
+            if (inClosed->equals(*option)) {
+              break;
+            }
           }
-        }
 
         if (inOpen!=opened.end()) {
-          if (option.GetCost() <= inOpen->GetCost()) {
+          if (option->GetCost() < inOpen->GetCost()) {
             opened.remove(*inOpen);
-            opened.push_back(option);
+            opened.push_back(*option);
           }
         } else if (inClosed!=closed.end()) {
-          if (option.GetCost() <= inClosed->GetCost()) {}
+          cout<< option->GetCost() <<endl;
+          cout<< inOpen->GetCost() <<endl;
+          if (option->GetCost() < inOpen->GetCost()) {}
           closed.remove(*inClosed);
-          this->openList.push(option);
+          this->opened.push_back(*option);
         } else {
-          this->openList.push(option);
+          this->opened.push_back(*option);
         }
       }
+
       while (!opened.empty()) {
         openList.push(opened.front());
         opened.pop_front();
@@ -91,8 +98,7 @@ class AStar : public Searcher<T, S> {
   }
 
   list<State<T>> backTrace(State<T>) {
-    typename std::list<State < T>>
-    ::iterator element;
+    typename std::list<State < T>>::iterator element;
     list<State<T>> trace;
     for (element = closed.begin(); element!=closed.end(); ++element) {
       trace.push_back(*element);
