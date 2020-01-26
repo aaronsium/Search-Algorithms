@@ -58,14 +58,14 @@ class BestFirstSearch : public Searcher<T, S> {
 
         if((inOpen == this->opened.end()) && (inClosed == this->closed.end())){
           opt->SetCameFrom(&n);
-          this->openList.push(*opt);
+          this->opened.push_back(*opt);
         } else if(inClosed != this->closed.end()){
           if(opt->GetCost() < inClosed->GetCost()){
             if (inOpen != this->opened.end()) {
               //popping and pushing again(for the priority process)
               this->opened.remove(*inOpen);
             }
-            this->openList.push(*opt);
+            this->opened.push_back(*opt);
             this->closed.remove(*inClosed);
           }
         } else {
