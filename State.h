@@ -14,7 +14,7 @@ private:
     State<T> *cameFrom;
 
 public:
-    State(){};
+    State(){}
     State(T status1, State<T>* came_from, double c):
       status(status1),
       cameFrom(came_from),

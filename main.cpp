@@ -1,5 +1,8 @@
 
 #include "BestFirstSearch.h"
+#include "AStar.h"
+#include "DFS.h"
+#include "BFS.h"
 #include "CacheManager.h"
 #include "FileCacheManager.h"
 #include "MyClientHandler.h"

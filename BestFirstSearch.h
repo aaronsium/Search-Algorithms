@@ -12,7 +12,7 @@ template<class T>
 // comparator for min priority_queue<
 struct compare {
   bool operator()(const State<T> &l, const State<T> &r) {
-    return (l->GetCost() < r.GetCost());
+    return (l.GetCost() < r.GetCost());
   }
 };
 
