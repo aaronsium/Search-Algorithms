@@ -1,14 +1,21 @@
 
 #include "BFS.h"
+#include "BestFirstSearch.h"
+#include "AStar.h"
+#include "DFS.h"
+#include "BFS.h"
 #include "CacheManager.h"
 #include "FileCacheManager.h"
 #include "MyClientHandler.h"
 #include "MySerialServer.h"
 #include "OA.h"
+#include "Point.h"
+#include "Searcher.h"
+#include "StringReverser.h"
+#include "MyParallelServer.h"
 
 int main(int arg, char *args[]) {
-  MySerialServer server;
-
+  MyParallelServer server;
 
   Searcher<Point,vector<string>> *search;
   search = new BFS<Point,vector<string>> ();
