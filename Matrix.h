@@ -40,34 +40,34 @@ class Matrix : public Searchable<Point> {
     list<State<Point>> possibleState;
 
     if(current.getStatus().getX() - 1 >= 0) {
-      State<Point> o1(Point(current.getStatus().getX() - 1, current.getStatus().getY()),
-                      &current, current.GetCost() + pointCost(o1));
+      Point p1(current.getStatus().getX() - 1, current.getStatus().getY());
+      State<Point> o1(p1, &current, current.GetCost() + pointCost(p1));
       possibleState.push_back(o1);
     }
 
     if(current.getStatus().getX() < this->field.size()) {
-      State<Point> o2(Point(current.getStatus().getX() + 1, current.getStatus().getY()),
-                      &current, current.GetCost() + pointCost(o2));
+      Point p2(current.getStatus().getX() + 1, current.getStatus().getY());
+      State<Point> o2(Point(p2), &current, current.GetCost() + pointCost(p2));
       possibleState.push_back(o2);
     }
 
     if(current.getStatus().getY() - 1 >= 0) {
-      State<Point> o3(Point(current.getStatus().getX(), current.getStatus().getY() - 1),
-                      &current, current.GetCost() + pointCost(o3));
+      Point p3(current.getStatus().getX(), current.getStatus().getY() - 1);
+      State<Point> o3(p3, &current, current.GetCost() + pointCost(p3));
       possibleState.push_back(o3);
     }
 
-    if(current.getStatus().getX() < this->field[0].size()) {
-      State<Point> o4(Point(current.getStatus().getX(), current.getStatus().getY() + 1),
-                      &current, current.GetCost() + pointCost(o4));
+    if(current.getStatus().getY() < this-> field[0].size()) {
+      Point p4(current.getStatus().getX(), current.getStatus().getY() + 1);
+      State<Point> o4(Point(p4), &current, current.GetCost() + pointCost(p4));
       possibleState.push_back(o4);
     }
 
     return possibleState;
   }
 
-  int pointCost(State<Point> current) {
-    return field[current.getStatus().getX()][current.getStatus().getY()];
+  int pointCost(Point current) {
+    return field[current.getX()][current.getY()];
   }
 
   vector<string> adaptSolution(vector<State<Point>> stateVector) {
