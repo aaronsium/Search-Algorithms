@@ -27,6 +27,10 @@ int main(int arg, char *args[]) {
   cash2 = new FileCacheManager<vector<string>> ();
 
   MyClientHandler client(solv,cash2);
+  delete (search);
+  delete (solv);
+  delete (cash2);
+
 
   server.open(atoi(args[1]),&client);
   return 0;
