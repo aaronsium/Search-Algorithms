@@ -13,14 +13,14 @@
 
 
 template<class T, class S>
-class BFS : public Searcher<T, vector<State<T>>> {
+class BFS : public Searcher<T,S> {
 
 private:
 vector<State<T>> visited;
 public:
 virtual ~BFS() = default;
 ////////////////////////////////////////////////////////////////////////////////
-vector<State<T>> search(Searchable<T> *searchable) {
+S search(Searchable<T> *searchable) {
   State<T> start = searchable->getInitialState();
   queue<State<T>> q;
   q.push(start);
@@ -30,7 +30,7 @@ vector<State<T>> search(Searchable<T> *searchable) {
     q.pop();
     this->SetEvaluatedNodes(this->evaluatedNodes + 1);// add 1 to node's counter
     if (searchable->isGoalState(current)) {
-      return visited;
+      return searchable->adaptSolution(visited);
     }
     list<State<T>> options = searchable->getAllPossibleStates(current);
     typename std::list<State<T>>::iterator opt;
