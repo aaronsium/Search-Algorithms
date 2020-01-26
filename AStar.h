@@ -51,7 +51,8 @@ class AStar : public Searcher<T, S> {
 
         while (!this->openList.empty()) {
             this->opened.push_back(this->openList.top());
-            this->openList.pop();
+          cout<< openList.top().GetCost() <<endl;
+          this->openList.pop();
         }
 
       list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
@@ -90,6 +91,7 @@ class AStar : public Searcher<T, S> {
 
       while (!opened.empty()) {
         openList.push(opened.front());
+        cout<< opened.front().GetCost() <<endl;
         opened.pop_front();
       }
 
