@@ -12,20 +12,14 @@
 #include <list>
 #include <vector>
 using namespace std;
-template<class T>
-// comparator for min priority_queue<
-struct compare {
-    bool operator()(const State<T> &l, const State<T> &r) {
-        return (l.GetCost() < r.GetCost());
-    }
-};
 
+// comparator for min priority_queue<
 template<class T, class S>
 class AStar : public Searcher<T, S> {
 
  private:
   list<State<T>> closed;
-    priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
+  priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
   list<State<T>> trace;
   list<State<T>> opened;
 
