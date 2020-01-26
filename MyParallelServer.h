@@ -34,6 +34,8 @@ class MyParallelServer : public server_side::Server {
   int PORT = 0;
   int client_socket = 0;
   int server_socket = 0;
+  int liveCounter=0;
+  int temp_socket=0;
  public:
   void open(int port, ClientHandler *myHandler) {
     //opening a new thread which will run the server
@@ -57,7 +59,6 @@ class MyParallelServer : public server_side::Server {
   }
 
   int newSocket(int port) {
-    int server_socket = socket(AF_INET, SOCK_STREAM, 0);
     this->server_socket = server_socket;
     if (server_socket==-1) {
       cerr << "Could not create a socket" << endl;
@@ -86,18 +87,8 @@ class MyParallelServer : public server_side::Server {
       struct timeval tv;
       tv.tv_sec = 120;
       setsockopt(server_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
-
-      int client_socket = accept(server_socket, (struct sockaddr *) &address, (socklen_t *) &address);
-      if (client_socket==-1) {
-        cerr << "Error accepting client" << endl;
-        return -4;
-      } else {
-        cout << "client connected" << endl;
-        isOpen = true;
-      }
       //updating the socket by getting a new client
-      this->client_socket = client_socket;
-      while (this->client_socket!=0) {}
+      while (isOpen) {}
     }
   }
 
@@ -105,16 +96,23 @@ class MyParallelServer : public server_side::Server {
     //when server opened we can open client thread
     while(!isOpen){}
     while (isOpen) {
-      cout << "Server is now listening" << endl;
+      cout << "newThread" << endl;
+      temp_socket = socket(AF_INET, SOCK_STREAM, 0);
+      if (temp_socket==-1) {
+        cerr << "Error accepting client" << endl;
+      } else {
+        cout << "client connected" << endl;
+      }
       //waiting till client connect
       while (client_socket==0) {}
-      cout << "xxxxx" << endl;
-      myHandler->handleClient(this->client_socket);; // need to check about arguments
-// current client is disconnecting
+      myHandler->handleClient(this->client_socket); // need to check about arguments
       cout << "client disconnected" << endl;
       //reset socket
-      client_socket = 0;
+//      client_socket = 0;
     }
+
+    liveCounter++;
+    while(liveCounter<10){}
     stop();
   }
 
