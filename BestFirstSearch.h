@@ -64,7 +64,6 @@ class BestFirstSearch : public Searcher<T, S> {
         }
 
         if ((inOpen==this->opened.end()) && (inClosed==this->closed.end())) {
-          opt->SetCameFrom(&n);
           this->opened.push_back(*opt);
         } else if (inClosed!=this->closed.end()) {
           if (opt->GetCost() < inClosed->GetCost()) {
