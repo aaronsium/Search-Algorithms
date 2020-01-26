@@ -19,7 +19,7 @@ class AStar : public Searcher<T, S> {
 
  private:
   list<State<T>> closed;
-  priority_queue<State<T>, vector<State<T>>, compare<T>> openList;
+  priority_queue<State<T>, vector<State<T>>> openList;
   list<State<T>> trace;
   list<State<T>> opened;
 
