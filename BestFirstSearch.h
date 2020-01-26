@@ -55,7 +55,6 @@ class BestFirstSearch : public Searcher<T, S> {
         }
 
         //iterator to check if option in closed
-//      for (std::list<T>::iterator it = mylist.begin(); it != mylist.end(); ++it)
         typename list<State<T>>::iterator inClosed;
         for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
           if (inClosed->equals(*opt)) {
