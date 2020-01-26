@@ -85,13 +85,14 @@ class MyParallelServer : public server_side::Server {
   }
 
   void start(ClientHandler *myHandler) {
+    this_thread::sleep_for(200ms);
     //when server opened we can open client thread
     while (!isOpen) {}
     if (isOpen) {
       //waiting till client connect
 //            timeout
       struct timeval tv;
-      tv.tv_sec = 20;
+      tv.tv_sec = 120;
       setsockopt(server_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
      int  client_socket = accept(server_socket, (struct sockaddr *) &address, (socklen_t *) &address);
       if (client_socket==-1) {
@@ -102,6 +103,7 @@ class MyParallelServer : public server_side::Server {
         isOpen = true;
         myHandler->handleClient(client_socket);; // need to check about arguments
 // current client is disconnecting
+        delete (myHandler);
         cout << "client disconnected" << endl;
       }
       liveCounter++;
