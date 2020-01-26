@@ -46,7 +46,7 @@ class AStar : public Searcher<T, S> {
         openList.pop();
       }
 
-      list<State<T>> PossibleStates = s->getAllPossibleStates(state);
+      list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
       while (!PossibleStates.empty()) {
         State<T> option = PossibleStates.front();
         PossibleStates.pop_front();

@@ -42,7 +42,7 @@ class BestFirstSearch : public Searcher<T, S> {
         this->openList.pop();
       }
 
-      list<State<T>> options = searchable->getAllPossibleStates(n);
+      list<State<T>> options = searchable->getAllPossibleStates(n.copy());
       typename std::list<State<T>>::iterator opt;
       for (opt = options.begin(); opt!=options.end(); ++opt) {
         this->SetEvaluatedNodes(this->evaluatedNodes + 1);

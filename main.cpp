@@ -1,5 +1,5 @@
 
-#include "BestFirstSearch.h"
+#include "BFS.h"
 #include "AStar.h"
 #include "DFS.h"
 #include "BFS.h"
