@@ -22,29 +22,46 @@ virtual ~BFS() = default;
 ////////////////////////////////////////////////////////////////////////////////
 S search(Searchable<T> *searchable) {
   State<T> start = searchable->getInitialState();
-  queue<State<T>> q;
-  q.push(start);
-  visited.push_back(start);
+  list<State<T>> q;
+  q.push_back(start);
   while (!q.empty()) {
-    State<T> current = q.front();
-    q.pop();
-    this->SetEvaluatedNodes(this->evaluatedNodes + 1);// add 1 to node's counter
+      State<T> current = q.front();
+      q.pop_front();
+      visited.push_back(current);
     if (searchable->isGoalState(current)) {
-      return searchable->adaptSolution(visited);
+        vector<State<T>> traceVector = backTrace(current);
+        return searchable->adaptSolution(traceVector);
     }
-    list<State<T>> options = searchable->getAllPossibleStates(current);
+    list<State<T>> options = searchable->getAllPossibleStates(current.copy());
     typename std::list<State<T>>::iterator opt;
     for (opt = options.begin(); opt!=options.end(); ++opt) {
-      if ((!std::count(visited.begin(), visited.end(), (*opt)))) {
-        visited.push_back(*opt);
-        q.push(*opt);
-      }
+        if ((!std::count(visited.begin(), visited.end(), (*opt)))) {
+          if ((!std::count(q.begin(), q.end(), (*opt)))) {
+              q.push_back(*opt);
+          }
+        }
     }
   }
 }
 
-vector<State<T>>backTrace() {
-  return visited;
+vector<State<T>>backTrace(State<T> state) {
+    list<State<T>> trace;
+    trace.push_back(state);
+    State<T>* previous = state.getPrevious();
+
+    while(previous != NULL){
+        trace.push_back(*previous);
+        previous = previous->getPrevious();
+        this->SetEvaluatedNodes(this->evaluatedNodes + 1);
+    }
+
+    vector<State<T>> traceVector;
+    while(!trace.empty()){
+        traceVector.push_back(trace.back());
+        trace.pop_back();
+    }
+
+    return traceVector;
 }
 
 //void TemporaryFunction3 (){
