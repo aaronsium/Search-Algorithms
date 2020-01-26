@@ -54,6 +54,7 @@ vector<State<T>>backTrace(State<T> state) {
         previous = previous->getPrevious();
         this->SetEvaluatedNodes(this->evaluatedNodes + 1);
     }
+    cout<< "BFS - evaluatedNodes : "<<this->evaluatedNodes <<endl;
 
     vector<State<T>> traceVector;
     while(!trace.empty()){
