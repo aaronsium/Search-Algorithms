@@ -15,10 +15,10 @@
 #include "MyParallelServer.h"
 
 int main(int arg, char *args[]) {
-  MyParallelServer server;
+  MySerialServer server;
 
   Searcher<Point,vector<string>> *search;
-  search = new BFS<Point,vector<string>> ();
+  search = new AStar<Point,vector<string>> ();
 
   Solver<Matrix,vector<string>> *solv;
   solv = new OA<Matrix,vector<string>,Point>(search);

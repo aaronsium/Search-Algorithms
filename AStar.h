@@ -43,51 +43,52 @@ class AStar : public Searcher<T, S> {
         return s->adaptSolution(traceVector);
       }
 
-        while (!this->openList.empty()) {
-            this->opened.push_back(this->openList.top());
-          cout<< openList.top().GetCost() <<endl;
-          this->openList.pop();
-        }
-
       list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
-        typename std::list<State<T>>::iterator option;
-        for (option = PossibleStates.begin(); option!=PossibleStates.end(); ++option){
+      typename std::list<State<T>>::iterator option;
+      State<T> tempOption;
+      State<T> tempInclose;
+      State<T> tempOpen;
+      if (!PossibleStates.empty()){
+        for (option = PossibleStates.begin(); option!=PossibleStates.end(); ++option) {
+          tempOption = (*option);
           //iterator to check if option in opened
           typename std::list<State<T>>::iterator inOpen;
-          for (inOpen = this->opened.begin(); inOpen!= this->opened.end(); ++inOpen) {
-            if (inOpen->equals(*option)) {
-              break;
+          if (!opened.empty()) {
+
+            for (inOpen = this->opened.begin(); inOpen!=this->opened.end(); ++inOpen) {
+              tempOpen = (*inOpen);
+              if (tempOpen.equals(tempOption)) {
+                break;
+              }
             }
           }
           //iterator to check if option in closed
           typename std::list<State<T>>::iterator inClosed;
-          for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
-            if (inClosed->equals(*option)) {
-              break;
+          if (!closed.empty()) {
+            for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
+              tempInclose = (*inClosed);
+              if (tempInclose.equals(tempOption)) {
+                break;
+              }
             }
           }
-
-        if (inOpen!=opened.end()) {
-          if (option->GetCost() < inOpen->GetCost()) {
-            opened.remove(*inOpen);
-            opened.push_back(*option);
+          if (!opened.empty() && inOpen!=opened.end()) {
+            if (tempOption.GetCost() < tempOpen.GetCost()) {
+              opened.remove(tempOpen);
+              opened.push_back(tempOption);
+            }
+          } else if (!closed.empty() && inClosed!=closed.end()) {
+            cout << tempOption.GetCost() << endl;
+            cout << tempOpen.GetCost() << endl;
+            if (tempOption.GetCost() < tempOpen.GetCost()) {}
+            closed.remove(tempInclose);
+            this->opened.push_back(tempOption);
+          } else {
+            this->opened.push_back(tempOption);
           }
-        } else if (inClosed!=closed.end()) {
-          cout<< option->GetCost() <<endl;
-          cout<< inOpen->GetCost() <<endl;
-          if (option->GetCost() < inOpen->GetCost()) {}
-          closed.remove(*inClosed);
-          this->opened.push_back(*option);
-        } else {
-          this->opened.push_back(*option);
         }
-      }
+    }
 
-      while (!opened.empty()) {
-        openList.push(opened.front());
-        cout<< opened.front().GetCost() <<endl;
-        opened.pop_front();
-      }
 
       closed.push_back(state);
     }
