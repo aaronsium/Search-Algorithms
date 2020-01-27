@@ -28,70 +28,74 @@ class AStar : public Searcher<T, S> {
 
   /////////////////////////////////////////////////////////////////////////
   S search(Searchable<T> *s) {
-    this->openList.push(s->getInitialState());
+      this->openList.push(s->getInitialState());
 
-    while (!this->openList.empty()) {
-      State<T> state = this->openList.top();
-      this->openList.pop();
+      while (!this->openList.empty()) {
+          State<T> state = this->openList.top();
+          this->openList.pop();
 
-      if (s->isGoalState(state)) {
-        vector<State<T>> traceVector;
-        while (!this->trace.empty()) {
-          traceVector.push_back(this->trace.back());
-          this->trace.pop_back();
-        }
-        return s->adaptSolution(traceVector);
+          if (s->isGoalState(state)) {
+              vector<State<T>> traceVector;
+              while (!this->trace.empty()) {
+                  traceVector.push_back(this->trace.back());
+                  this->trace.pop_back();
+              }
+              return s->adaptSolution(traceVector);
+          }
+
+          list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
+          typename std::list<State<T>>::iterator option;
+          State<T> tempOption;
+          State<T> tempInclose;
+          State<T> tempOpen;
+          if (!PossibleStates.empty()) {
+              for (option = PossibleStates.begin(); option != PossibleStates.end(); ++option) {
+                  tempOption = (*option);
+                  //iterator to check if option in opened
+                  typename std::list<State<T>>::iterator inOpen;
+                  if (!opened.empty()) {
+
+                      for (inOpen = this->opened.begin(); inOpen != this->opened.end(); ++inOpen) {
+                          tempOpen = (*inOpen);
+                          if (tempOpen.equals(tempOption)) {
+                              break;
+                          }
+                      }
+                  }
+                  //iterator to check if option in closed
+                  typename std::list<State<T>>::iterator inClosed;
+                  if (!closed.empty()) {
+                      for (inClosed = this->closed.begin(); inClosed != this->closed.end(); ++inClosed) {
+                          tempInclose = (*inClosed);
+                          if (tempInclose.equals(tempOption)) {
+                              break;
+                          }
+                      }
+                  }
+                  if (!opened.empty() && inOpen != opened.end()) {
+                      if (tempOption.GetCost() < tempOpen.GetCost()) {
+                          opened.remove(tempOpen);
+                          opened.push_back(tempOption);
+                      }
+                  } else if (!closed.empty() && inClosed != closed.end()) {
+                      cout << tempOption.GetCost() << endl;
+                      cout << tempOpen.GetCost() << endl;
+                      if (tempOption.GetCost() < tempOpen.GetCost()) {}
+                      closed.remove(tempInclose);
+                      this->opened.push_back(tempOption);
+                  } else {
+                      this->opened.push_back(tempOption);
+                  }
+              }
+
+              while (!opened.empty()) {
+                  openList.push(opened.front());
+                  opened.pop_front();
+              }
+
+              closed.push_back(state);
+          }
       }
-
-      list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
-      typename std::list<State<T>>::iterator option;
-      State<T> tempOption;
-      State<T> tempInclose;
-      State<T> tempOpen;
-      if (!PossibleStates.empty()){
-        for (option = PossibleStates.begin(); option!=PossibleStates.end(); ++option) {
-          tempOption = (*option);
-          //iterator to check if option in opened
-          typename std::list<State<T>>::iterator inOpen;
-          if (!opened.empty()) {
-
-            for (inOpen = this->opened.begin(); inOpen!=this->opened.end(); ++inOpen) {
-              tempOpen = (*inOpen);
-              if (tempOpen.equals(tempOption)) {
-                break;
-              }
-            }
-          }
-          //iterator to check if option in closed
-          typename std::list<State<T>>::iterator inClosed;
-          if (!closed.empty()) {
-            for (inClosed = this->closed.begin(); inClosed!=this->closed.end(); ++inClosed) {
-              tempInclose = (*inClosed);
-              if (tempInclose.equals(tempOption)) {
-                break;
-              }
-            }
-          }
-          if (!opened.empty() && inOpen!=opened.end()) {
-            if (tempOption.GetCost() < tempOpen.GetCost()) {
-              opened.remove(tempOpen);
-              opened.push_back(tempOption);
-            }
-          } else if (!closed.empty() && inClosed!=closed.end()) {
-            cout << tempOption.GetCost() << endl;
-            cout << tempOpen.GetCost() << endl;
-            if (tempOption.GetCost() < tempOpen.GetCost()) {}
-            closed.remove(tempInclose);
-            this->opened.push_back(tempOption);
-          } else {
-            this->opened.push_back(tempOption);
-          }
-        }
-    }
-
-
-      closed.push_back(state);
-    }
   }
 
   list<State<T>> backTrace(State<T>) {
