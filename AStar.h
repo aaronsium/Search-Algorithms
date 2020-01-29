@@ -63,6 +63,7 @@ public:
             this->closed.push_back(state);
 
             if (s->isGoalState(state)) {
+                cout << "Cost:" << state.GetCost() << endl;
                 return s->adaptSolution(backTrace());
             }
 

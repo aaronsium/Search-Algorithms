@@ -18,7 +18,7 @@ int main(int arg, char *args[]) {
   MyParallelServer server;
 
   Searcher<Point, vector<string>> *search;
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
 
   Solver<Matrix, vector<string>> *solv;
   solv = new OA<Matrix, vector<string>, Point>(search);
@@ -29,39 +29,39 @@ int main(int arg, char *args[]) {
 
   MyClientHandler client1(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client2(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client3(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client4(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client5(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client6(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client7(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client8(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client9(solv, cash2);
 
-  search = new BFS<Point, vector<string>>();
+  search = new AStar<Point, vector<string>>();
   solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client10(solv, cash2);
 
