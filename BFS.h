@@ -21,28 +21,32 @@ public:
 virtual ~BFS() = default;
 ////////////////////////////////////////////////////////////////////////////////
 S search(Searchable<T> *searchable) {
+
   State<T> start = searchable->getInitialState();
   list<State<T>> q;
   q.push_back(start);
+        int i = 0;
   while (!q.empty()) {
+      i++;
       State<T> current = q.front();
       q.pop_front();
       visited.push_back(current);
     if (searchable->isGoalState(current)) {
+        cout << "found solution" << endl;
         vector<State<T>> traceVector = backTrace(current);
         return searchable->adaptSolution(traceVector);
     }
-    list<State<T>> options = searchable->getAllPossibleStates(current.copy());
-    typename std::list<State<T>>::iterator opt;
-    for (opt = options.begin(); opt!=options.end(); ++opt) {
-        if ((!std::count(visited.begin(), visited.end(), (*opt)))) {
-          if ((!std::count(q.begin(), q.end(), (*opt)))) {
-              q.push_back(*opt);
+      list<State<T>> options = searchable->getAllPossibleStates(current.copy());
+      typename std::list<State<T>>::iterator opt;
+      for (opt = options.begin(); opt!=options.end(); ++opt) {
+          if ((!std::count(visited.begin(), visited.end(), (*opt)))) {
+              if ((!std::count(q.begin(), q.end(), (*opt)))) {
+                  q.push_back(*opt);
+              }
           }
-        }
-    }
+      }
   }
-}
+    }
 
 vector<State<T>>backTrace(State<T> state) {
     list<State<T>> trace;

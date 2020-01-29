@@ -12,7 +12,7 @@ template<class T>
 // comparator for min priority_queue<
 struct compare {
   bool operator()(const State<T> &l, const State<T> &r) {
-    return (l.GetCost() < r.GetCost());
+    return (l.GetCost() > r.GetCost());
   }
 };
 
@@ -34,6 +34,7 @@ class BestFirstSearch : public Searcher<T, S> {
       this->openList.pop();
       this->closed.push_back(n);
       if (searchable->isGoalState(n)) {
+          cout << n.GetCost() << endl;
         return searchable->adaptSolution(backTrace());
       }
 
@@ -93,8 +94,11 @@ class BestFirstSearch : public Searcher<T, S> {
     ::iterator element;
     vector<State<T>> trace;
     for (element = closed.begin(); element!=closed.end(); ++element) {
+      this->SetEvaluatedNodes(this->evaluatedNodes + 1);
       trace.push_back(*element);
     }
+    cout<< "BestFS - evaluatedNodes : "<<this->evaluatedNodes <<endl;
+
     return trace;
   }
 

@@ -132,24 +132,19 @@ class MyClientHandler : public ClientHandler {
           }}
 
       for(int q = 0; q < problem[0].size(); q++){
-          for(int p = 0; p < problem.size();p++){
-              cout << problem[p][q] << " ";
-          }
-          cout << endl;
       }
     hash<string> myHash;
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
       solution = this->cache->getSolution(strProblem);
       //if solution wasn't found create one
-    } else {///// אולי בלבול יכול להיות שהצריך לשלוח את המטריצה הגדולה (סולבר)
-
+    } else {
       solution = this->solver->solve(Matrix(problem));
-      this->cache->intoCache(strProblem, solution);//////hash להוסיף
+      this->cache->intoCache(strProblem, solution);
     }
 
     for (int i = 0; i < solution.size(); i++) {
-      message = message + solution[i];/// להוסיך רווח
+      message = message + solution[i] + " ";
     }
 
     write(socket, message.c_str(), message.length());
