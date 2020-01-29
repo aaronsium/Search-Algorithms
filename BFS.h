@@ -21,9 +21,6 @@ public:
 virtual ~BFS() = default;
 ////////////////////////////////////////////////////////////////////////////////
 S search(Searchable<T> *searchable) {
-        cout << "in BFS"<< endl;
-        cout << "goal: "<< searchable->getGoalState().getStatus().getX();
-        cout << ","<< searchable->getGoalState().getStatus().getY() << endl;
 
   State<T> start = searchable->getInitialState();
   list<State<T>> q;
@@ -49,7 +46,6 @@ S search(Searchable<T> *searchable) {
           }
       }
   }
-        cout << "visited: "<< i << endl;
     }
 
 vector<State<T>>backTrace(State<T> state) {

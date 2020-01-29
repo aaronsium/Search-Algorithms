@@ -63,8 +63,6 @@ public:
             this->closed.push_back(state);
 
             if (s->isGoalState(state)) {
-                this->SetEvaluatedNodes(state.GetCost());
-                cout << state.GetCost() << endl;
                 return s->adaptSolution(backTrace());
             }
 
@@ -86,8 +84,11 @@ public:
         typename std::list<State<T>> ::iterator element;
         vector<State<T>> trace;
         for (element = closed.begin(); element!=closed.end(); ++element) {
+            this->SetEvaluatedNodes(this->evaluatedNodes + 1);
             trace.push_back(*element);
         }
+
+        cout<< "A* - evaluatedNodes : "<<this->evaluatedNodes <<endl;
         return trace;
     }
 };
