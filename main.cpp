@@ -28,14 +28,41 @@ int main(int arg, char *args[]) {
   vector<ClientHandler*>* handlers =new vector<ClientHandler*>();
 
   MyClientHandler client1(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client2(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client3(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client4(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client5(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client6(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client7(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client8(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client9(solv, cash2);
+
+  search = new BFS<Point, vector<string>>();
+  solv = new OA<Matrix, vector<string>, Point>(search);
   MyClientHandler client10(solv, cash2);
 
   handlers->push_back(&client1);
@@ -50,7 +77,5 @@ int main(int arg, char *args[]) {
   handlers->push_back(&client10);
 
   server.open(atoi(args[1]),handlers);
-
-
   return 0;
 }
