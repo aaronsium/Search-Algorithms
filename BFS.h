@@ -32,7 +32,7 @@ S search(Searchable<T> *searchable) {
       q.pop_front();
       visited.push_back(current);
     if (searchable->isGoalState(current)) {
-        cout << "found solution" << endl;
+        cout << "Cost:" << current.GetCost() << endl;
         vector<State<T>> traceVector = backTrace(current);
         return searchable->adaptSolution(traceVector);
     }
@@ -59,8 +59,9 @@ vector<State<T>>backTrace(State<T> state) {
         this->SetEvaluatedNodes(this->evaluatedNodes + 1);
     }
     cout<< "BFS - evaluatedNodes : "<<this->evaluatedNodes <<endl;
+    cout<< endl;
 
-    vector<State<T>> traceVector;
+        vector<State<T>> traceVector;
     while(!trace.empty()){
         traceVector.push_back(trace.back());
         trace.pop_back();
