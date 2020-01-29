@@ -5,113 +5,91 @@
 #ifndef EX4__ASTAR_H_
 #define EX4__ASTAR_H_
 
-
 #include "Searcher.h"
 #include "State.h"
 #include "Searchable.h"
 #include <list>
 #include <vector>
 using namespace std;
+template<class T>
+struct comparator {
+    comparator(State<T> g) { this->goal = g; }
+    State<T> goal;
+    bool operator()(const State<T> &l, const State<T> &r) {
+        int x = l.getStatus().getX() - goal.getStatus().getX();
+        int y = l.getStatus().getY() - goal.getStatus().getY();
+        if(x < 0){
+            y *= -1;
+        }
+        if(x < 0){
+            x *= -1;
+        }
+        int l_heuristic = y-x;
 
-// comparator for min priority_queue<
+        x = r.getStatus().getX() - goal.getStatus().getX();
+        y = r.getStatus().getY() - goal.getStatus().getY();
+        if(x < 0){
+            y *= -1;
+        }
+        if(x < 0){
+            x *= -1;
+        }
+        int r_heuristic = y-x;
+
+        int fn1 = l.GetCost() + l_heuristic;
+        int fn2 = r.GetCost() + r_heuristic;
+        return (fn1 > fn2);
+    }
+};
+
 template<class T, class S>
 class AStar : public Searcher<T, S> {
 
- private:
-  list<State<T>> closed;
-  priority_queue<State<T>, vector<State<T>>> openList;
-  list<State<T>> trace;
-  list<State<T>> opened;
+private:
+    list<State<T>> closed;
 
- public:
-  virtual ~AStar() = default;
+public:
 
-  /////////////////////////////////////////////////////////////////////////
-  S search(Searchable<T> *s) {
-      this->openList.push(s->getInitialState());
+    virtual ~AStar() = default;
 
-      while (!this->openList.empty()) {
-          State<T> state = this->openList.top();
-          this->openList.pop();
+    S search(Searchable<T> *s) {
+        priority_queue<State<T>, vector<State<T>>, comparator<T>> openList(comparator<T>(s->getGoalState()));
 
-          if (s->isGoalState(state)) {
-              vector<State<T>> traceVector;
-              while (!this->trace.empty()) {
-                  traceVector.push_back(this->trace.back());
-                  this->trace.pop_back();
-              }
-              return s->adaptSolution(traceVector);
-          }
 
-          list<State<T>> PossibleStates = s->getAllPossibleStates(state.copy());
-          typename std::list<State<T>>::iterator option;
-          State<T> tempOption;
-          State<T> tempInclose;
-          State<T> tempOpen;
-          if (!PossibleStates.empty()) {
-              for (option = PossibleStates.begin(); option != PossibleStates.end(); ++option) {
-                  tempOption = (*option);
-                  //iterator to check if option in opened
-                  typename std::list<State<T>>::iterator inOpen;
-                  if (!opened.empty()) {
+        openList.push(s->getInitialState());
+        while (!openList.empty()) {
+            State<T> state = openList.top();
+            openList.pop();
+            this->closed.push_back(state);
 
-                      for (inOpen = this->opened.begin(); inOpen != this->opened.end(); ++inOpen) {
-                          tempOpen = (*inOpen);
-                          if (tempOpen.equals(tempOption)) {
-                              break;
-                          }
-                      }
-                  }
-                  //iterator to check if option in closed
-                  typename std::list<State<T>>::iterator inClosed;
-                  if (!closed.empty()) {
-                      for (inClosed = this->closed.begin(); inClosed != this->closed.end(); ++inClosed) {
-                          tempInclose = (*inClosed);
-                          if (tempInclose.equals(tempOption)) {
-                              break;
-                          }
-                      }
-                  }
-                  if (!opened.empty() && inOpen != opened.end()) {
-                      if (tempOption.GetCost() < tempOpen.GetCost()) {
-                          opened.remove(tempOpen);
-                          opened.push_back(tempOption);
-                      }
-                  } else if (!closed.empty() && inClosed != closed.end()) {
-                      cout << tempOption.GetCost() << endl;
-                      cout << tempOpen.GetCost() << endl;
-                      if (tempOption.GetCost() < tempOpen.GetCost()) {}
-                      closed.remove(tempInclose);
-                      this->opened.push_back(tempOption);
-                  } else {
-                      this->opened.push_back(tempOption);
-                  }
-              }
+            if (s->isGoalState(state)) {
+                this->SetEvaluatedNodes(state.GetCost());
+                cout << state.GetCost() << endl;
+                return s->adaptSolution(backTrace());
+            }
 
-              while (!opened.empty()) {
-                  openList.push(opened.front());
-                  opened.pop_front();
-              }
 
-              closed.push_back(state);
-          }
-      }
-  }
+            list<State<T>> options = s->getAllPossibleStates(state.copy());
+            typename std::list<State<T>>::iterator opt;
+            for (opt = options.begin(); opt!=options.end(); ++opt) {
+                //iterator to check if option in closed
+                typename list<State<T>>::iterator inClosed;
+                if ((!std::count(closed.begin(), closed.end(), (*opt)))){
+                    openList.push(*opt);
+                }
+            }
 
-  list<State<T>> backTrace(State<T>) {
-    typename std::list<State < T>>::iterator element;
-    list<State<T>> trace;
-    for (element = closed.begin(); element!=closed.end(); ++element) {
-      trace.push_back(*element);
-      this->SetEvaluatedNodes(this->evaluatedNodes + 1);
+        }
     }
-    this->trace = trace;
-    return trace;
-  }
 
-  void TemporaryFunction1() {
-    AStar<Point, vector < string>>
-    x;
-  }
+    vector<State<T>> backTrace() {
+        typename std::list<State<T>> ::iterator element;
+        vector<State<T>> trace;
+        for (element = closed.begin(); element!=closed.end(); ++element) {
+            trace.push_back(*element);
+        }
+        return trace;
+    }
 };
+
 #endif //EX4__ASTAR_H_

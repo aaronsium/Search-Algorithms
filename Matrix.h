@@ -31,6 +31,10 @@ class Matrix : public Searchable<Point> {
     return this->initial;
   }
 
+  State<Point> getGoalState() {
+    return this->goal;
+  }
+
   bool isGoalState(State<Point> current) {
     return (this->goal).equals(current);
   }

@@ -12,7 +12,7 @@ template<class T, class S>
 
 class Searcher {
 protected:
-    int evaluatedNodes;
+    double evaluatedNodes;
 
 public:
     Searcher() {
@@ -20,11 +20,11 @@ public:
     }
 
     virtual S search(Searchable<T>* searchable) = 0;
-    int NodesEvaluated() {
+    double NodesEvaluated() {
         return evaluatedNodes;
     }
 
-    void SetEvaluatedNodes(int evaluated_nodes) {
+    void SetEvaluatedNodes(double evaluated_nodes) {
         evaluatedNodes = evaluated_nodes;
     }
 

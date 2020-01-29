@@ -132,19 +132,21 @@ class MyClientHandler : public ClientHandler {
           }}
 
       for(int q = 0; q < problem[0].size(); q++){
-          for(int p = 0; p < problem.size();p++){
-              cout << problem[p][q] << " ";
-          }
-          cout << endl;
+//          for(int p = 0; p < problem.size();p++){
+//              cout << problem[p][q] << " ";
+//          }
+//          cout << endl;
       }
     hash<string> myHash;
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
+      cout << "problem in cache" << endl;
       solution = this->cache->getSolution(strProblem);
       //if solution wasn't found create one
     } else {///// אולי בלבול יכול להיות שהצריך לשלוח את המטריצה הגדולה (סולבר)
-
+      cout << "problem not in cache" << endl;
       solution = this->solver->solve(Matrix(problem));
+      cout << "after solving" << endl;
       this->cache->intoCache(strProblem, solution);//////hash להוסיף
     }
 
@@ -152,6 +154,8 @@ class MyClientHandler : public ClientHandler {
       message = message + solution[i];/// להוסיך רווח
     }
 
+    cout << "end" << endl;
+      cout << endl << endl;
     write(socket, message.c_str(), message.length());
   }
   ~MyClientHandler() {}

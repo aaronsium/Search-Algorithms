@@ -26,8 +26,9 @@ public:
 
         Searchable<Point> *able;
         able = new Matrix(problem);
-
+cout << "in solver "<< endl;
         S solution = this->searcher->search(able);// solving the problem by search -> store the solution
+        cout << "out solver "<< endl;
         return solution;// adapt the solution to the problem's type
     }
 
