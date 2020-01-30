@@ -1,0 +1,40 @@
+matrix 1:
+ right right right right right right right right down right down down down down down down down down 
+
+
+matrix 2:
+ right right right right right right right right right right right right right right down down down down down down down down down down down down down down 
+
+
+matrix 3:
+ right right right right right right right right right right right right right right right right right down right right down down down down down down down down down down down down down down down down down down 
+
+
+matrix 4:
+ right right right right right right right right right down right right right down right down right right right right right right right right right down right right down down down down down down down down down down down down down down down down down down down down 
+
+
+matrix 5:
+ right right right right right right right right right right right right right right right right right right right right right right right right right right right right right down down down down down down down down down down down down down down down down down down down down down down down down down down down down down 
+
+
+matrix 6:
+ right right right right right right right right right right right right right right right down right right right right right right right right right right right right right down right right right down down down down down down down right down down down down down down right down down down down down down down down down down down down right down down down down down down down 
+
+
+matrix 7:
+ right right right right right right right right right right right right right right right right right right down right right right right right right right right right right right right right right right right right right right right right down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down 
+
+
+matrix 8:
+ right right right right right right right right right right right right right right right right down right right right right right right right right right right right right right right right right right right right right right right down right right right right right right down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down 
+
+
+matrix 9:
+ right right right right right right right right right right right right right right right right right right right right right right right right right right right right right right down down down right right right right right right right right right right right right right right down down down down down down down down right down down down down right down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down down right down 
+
+
+matrix 10:
+ right right right right right right right right down down right right right right right right right right right right right right right right right down down right right right right right right right right right right right down right right right right right right right right right right right down down down down down down down down down down right right down down down down down down down down down down down down down down down down down down down down down right down down down down down down down down right down down down down down 
+
+
