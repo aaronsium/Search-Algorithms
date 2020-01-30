@@ -34,7 +34,7 @@ class BestFirstSearch : public Searcher<T, S> {
       this->openList.pop();
       this->closed.push_back(n);
       if (searchable->isGoalState(n)) {
-          cout << "Cost:" << n.GetCost() << endl;
+        cout << "Cost:" << n.GetCost() << endl;
         return searchable->adaptSolution(backTrace());
       }
 
@@ -96,7 +96,7 @@ class BestFirstSearch : public Searcher<T, S> {
       this->SetEvaluatedNodes(this->evaluatedNodes + 1);
       trace.push_back(*element);
     }
-    cout<< "BestFS - evaluatedNodes : "<<this->evaluatedNodes <<endl;
+    cout << "BestFS - evaluatedNodes : " << this->evaluatedNodes << endl;
 
     return trace;
   }
