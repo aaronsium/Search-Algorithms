@@ -46,12 +46,12 @@ Starting from the Initial state all the way to the goal state, every State descr
 
 #### Matrix
 
-Type: `object`
+Type: `searchable object`
 
 Matrix illustrates real field which in we can move in four directions (right, left, up, down), 
-and every step has it's own cost. 
+and every step has it's own cost. we can search for the best way using the search algorithms. 
 
-#### algorithms
+#### search algorithms
 
 Type: `search object`
 
