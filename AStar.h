@@ -52,6 +52,7 @@ class AStar : public Searcher<T, S> {
 
   virtual ~AStar() = default;
 
+    ///////////////////////////////////////////////
   S search(Searchable<T> *s) {
     priority_queue<State<T>, vector<State<T>>, comparator<T>> openList(comparator<T>(s->getGoalState()));
 
