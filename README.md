@@ -1,5 +1,7 @@
 # ex4
 
+![pageres](media/matrix.jpeg)
+
 EX4 implement different search algorithms.
 we can compare and chose the best one for certain client.
 
