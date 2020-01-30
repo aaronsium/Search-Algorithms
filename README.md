@@ -37,12 +37,20 @@ Type: `Interface`
 classes that implements CacheManager receive both problem and it solution and store it so we can
 get by o(1) solutions to problems we already had deal with.
 
+#### State
+Type: `object`
+
+holds the position we got into in algorithm. 
+Starting from the Initial state all the way to the goal state, every State describes every step.  
+
 #### algorithms
 
-- `AStar`, `BestFirstSearch` : receive a search implemention, finds the path with
+Type: `search object`
+
+- `AStar`, `BestFirstSearch` : receive a searchable implemention, finds the path with
                                the lowest cost and returns it.
             
-- `BFS`, `DFS`: receive a search implemention, finds the shortest path and returns it.
+- `BFS`, `DFS`: receive a searchable implemention, finds the shortest path and returns it.
                 
 
 ## Github
