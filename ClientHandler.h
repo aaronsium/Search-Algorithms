@@ -11,9 +11,9 @@
 
 class ClientHandler {
 
-public:
-    virtual void handleClient(int socket) = 0;
-  virtual ClientHandler *create() const =0;
+ public:
+  virtual void handleClient(int socket) = 0;
+  virtual ClientHandler *create() const = 0;
   virtual ClientHandler *clone() const = 0;
   virtual ~ClientHandler() {}
 };

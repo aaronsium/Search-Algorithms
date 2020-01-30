@@ -26,7 +26,6 @@ class BestFirstSearch : public Searcher<T, S> {
 
  public:
   virtual ~BestFirstSearch() = default;
-  ///////////////////////////////////////////////
   S search(Searchable<T> *searchable) {
     this->openList.push(searchable->getInitialState());
     while (!this->openList.empty()) {
@@ -100,11 +99,6 @@ class BestFirstSearch : public Searcher<T, S> {
 
     return trace;
   }
-
-//  void TemporaryFunction2() {
-//    BestFirstSearch<Point, vector < string>>
-//    x;
-//  }
 
 };
 

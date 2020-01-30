@@ -31,19 +31,18 @@ using namespace std::literals::chrono_literals;
 typedef vector<vector<int>> matrix;
 typedef vector<string> strVector;
 
-
 class StringReverser : public Solver<string, string> {
 
-public:
-    virtual string solve (string problem){
-        string solution = " ";
-        for(int i = problem.length()-1; i >= 0; i++){
-            solution += problem[i];
-        }
-        return problem;
+ public:
+  virtual string solve(string problem) {
+    string solution = " ";
+    for (int i = problem.length() - 1; i >= 0; i++) {
+      solution += problem[i];
     }
+    return problem;
+  }
 
-    ~StringReverser() override {}
+  ~StringReverser() override {}
 };
 
 #endif //EX4_STRINGREVERSER_H

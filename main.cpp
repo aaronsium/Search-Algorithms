@@ -5,6 +5,6 @@ using namespace boot;
 int main(int arg, char *args[]) {
 
   Main M;
-  M.main(arg,args);
+  M.main(arg, args);
   return 0;
 }

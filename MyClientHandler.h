@@ -39,36 +39,28 @@ class MyClientHandler : public ClientHandler {
   CacheManager<string, vector<string>> *cache;
 
  public:
-  MyClientHandler(){}
-//  MyClientHandler(const MyClientHandler& rhs){}
-  MyClientHandler* clone()  const{
+  MyClientHandler() {}
+  MyClientHandler *clone() const {
     return new MyClientHandler(*this);
   }
-  MyClientHandler* create() const{
+  MyClientHandler *create() const {
     return new MyClientHandler();
   }
 
-
-//  Circle* Circle::clone()  const { return new Circle(*this); }
-//  Circle* Circle::create() const { return new Circle();      }
   MyClientHandler(Solver<Matrix, vector<string>> *sol, CacheManager<string, vector<string>> *cacheManager)
       : solver(sol),
         cache(cacheManager) {};
   void handleClient(int socket) {
 
-    char buffer[1024] = {0};
     matrix problem;
     vector<string> solution;
     string message = " ";
     string strProblem = " ";
-    string tempToken="";
-    bool isN = false;
-    int countStr = 0;
+    string tempToken = "";
     bool check = true;
     string tempStr;
-    int maxLine = 0;
     int colCounter = 0;
-      int rowCounter = 0;
+    unsigned int rowCounter = 0;
     while (check) {
       char buffer[1024] = {0};
       read(socket, buffer, 1024);
@@ -85,12 +77,12 @@ class MyClientHandler : public ClientHandler {
       int m = 0;
       int j = 0;
       if (!strcmp(tempBuffer, "end")) {
-          tempBuffer = NULL;
-          continue;
+        tempBuffer = NULL;
+        continue;
       } else {
         string str = tempBuffer;
         str = str + "\n";
-          int i = 0;
+        int i = 0;
         for (i; str[m - 1]!='\n'; i++) {
           vector<int> v;
           // find next value
@@ -104,10 +96,10 @@ class MyClientHandler : public ClientHandler {
             m++;
           }
           m++;
-          if (colCounter == 0 || i > colCounter) {
-              while (v.size() < rowCounter){
-                  v.push_back(-1);
-              }
+          if (colCounter==0 || i > colCounter) {
+            while (v.size() < rowCounter) {
+              v.push_back(-1);
+            }
             v.push_back(atoi(token.c_str()));
             problem.push_back(v);
           } else {
@@ -115,25 +107,25 @@ class MyClientHandler : public ClientHandler {
           }
           j++;
           tempToken += token + " ";
-            if(i > colCounter){
-                colCounter = i;
-            }
+          if (i > colCounter) {
+            colCounter = i;
+          }
         }
-          rowCounter++;
+        rowCounter++;
 //          cout << strProblem << endl;
         strProblem = strProblem + tempToken;
-        tempToken= "";
+        tempToken = "";
       }
       tempBuffer = strtok(NULL, "\n");
     }
-      for(int q = rowCounter-2; q < problem[0].size(); q++){
-          for(int p = 2; p < problem.size();p++){
-              problem[p].push_back(-1);
-          }}
-
-      for(int q = 0; q < problem[0].size(); q++){
+    for (unsigned int q = rowCounter - 2; q < problem[0].size(); q++) {
+      for (unsigned int p = 2; p < problem.size(); p++) {
+        problem[p].push_back(-1);
       }
-    hash<string> myHash;
+    }
+
+    for (int q = 0; q < problem[0].size(); q++) {
+    }
     //searching for solution in the cache
     if (this->cache->inCache(strProblem)) {
       solution = this->cache->getSolution(strProblem);
@@ -143,7 +135,7 @@ class MyClientHandler : public ClientHandler {
       this->cache->intoCache(strProblem, solution);
     }
 
-    for (int i = 0; i < solution.size(); i++) {
+    for (unsigned int i = 0; i < solution.size(); i++) {
       message = message + solution[i] + " ";
     }
 

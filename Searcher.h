@@ -11,24 +11,24 @@
 template<class T, class S>
 
 class Searcher {
-protected:
-    double evaluatedNodes;
+ protected:
+  double evaluatedNodes;
 
-public:
-    Searcher() {
-        evaluatedNodes = 0;
-    }
+ public:
+  Searcher() {
+    evaluatedNodes = 0;
+  }
 
-    virtual S search(Searchable<T>* searchable) = 0;
-    double NodesEvaluated() {
-        return evaluatedNodes;
-    }
+  virtual S search(Searchable<T> *searchable) = 0;
+  double NodesEvaluated() {
+    return evaluatedNodes;
+  }
 
-    void SetEvaluatedNodes(double evaluated_nodes) {
-        evaluatedNodes = evaluated_nodes;
-    }
+  void SetEvaluatedNodes(double evaluated_nodes) {
+    evaluatedNodes = evaluated_nodes;
+  }
 
-    virtual ~Searcher() = default;
+  virtual ~Searcher() = default;
 };
 
 #endif //EX4_SEARCHER_H

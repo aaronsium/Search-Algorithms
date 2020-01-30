@@ -14,7 +14,6 @@
 
 using namespace std;
 
-
 template<class S>
 class FileCacheManager : public CacheManager<string, S> {
  private:
@@ -23,10 +22,9 @@ class FileCacheManager : public CacheManager<string, S> {
   unsigned int capacity = 5;
 
  public:
-  FileCacheManager(){};
-  ~FileCacheManager()  {} ;
+  FileCacheManager() {};
+  ~FileCacheManager() {};
 
-  ////////////////////////////////////////////////////////
   string hashing(string problem) {
     hash<string> myHash;
     // Using operator() to get hash value
@@ -135,7 +133,7 @@ class FileCacheManager : public CacheManager<string, S> {
     string newStr(buf);
     return newStr;
   }
-  void TemporaryFunction5 (){
+  void TemporaryFunction5() {
     FileCacheManager<vector<string>> x;
   }
 };

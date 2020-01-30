@@ -68,13 +68,6 @@ class BFS : public Searcher<T, S> {
     return traceVector;
   }
 
-//void TemporaryFunction3 (){
-//  BFS<Point,vector<string>> x;
-//}
-
-
-
-
 };
 
 #endif //EX4__BFS_H_

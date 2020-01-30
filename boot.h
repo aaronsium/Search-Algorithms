@@ -32,13 +32,10 @@ class boot::Main {
     MyParallelServer server;
 
     Searcher<Point, vector<string>> *search;
-    search = new BestFirstSearch<Point, vector<string>>();
     Solver<Matrix, vector<string>> *solv;
-    solv = new OA<Matrix, vector<string>, Point>(search);
     CacheManager<string, vector<string>> *cash2;
     cash2 = new FileCacheManager<vector<string>>();
     vector<ClientHandler *> *handlers = new vector<ClientHandler *>();
-    MyClientHandler client1(solv, cash2);
     for (int i = 0; i < 10; i++) {
       search = new AStar<Point, vector<string>>();
       solv = new OA<Matrix, vector<string>, Point>(search);
