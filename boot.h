@@ -32,6 +32,7 @@ class boot::Main {
     MyParallelServer server;
 
     Searcher<Point, vector<string>> *search;
+    search = new AStar<Point, vector<string>>();
     Solver<Matrix, vector<string>> *solv;
     CacheManager<string, vector<string>> *cash2;
     cash2 = new FileCacheManager<vector<string>>();

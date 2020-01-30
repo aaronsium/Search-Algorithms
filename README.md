@@ -8,7 +8,7 @@ we can compare and chose the best one for certain client.
 ## Usage
 
 ```
-include all files in "EX4" create in main wanted search implement (algorithm) and run main.
+include all files in "ex4", create in root-Main wanted search implement (algorithm) and run main. 
 ```
 
 ## API
