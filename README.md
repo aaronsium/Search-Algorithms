@@ -38,10 +38,18 @@ classes that implements CacheManager receive both problem and it solution and st
 get by o(1) solutions to problems we already had deal with.
 
 #### State
+
 Type: `object`
 
 holds the position we got into in algorithm. 
 Starting from the Initial state all the way to the goal state, every State describes every step.  
+
+#### Matrix
+
+Type: `object`
+
+Matrix illustrates real field which in we can move in four directions (right, left, up, down), 
+and every step has it's own cost. 
 
 #### algorithms
 
